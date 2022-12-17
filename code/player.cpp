@@ -1,6 +1,6 @@
 #include "player.hpp"
 
-
+/*
 void Player::move(){
 
 }
@@ -31,3 +31,4 @@ void Player::disturb() const{
 void Player::tackle() const{
     
 }
+*/
