@@ -1,6 +1,7 @@
 #pragma once 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 class Character{
 
@@ -9,11 +10,13 @@ public:
     Character(const Character & c): first_name(c.first_name), last_name(c.last_name), origin(c.origin), present(c.present){};
     std::string getName(){return first_name + ' '+ last_name;}
     std::string getOrigin(){return origin;}
+    double getStat(){return stat;}
     bool on_field(){return present;}
 
     void setPresence(){present=1;}
     void setOrigin(std::string nation){origin=nation;}
-
+    void setStat(double s){stat=s;}
+    //virtual void initStat(const Character & c, std::stringstream fichier)=0;
     //virtual void indicate_position() const = 0;
     //virtual void move() const = 0;
 
@@ -22,6 +25,6 @@ protected:
     std::string last_name;
     std::string origin; 
     bool present; //Presence sur le terrain
-    size_t stats;
+    double stat;
     
 };
