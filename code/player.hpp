@@ -10,6 +10,8 @@ class Player : public Character {
         Player(std::string f, std::string n, std::string o): Character(f,n, o){};
         Player(const Player & p): Character(p){};
         void initStat( Player & e, std::string fichier);
+        void initStat2( Player & e, std::string fichier);
+
         // void move();
         // bool has_ball() const;
         // void dribble() const;
