@@ -9,7 +9,7 @@ class Player : public Character {
     public: 
         Player(std::string f, std::string n, std::string o): Character(f,n, o){};
         Player(const Player & p): Character(p){};
-        void initStat( Player & e, std::string fichier);
+        void initStat( std::string fichier);
         void initStat2( Player & e, std::string fichier);
 
         // void move();

@@ -2,28 +2,29 @@
 #include<vector>
 using namespace std;
 
-void Player::initStat( Player & e, string fichier){
+void Player::initStat( string fichier){
 
     ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
-    bool found=false;
+    
 
         if(file)  // si l'ouverture a réussi
-        {       
+        {   
+            bool found;
             string ligne;
             string mot2;
             string mot3;
             vector<string> retour;
+            found=false;
             while (file.peek()!=EOF){
                 file >> mot2;
                 //cout << mot2 << endl;
                 retour.push_back(mot2);
-                
             }
             if(!found){
                 for (size_t i=0; i< retour.size(); i++ ){
-                    if (retour[i]==e.first_name && retour[i+1]==e.last_name){
+                    if (retour[i]==this->first_name && retour[i+1]==this->last_name){
                         cout << retour[i]  << ' ' << retour[i+1] << endl;
-                        e.setStat(stod(retour[i+2]));
+                        this->setStat(stod(retour[i+2]));
                         found =true;
                     }
                 }
@@ -55,7 +56,7 @@ void Player::initStat2( Player & e, string fichier){
                 for (size_t i = 0; i < retour.size(); i++){
                     //cout << "ici" << endl;
                     //cout << retour[i] << endl;
-                    //cout << "=============" << endl;
+                    cout << "=============" << endl;
                     //cout << e.first_name << ' ' << e.last_name << endl;
                     cout << retour[i]  << ' ' << retour[i+1] << endl;
                     if (retour[i] == e.first_name && retour[i+1] == e.last_name){
