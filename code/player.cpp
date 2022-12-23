@@ -20,7 +20,7 @@ void Player::initStat( string fichier){
                 retour.push_back(mot);
             }
             if(!found){
-                for (size_t i=0; i< retour.size(); i++ )
+                for (size_t i=0; i< retour.size(); i+=3 )
                 {
                     if (retour[i] == this->first_name && retour[i+1] == this->last_name)
                     {
@@ -54,14 +54,13 @@ void Player::initStat2( Player & e, string fichier){
                 retour.push_back(ligne);
             }
             //if(!found){
-                for (size_t i = 0; i < retour.size(); i++){
-                    //cout << "ici" << endl;
-                    //cout << retour[i] << endl;
+                for (size_t i = 0; i < retour.size(); i+=4){
                     cout << "=============" << endl;
-                    //cout << e.first_name << ' ' << e.last_name << endl;
+                    cout << e.first_name << ' ' << e.last_name << endl;
                     cout << retour[i]  << ' ' << retour[i+1] << endl;
+
                     if (retour[i] == e.first_name && retour[i+1] == e.last_name){
-                        
+                        cout << "Giving stat : " << retour[i+2] << " to " << retour[i]  << ' ' << retour[i+1] << endl;
                         e.setStat(stod(retour[i+2]));
                         found=true;
                     }

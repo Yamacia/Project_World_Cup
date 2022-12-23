@@ -1,17 +1,17 @@
-first_name;last_name;origin;stat
-Kylian;Mbappe;french;0.88
-Adrien;Rabiot;french;0.86
-Wissam;Ben Yedder;french;0.84
-Kingsley;Coman;french;0.83
-Theo;Hernandez;french;0.83
-Lucas;Digne;french;0.83
-Antoine;Griezmann;french;0.82
-Christopher;Nkuntu;french;0.79
-Aurélien;Tchouaméni;french;0.78
-Jonathan;Clauss;french;0.77
-Mattéo;Guendouzi;french;0.74
-Presnel;Kimpembe;french;0.7
-Lucas;Hernandez;french;0.62
-Wiliam;Saliba;french;0.6
-Raphaël;Varane;french;0.52
-Jules;Koundé;french;0.48
+first_name;last_name;origin;stat;
+Kylian;Mbappe;french;0.88;
+Adrien;Rabiot;french;0.86;
+Wissam;Ben Yedder;french;0.84;
+Kingsley;Coman;french;0.83;
+Theo;Hernandez;french;0.83;
+Lucas;Digne;french;0.83;
+Antoine;Griezmann;french;0.82;
+Christopher;Nkuntu;french;0.79;
+Aurélien;Tchouaméni;french;0.78;
+Jonathan;Clauss;french;0.77;
+Mattéo;Guendouzi;french;0.74;
+Presnel;Kimpembe;french;0.7;
+Lucas;Hernandez;french;0.62;
+Wiliam;Saliba;french;0.6;
+Raphaël;Varane;french;0.52;
+Jules;Koundé;french;0.48;
