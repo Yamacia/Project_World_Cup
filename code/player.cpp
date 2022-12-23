@@ -9,23 +9,24 @@ void Player::initStat( string fichier){
 
         if(file)  // si l'ouverture a réussi
         {   
-            bool found;
+            bool found=false;
             string ligne;
-            string mot2;
-            string mot3;
+            string mot;
             vector<string> retour;
-            found=false;
+
             while (file.peek()!=EOF){
-                file >> mot2;
-                //cout << mot2 << endl;
-                retour.push_back(mot2);
+                file >> mot;
+                //cout << mot << endl;
+                retour.push_back(mot);
             }
             if(!found){
-                for (size_t i=0; i< retour.size(); i++ ){
-                    if (retour[i]==this->first_name && retour[i+1]==this->last_name){
+                for (size_t i=0; i< retour.size(); i++ )
+                {
+                    if (retour[i] == this->first_name && retour[i+1] == this->last_name)
+                    {
                         cout << retour[i]  << ' ' << retour[i+1] << endl;
                         this->setStat(stod(retour[i+2]));
-                        found =true;
+                        found = true;
                     }
                 }
             }
