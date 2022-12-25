@@ -20,7 +20,5 @@ TEST_CASE("1: Player")
   Player player2(player1);
   CHECK(player2.getOrigin()==player1.getOrigin());
   REQUIRE(player2.on_field()==1);
-  //player1.initStat("../data/France_team.txt");
-  //CHECK(player1.getStat()==0.88);
 }
 

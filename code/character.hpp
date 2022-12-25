@@ -26,5 +26,8 @@ protected:
     std::string origin; 
     bool present; //Presence sur le terrain
     double stat;
-    
+
+    //Character's position on the field
+    size_t x;
+    size_t y;
 };
