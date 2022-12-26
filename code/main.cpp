@@ -16,24 +16,24 @@ int main(){
     // p2.initStat2(p2,"../data/French_team.csv");
     std::cout << p2.getStat() << std::endl;
 
-    // sf::RenderWindow window(sf::VideoMode(LARGEUR_TERRAIN * TAILLE_CASE, HAUTEUR_TERRAIN * TAILLE_CASE), "Football");
-    // sf::Texture terrain;
-    // terrain.loadFromFile("../images/field.png");
-    // sf::Sprite s(terrain);
-    // window.setVerticalSyncEnabled(true);
+    sf::RenderWindow window(sf::VideoMode(LARGEUR_ECRAN,HAUTEUR_ECRAN), "Football");
+    sf::Texture terrain;
+    terrain.loadFromFile("../images/field.png");
+    sf::Sprite s(terrain);
+    window.setVerticalSyncEnabled(true);
 
-    // while(window.isOpen())
-    // {
-    //     sf::Event windowEvent;
-    //     while (window.pollEvent(windowEvent))
-    //     {
-    //         if (windowEvent.type == sf::Event::Closed)
-    //                 window.close();
-    //     }
-    //     window.clear(sf::Color::Black);
-    //     window.draw(s);
-    //     window.display();
-    // }
+    while(window.isOpen())
+    {
+        sf::Event windowEvent;
+        while (window.pollEvent(windowEvent))
+        {
+            if (windowEvent.type == sf::Event::Closed)
+                    window.close();
+        }
+        window.clear(sf::Color::Black);
+        window.draw(s);
+        window.display();
+    }
 
    return 0;
 }
