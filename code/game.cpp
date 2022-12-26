@@ -1,28 +1,28 @@
-#include "game.hpp"
+// #include "game.hpp"
 
-Game::Game(){}
+// Game::Game(){}
 
-Game::~Game(){}
+// Game::~Game(){}
 
-Game& Game::instance()
-{
-    static Game gameManager;
-    return gameManager;
-}
+// Game& Game::instance()
+// {
+//     static Game gameManager;
+//     return gameManager;
+// }
 
-void Game::gameLoop(sf::RenderWindow& window)
-{
-    while(window.isOpen())
-    {
-        // gameUpdate(window);
+// void Game::gameLoop(sf::RenderWindow& window)
+// {
+//     while(window.isOpen())
+//     {
+//         // gameUpdate(window);
 
-        window.clear(sf::Color::Black);
-        // gameDraw(window);
-        window.display();
-    }
-}
+//         window.clear(sf::Color::Black);
+//         // gameDraw(window);
+//         window.display();
+//     }
+// }
 
-void Game::gameStart(sf::RenderWindow& window)
-{
+// void Game::gameStart(sf::RenderWindow& window)
+// {
 
-}
+// }
