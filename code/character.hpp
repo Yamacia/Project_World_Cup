@@ -11,7 +11,7 @@ MG / MC / MD = Milieu Gauche / Centre / Droite
 DG / DC / DD = Défense Gauche / Centre / Droite
 G = Gardien
 */
-typedef enum Poste{AG, AC, AD, MOG, MOC, MOD, MG, MC, MD, DG, DC, DD, G} Poste;
+enum Poste{AG, AC, AD, MOG, MOC, MOD, MG, MC, MD, DG, DC, DD, G};
 
 
 class Character{
@@ -46,7 +46,7 @@ protected:
     std::string origin; 
     bool present; //Presence sur le terrain
     double stat;
-    Poste *role;
+    Poste role;
 
     //Character's position on the field
     size_t _x;
