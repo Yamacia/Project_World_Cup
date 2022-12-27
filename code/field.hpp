@@ -10,7 +10,7 @@ MG / MC / MD = Milieu Gauche / Centre / Droite
 DG / DC / DD = Défense Gauche / Centre / Droite
 G = Gardien
 */
-enum Poste{AG, AC, AD, MOG, MOC, MOD, MG, MC, MD, DG, DC, DD, G};
+typedef enum Poste{AG, AC, AD, MOG, MOC, MOD, MG, MC, MD, DG, DC, DD, G} Poste;
 
 /* Taille du terrain (basé sur l'image) */
 const size_t LARGEUR_TERRAIN = 14;

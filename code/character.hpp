@@ -3,6 +3,17 @@
 #include <string>
 #include <fstream>
 
+/* Postes des joueurs
+Légende :
+AG / AC / AD = Attaquant Gauche / Centre / Droite
+MOG / MOC / MOD = Milieu Offensif Gauche / Centre / Droite
+MG / MC / MD = Milieu Gauche / Centre / Droite
+DG / DC / DD = Défense Gauche / Centre / Droite
+G = Gardien
+*/
+typedef enum Poste{AG, AC, AD, MOG, MOC, MOD, MG, MC, MD, DG, DC, DD, G} Poste;
+
+
 class Character{
 
 public:
@@ -35,6 +46,7 @@ protected:
     std::string origin; 
     bool present; //Presence sur le terrain
     double stat;
+    Poste *role;
 
     //Character's position on the field
     size_t _x;

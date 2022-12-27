@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once
 #include "character.hpp"
 #include "player.hpp"
 #include "game.hpp"
@@ -21,7 +21,7 @@ int main(){
     /* Création de la fenêtre */
     sf::RenderWindow window(sf::VideoMode(LARGEUR_ECRAN,HAUTEUR_ECRAN), "Football");
     sf::Texture terrain;
-    terrain.loadFromFile("../images/field.png");
+    terrain.loadFromFile("../images/Field.png");
     sf::Sprite s(terrain);    
 
     /* Cercle blanc qui représente le coin haut-gauche du terrain */
