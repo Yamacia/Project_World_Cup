@@ -14,10 +14,10 @@ void Game::gameLoop(sf::RenderWindow& window)
 {
     while(window.isOpen())
     {
-        // gameUpdate(window);
+        gameUpdate(window);
 
         window.clear(sf::Color::Black);
-        // gameDraw(window);
+        gameDraw(window);
         window.display();
     }
 }
@@ -25,4 +25,14 @@ void Game::gameLoop(sf::RenderWindow& window)
 void Game::gameStart(sf::RenderWindow& window)
 {
 
+}
+
+void Game::gameUpdate(sf::RenderWindow& window)
+{
+
+}
+
+void Game::gameDraw(sf::RenderWindow& window)
+{
+    
 }

@@ -21,29 +21,49 @@ int main(){
     /* Création de la fenêtre */
     sf::RenderWindow window(sf::VideoMode(LARGEUR_ECRAN,HAUTEUR_ECRAN), "Football");
     sf::Texture terrain;
-    terrain.loadFromFile("../images/field.png");
+    terrain.loadFromFile("../images/Field_no_grid.png");
     sf::Sprite s(terrain);    
 
-    /* Cercle blanc qui représente le coin haut-gauche du terrain */
-    sf::CircleShape origine(12);
+    /* Carré de sélection de case */
+    sf::RectangleShape cursor(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
+    cursor.setFillColor(sf::Color::Transparent);
+    cursor.setOutlineColor(sf::Color::Red);
+    cursor.setOutlineThickness(2);
+    size_t x = 0;
+    size_t y = 0;
 
     while(window.isOpen())
     {
-        sf::Event windowEvent;
-        while (window.pollEvent(windowEvent))
+        sf::Event event;
+        while (window.pollEvent(event))
         {
-            if (windowEvent.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
                     window.close();
+            
+            if(event.type == sf::Event::KeyPressed)
+            {
+                if(event.key.code == sf::Keyboard::Left && x > 0)
+                    x--;
+                if(event.key.code == sf::Keyboard::Right && x < LARGEUR_TERRAIN)
+                    x++;
+                if(event.key.code == sf::Keyboard::Up && y > 0)
+                    y--;
+                if(event.key.code == sf::Keyboard::Down && y < HAUTEUR_TERRAIN)
+                    y++;
+                if(event.key.code == sf::Keyboard::Enter)
+                {
+                    std::cout << "Case (" << x << "," << y << ")" << std::endl;
+                    if(x == 4 && y == 7)
+                        std::cout << "Theo Rouyer a choisi cette case." << std::endl;
+                }
+            }
         }
         window.clear(sf::Color::Black);
         window.draw(s);
 
-
-        /* Fixer sa position au coin haut-gauche */
-        origine.setPosition(sf::Vector2f(32, 29));
-        origine.setOrigin(sf::Vector2f(origine.getRadius(),origine.getRadius())); // Fixer son origine en son centre
-
-        window.draw(origine);
+        /* */
+        cursor.setPosition(sf::Vector2f(x*LARGEUR_CASE + 32, y*HAUTEUR_CASE + 29));
+        window.draw(cursor);
         window.display();
     }
 

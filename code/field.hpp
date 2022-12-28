@@ -13,9 +13,10 @@ G = Gardien
 enum Poste{AG, AC, AD, MOG, MOC, MOD, MG, MC, MD, DG, DC, DD, G};
 
 /* Taille du terrain (basé sur l'image) */
-const size_t LARGEUR_TERRAIN = 14;
-const size_t HAUTEUR_TERRAIN = 9;
-const size_t TAILLE_CASE = 50;
+const size_t LARGEUR_TERRAIN = 13;
+const size_t HAUTEUR_TERRAIN = 8;
+const size_t LARGEUR_CASE = 49;
+const size_t HAUTEUR_CASE = 47;
 const size_t CENTRE_CASE = 24;
 
 
