@@ -7,7 +7,7 @@
 
 class Team{
     public: 
-    Team();
+    Team(std::string country, std::string players);
     void init();
     void update();
     private:

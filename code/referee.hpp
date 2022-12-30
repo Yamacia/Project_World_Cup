@@ -4,7 +4,7 @@
 
 class Referee: public Character{
     public:
-        Referee(std::string f, std::string n, std::string o): Character(f,n, o){};
+        Referee(std::string n, std::string o): Character(n, o){};
         void whistle(); //siffler
         void card(); //carton
         void offside(); //hors-jeu

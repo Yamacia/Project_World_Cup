@@ -5,11 +5,11 @@ class Character{
 
 public:
     /* Constructeurs et Destructeurs */
-    Character(std::string f, std::string n, std::string o) : first_name(f), last_name(n), origin(o), present(0), stat(0), _x(0), _y(0){sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur vide" << std::endl;};
-    Character(const Character & c): first_name(c.first_name), last_name(c.last_name), origin(c.origin), present(c.present), _x(c._x), _y(c._y){sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur" << std::endl;};
+    Character( std::string n, std::string o) : name(n), origin(o), present(0), stat(0), _x(0), _y(0), poste("AG"){sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur vide" << std::endl;};
+    Character(const Character & c): name(c.name), origin(c.origin), present(c.present), _x(c._x), _y(c._y){sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur" << std::endl;};
 
     /* Getters */
-    std::string getName(){return first_name + ' '+ last_name;}
+    std::string getName(){return name;}
     std::string getOrigin(){return origin;}
     double getStat(){return stat;}
     size_t getX(){return _x;}
@@ -31,12 +31,12 @@ public:
     //virtual void move() const = 0;
 
 protected: 
-    std::string first_name;
-    std::string last_name;
+    std::string name;
     std::string origin; 
     bool present; //Presence sur le terrain
     double stat;
     Poste role;
+    std::string poste;
 
     //Character's position on the field
     size_t _x;

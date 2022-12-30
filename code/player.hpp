@@ -5,11 +5,12 @@
 class Player : public Character {
 
     public: 
-        Player(std::string f, std::string n, std::string o): Character(f,n, o){};
+        Player(std::string n, std::string o): Character(n, o){};
         Player(const Player & p): Character(p){};
         void initStat( std::string fichier);
-        void initStat2( Player & e, std::string fichier);
+        void initLeftPosition();
 
+        void move(){_x++; _y++;}
         // void move();
         // bool has_ball() const;
         // void dribble() const;

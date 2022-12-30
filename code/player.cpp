@@ -2,6 +2,9 @@
 #include<vector>
 using namespace std;
 
+
+/* Fonction qui initialise les statistiques des jouerus à parti d'un fichier txt 
+*/
 void Player::initStat( string fichier){
 
     ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
@@ -20,9 +23,10 @@ void Player::initStat( string fichier){
                 retour.push_back(mot);
             }
             if(!found){
-                for (size_t i=0; i< retour.size(); i+=3 )
+                for (size_t i = 0; i < retour.size(); i+=4)
                 {
-                    if (retour[i] == this->first_name && retour[i+1] == this->last_name)
+                    //cout << retour[i] << " + " << retour[i+1] << endl;
+                    if (retour[i]+' '+retour[i+1] == this->name)
                     {
                         cout << retour[i]  << ' ' << retour[i+1] << endl;
                         this->setStat(stod(retour[i+2]));
@@ -37,6 +41,69 @@ void Player::initStat( string fichier){
  
 }
 
+/* Fonction qui initialise la position des joueurs en fonction de leur postes sur la partie gauche du terrain 
+*/
+void Player::initLeftPosition()
+{
+    if (poste== "DG")
+    {
+            _x=1;
+            _y=0;
+            cout << _x << ' ' << _y << endl;
+    }
+    
+    if (poste =="DC")
+    {
+            _x=1;
+            _y=4;
+            cout << _x << ' ' << _y<<endl;
+    }
+
+    if (poste== "DD")
+    {
+            _x=1;
+            _y=8;
+            cout << _x << ' ' << _y <<endl;
+    }
+
+    if (poste== "MG")
+    {
+    
+            _x=3;
+            _y=1;
+            cout << _x << ' ' << _y << endl;
+    }
+
+    if (poste=="MC")
+    {
+            _x=3;
+            _y=4;
+            cout << _x << ' ' << _y << endl;
+    }
+
+    if (poste== "MD"){
+            _x=3;
+            _y=7;
+            cout << _x << ' ' << _y << endl;
+    }
+    if (poste== "AG"){
+            _x=5;
+            _y=1;
+            cout << _x << ' ' << _y << endl;   
+    }
+
+    if (poste=="AC"){
+        _x=6;
+        _y=4;
+        cout << _x << ' ' << _y << endl;
+    }
+
+    if (poste=="AD"){
+            _x=5;
+            _y=7;
+            cout << _x << ' ' << _y << endl;
+    }
+}
 
 /*
 void Player::move(){
