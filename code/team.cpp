@@ -26,6 +26,9 @@ Team::Team(string  country, string  players){
                 //cpt=0;
                 
             }
+            if (players[i+1]==' '){
+                retour=retour + players[i+1];
+            }
             //cout << retour << endl;
             retour="";
             /*

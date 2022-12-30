@@ -5,8 +5,8 @@ class Character{
 
 public:
     /* Constructeurs et Destructeurs */
-    Character( std::string n, std::string o) : name(n), origin(o), present(0), stat(0), _x(0), _y(0), poste("AG"){sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur vide" << std::endl;};
-    Character(const Character & c): name(c.name), origin(c.origin), present(c.present), _x(c._x), _y(c._y){sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur" << std::endl;};
+    Character( std::string n, std::string o) : name(n), origin(o), present(0), stat(0), _x(0), _y(0), poste("AG"){};//{sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur vide" << std::endl;};
+    Character(const Character & c): name(c.name), origin(c.origin), present(c.present), _x(c._x), _y(c._y){};//{sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur" << std::endl;};
 
     /* Getters */
     std::string getName(){return name;}

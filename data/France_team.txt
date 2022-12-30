@@ -1,16 +1,18 @@
-Kylian Mbappe 0.88
-Adrien Rabiot 0.86
-Wissam Ben Yedder 0.84
-Kingsley Coman 0.83
-Theo Hernandez 0.83
-Lucas Digne 0.83
-Antoine Griezmann 0.82
-Christopher Nkuntu 0.79
-Aurélien Tchouaméni 0.78
-Jonathan Clauss 0.77
-Mattéo Guendouzi 0.74
-Presnel Kimpembe 0.7
-Lucas Hernandez 0.62
-Wiliam Saliba 0.6
-Raphaël Varane 0.52
-Jules Koundé 0.48
+Paul Pogba 0.90 MOC
+Olivier Giroud 0.85 AC
+Kylian Mbappe 0.84 AG
+Adrien Rabiot 0.86 MOC 
+Nabil Fékir 0.84 AD
+Kingsley Coman 0.83 AG
+Theo Hernandez 0.83 DC
+Lucas Digne 0.83 DD
+Antoine Griezmann 0.82 AG
+Christopher Nkuntu 0.79 AD
+Aurélien Tchouaméni 0.78 MOC
+Jonathan Clauss 0.77 DD
+Mattéo Guendouzi 0.74 MOC
+Presnel Kimpembe 0.7 DC
+Lucas Hernandez 0.62 DG
+Wiliam Saliba 0.6 DD
+Raphaël Varane 0.52 DG
+Jules Koundé 0.48 DD
