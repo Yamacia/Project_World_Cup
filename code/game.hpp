@@ -1,12 +1,6 @@
 #pragma once 
-#include <iostream>
-#include <string>
+#include "constants.hpp"
 #include "field.hpp"
-
-#include <SFML/Graphics.hpp>
-
-const size_t LARGEUR_ECRAN = 744;
-const size_t HAUTEUR_ECRAN = 476;
 
 class Game
 {

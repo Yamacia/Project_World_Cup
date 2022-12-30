@@ -1,24 +1,5 @@
 #pragma once 
-#include <iostream>
-#include <string>
-
-/* Postes des joueurs
-Légende :
-AG / AC / AD = Attaquant Gauche / Centre / Droite
-MOG / MOC / MOD = Milieu Offensif Gauche / Centre / Droite
-MG / MC / MD = Milieu Gauche / Centre / Droite
-DG / DC / DD = Défense Gauche / Centre / Droite
-G = Gardien
-*/
-enum Poste{AG, AC, AD, MOG, MOC, MOD, MG, MC, MD, DG, DC, DD, G};
-
-/* Taille du terrain (basé sur l'image) */
-const size_t LARGEUR_TERRAIN = 13;
-const size_t HAUTEUR_TERRAIN = 8;
-const size_t LARGEUR_CASE = 49;
-const size_t HAUTEUR_CASE = 47;
-const size_t CENTRE_CASE = 24;
-
+#include "constants.hpp"
 
 class Field{
     public: 

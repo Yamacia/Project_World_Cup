@@ -1,8 +1,6 @@
 #pragma once 
 #include "character.hpp"
-#include <fstream>
-#include <sstream>
-#include <string>
+#include "constants.hpp"
 
 class Player : public Character {
 

@@ -12,3 +12,6 @@ compile:
 
 clean:
 	rm -f main *.o
+
+cleanw:
+	erase -f main *.o
