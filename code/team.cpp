@@ -10,7 +10,13 @@ Team::Team(string  country, string  players){
     {
         if (players[i] != ',')
         {
-            retour = retour + players[i];
+            
+            if (retour=="" && players[i]==' '){
+                retour = retour;
+            }
+            else{
+                retour = retour + players[i];
+            }
         }
         
         if ( players[i] == ',' || players[i+1] == '\0'){
