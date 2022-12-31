@@ -104,7 +104,11 @@ void Player::initLeftPosition()
             cout << _x << ' ' << _y << endl;
     }
 }
-
+std::string Player::toInfo() const{
+        std::string retour="";
+        retour = name + " , " + origin + " , " + poste+" , " + to_string(stat);
+        return retour;
+}
 /*
 void Player::move(){
 

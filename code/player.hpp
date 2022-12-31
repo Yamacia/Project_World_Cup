@@ -9,7 +9,7 @@ class Player : public Character {
         Player(const Player & p): Character(p){};
         void initStat( std::string fichier);
         void initLeftPosition();
-
+        std::string toInfo() const;
         void move(){_x++; _y++;}
         // void move();
         // bool has_ball() const;

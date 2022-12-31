@@ -8,6 +8,7 @@
 class Team{
     public: 
     Team(std::string country, std::string players);
+    void printTeam();
     void init();
     void update();
     private:

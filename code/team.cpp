@@ -13,7 +13,6 @@ Team::Team(string  country, string  players){
             retour = retour + players[i];
         }
         
-        
         if ( players[i] == ',' || players[i+1] == '\0'){
             
             if (retour!="")
@@ -31,6 +30,14 @@ Team::Team(string  country, string  players){
 
         i++; 
     }
+}
+
+void Team::printTeam(){
+
+for (auto const &i: roster) {
+    cout << i << endl;
+    }
+
 }
 
 void Team::init(){
