@@ -5,7 +5,7 @@
 std::string Character::toInfo() const{
     std::string retour="";
 
-    retour = name + " , " + origin + " , " + poste;
+    retour = name + ", " + origin + ", " + poste;
     return retour;
 }
 

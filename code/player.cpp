@@ -3,11 +3,47 @@
 using namespace std;
 
 
-/* Fonction qui initialise les statistiques des jouerus à parti d'un fichier txt 
+/* Fonction qui initialise les statistiques des joueurs à partir d'un fichier txt 
 */
-void Player::initStat( string fichier){
+void Player::initStat(string fichier){
 
     ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
+    
+
+        if(file)  // si l'ouverture a réussi
+        {   
+            bool found=false;
+            string mot;
+            vector<string> retour;
+
+            while (file.peek()!=EOF){
+                file >> mot;
+                //cout << mot << endl;
+                retour.push_back(mot);
+            }
+            if(!found){
+                for (size_t i = 0; i < retour.size(); i+=4)
+                {
+                    //cout << retour[i] << " + " << retour[i+1] << endl;
+                    if (retour[i]+' '+retour[i+1] == this->name)
+                    {
+                        //cout << retour[i]  << ' ' << retour[i+1] << endl;
+                        this->setStat(stod(retour[i+2]));
+                        found = true;
+                    }
+                }
+            }
+            file.close();  // on ferme le fichier
+        }
+        else  // sinon
+                cerr << "Impossible d'ouvrir le fichier !" << endl;
+ 
+}
+
+/* Fonction qui initialise les postes des joueurs à partir d'un fichier txt 
+*/
+void Player::initPoste(string fichier){
+        ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
     
 
         if(file)  // si l'ouverture a réussi
@@ -29,7 +65,45 @@ void Player::initStat( string fichier){
                     if (retour[i]+' '+retour[i+1] == this->name)
                     {
                         cout << retour[i]  << ' ' << retour[i+1] << endl;
+                        this->setPoste(retour[i+3]);
+                        found = true;
+                    }
+                }
+            }
+            file.close();  // on ferme le fichier
+        }
+        else  // sinon
+                cerr << "Impossible d'ouvrir le fichier !" << endl;
+ 
+}
+
+/* Fonction qui initialise les infos des joueurs à partir d'un fichier txt 
+*/
+void Player::initInfo(string fichier){
+        ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
+    
+
+        if(file)  // si l'ouverture a réussi
+        {   
+            bool found=false;
+            string ligne;
+            string mot;
+            vector<string> retour;
+
+            while (file.peek()!=EOF){
+                file >> mot;
+                //cout << mot << endl;
+                retour.push_back(mot);
+            }
+            if(!found){
+                for (size_t i = 0; i < retour.size(); i+=4)
+                {
+                    //cout << retour[i] << " + " << retour[i+1] << endl;
+                    if (retour[i]+' '+retour[i+1] == this->name)
+                    {
+                        //cout << retour[i]  << ' ' << retour[i+1] << endl;
                         this->setStat(stod(retour[i+2]));
+                        this->setPoste(retour[i+3]);
                         found = true;
                     }
                 }
@@ -104,11 +178,14 @@ void Player::initLeftPosition()
             cout << _x << ' ' << _y << endl;
     }
 }
+
 std::string Player::toInfo() const{
         std::string retour="";
-        retour = name + " , " + origin + " , " + poste+" , " + to_string(stat);
+        retour = name + ", " + origin + ", " + poste + ", " + to_string(stat);
         return retour;
 }
+
+
 /*
 void Player::move(){
 

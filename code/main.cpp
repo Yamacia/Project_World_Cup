@@ -13,15 +13,17 @@ int main(){
     p1.initLeftPosition();    
     std::cout << "La position du joueur est : (" <<p1.getX() << ',' << p1.getY() <<')' << std::endl;
 
-    Player p2("Kylian Mbappe", "French");
-    p2.initStat("../data/France_team.txt");
+    Player p2("Lucas Digne", "French");
+    //p2.initStat("../data/France_team.txt");
+    //p2.initPoste("../data/France_team.txt");
+    p2.initInfo("../data/France_team.txt");
     std::cout << p2 << std::endl;
 
     // p2.initStat2(p2,"../data/French_team.csv");
     //std::cout << p2.getStat() << std::endl;
     //std::stringstream ss;
     //ss << p2;
-    Team t("French", "Kylian Mbappe, Lucas Digne, Paul Pogba");
+    Team t("France", "Kylian Mbappe, Lucas Digne, Paul Pogba");
     t.printTeam();
 /*
      Création de la fenêtre 

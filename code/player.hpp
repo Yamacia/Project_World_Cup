@@ -7,7 +7,11 @@ class Player : public Character {
     public: 
         Player(std::string n, std::string o): Character(n, o){};
         Player(const Player & p): Character(p){};
+        //Player (std::string n, std::string o, std::string p, double s): Character(n,o,p,s){};
+
         void initStat( std::string fichier);
+        void initPoste(std::string fichier);
+        void initInfo(std::string fichier);
         void initLeftPosition();
         std::string toInfo() const;
         void move(){_x++; _y++;}

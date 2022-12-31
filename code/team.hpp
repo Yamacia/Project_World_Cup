@@ -8,9 +8,12 @@
 class Team{
     public: 
     Team(std::string country, std::string players);
-    void printTeam();
+    void printTeam(); //Probleme..
+    
+
     void init();
     void update();
+    
     private:
         std::list<Player> roster; 
 };

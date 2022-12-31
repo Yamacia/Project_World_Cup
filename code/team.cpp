@@ -10,7 +10,6 @@ Team::Team(string  country, string  players){
     {
         if (players[i] != ',')
         {
-            
             if (retour=="" && players[i]==' '){
                 retour = retour;
             }
@@ -25,8 +24,11 @@ Team::Team(string  country, string  players){
             {
                
                 Player current_player (retour, country);
-                cout << "Le nom est : " << current_player.getName() << endl;
+                std::string fichier = "../data/" + country + "_team.txt";
+                current_player.initInfo(fichier);
+                cout << current_player << endl;
                 roster.push_back(current_player);
+
                 
             }
           
@@ -40,9 +42,9 @@ Team::Team(string  country, string  players){
 
 void Team::printTeam(){
 
-for (auto const &i: roster) {
-    cout << i << endl;
-    }
+    for(list<Player>::iterator it = roster.begin(); it != roster.end(); it++){
+		cout << *it << endl;
+	}
 
 }
 
