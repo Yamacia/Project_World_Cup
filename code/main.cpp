@@ -16,8 +16,10 @@ int main(){
     Player p2("Kylian Mbappe", "French");
     p2.initStat("../data/France_team.txt");
     // p2.initStat2(p2,"../data/French_team.csv");
-    std::cout << p2.getStat() << std::endl;
-    Team t("French", "Kylian Mbappe, Lucas Digne, Paul Pogba");
+    //std::cout << p2.getStat() << std::endl;
+    //std::stringstream ss;
+    //ss << p2;
+    //Team t("French", "Kylian Mbappe, Lucas Digne, Paul Pogba");
 /*
      Création de la fenêtre 
     sf::RenderWindow window(sf::VideoMode(LARGEUR_ECRAN,HAUTEUR_ECRAN), "Football");

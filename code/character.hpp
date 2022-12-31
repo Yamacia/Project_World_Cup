@@ -9,7 +9,7 @@ public:
     Character(const Character & c): name(c.name), origin(c.origin), present(c.present), _x(c._x), _y(c._y){};//{sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur" << std::endl;};
 
     /* Getters */
-    std::string getName(){return name;}
+    std::string getName()const{return name;}
     std::string getOrigin(){return origin;}
     double getStat(){return stat;}
     size_t getX(){return _x;}
@@ -25,6 +25,7 @@ public:
     void setSpritePosition(){std::cout << "x = " << _x * LARGEUR_CASE << std::endl; std::cout << "y = " << _y*LARGEUR_CASE << std::endl; sprite.setPosition(_x*LARGEUR_CASE, _y*HAUTEUR_CASE);}
     void setSpriteColor(){if(origin == "French"){sprite.setFillColor(sf::Color::Blue); std::cout << "Blue team !" << std::endl;}; if(origin == "Portugese"){sprite.setFillColor(sf::Color::Green);};}
 
+     std::string toInfo() const;
     /* Autres méthodes*/
     //virtual void initStat(const Character & c, std::stringstream fichier)=0;
     //virtual void indicate_position() const = 0;
@@ -45,3 +46,5 @@ protected:
     // Character's sprite
     sf::CircleShape sprite;
 };
+
+std::ostream & operator<<(std::ostream& os, const Character& e);
