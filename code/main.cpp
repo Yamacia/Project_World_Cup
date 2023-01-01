@@ -7,7 +7,7 @@
 #include "team.hpp"
 
 int main(){
-    Player p1("Kylian Mbappe", "French");
+    /*Player p1("Kylian Mbappe", "French");
     p1.initStat("../data/France_team.txt");
     //std::cout << p1.getStat() << std::endl;
     p1.initLeftPosition();    
@@ -23,16 +23,16 @@ int main(){
     //std::cout << p2.getStat() << std::endl;
     //std::stringstream ss;
     //ss << p2;
-    Team t("France", "Kylian Mbappe, Lucas Digne, Paul Pogba");
-    t.printTeam();
-/*
-     Création de la fenêtre 
+    Team t("France", "Kylian Mbappe, Lucas Digne, Paul Pogba");*/
+   // t.printTeam();
+
+    /*  Création de la fenêtre */
     sf::RenderWindow window(sf::VideoMode(LARGEUR_ECRAN,HAUTEUR_ECRAN), "Football");
     sf::Texture terrain;
     terrain.loadFromFile("../images/Field_no_grid.png");
     sf::Sprite s(terrain);    
 
-    /* Test Joueurs 
+    /* Test Joueurs */
     std::vector<sf::CircleShape> portuguese_team;
 
     sf::CircleShape portuguese_player(6);
@@ -44,8 +44,8 @@ int main(){
     portuguese_player2.setFillColor(sf::Color::Green);
     portuguese_player2.setPosition(sf::Vector2f(400,400));
     portuguese_team.push_back(portuguese_player2);
-
-    /* Test Afficher Equipe de joueurs 
+    
+    /* Test Afficher Equipe de joueurs */
     std::vector<Player> french_team;
 
     Player french_player("Antoine Griezmann", "French");
@@ -63,10 +63,8 @@ int main(){
     french_player_2.setSpritePosition();
     french_team.push_back(french_player_2);
     
-*/
 
-
-    /* Carré de sélection de case 
+    /* Carré de sélection de case */
     sf::RectangleShape cursor(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
     cursor.setFillColor(sf::Color::Transparent);
     cursor.setOutlineColor(sf::Color::Red);
@@ -107,19 +105,19 @@ int main(){
         {
             window.draw(sprite);
         }
-
+        
         for(auto player : french_team)
         {
             sf::CircleShape sprite = player.getSprite();
             std::cout << player.getName() << " " << sprite.getPosition().x << " " << sprite.getPosition().y << std::endl;
             window.draw(sprite);
         }
-
+        
         
         cursor.setPosition(sf::Vector2f(x*LARGEUR_CASE + 32, y*HAUTEUR_CASE + 29));
         window.draw(cursor);
         window.display();
     }
-*/
+
    return 0;
 }

@@ -7,7 +7,7 @@ public:
     /* Constructeurs et Destructeurs */
     Character( std::string n, std::string o) : name(n), origin(o), present(0), _x(0), _y(0){};//{sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur vide" << std::endl;};
     Character(const Character & c): name(c.name), origin(c.origin), present(c.present), _x(c._x), _y(c._y){};//{sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur" << std::endl;};
-    Character(std::string n, std::string o, std::string p, double s): name(n), origin(o), poste(p), stat(s){};
+
     /* Getters */
     std::string getName()const{return name;}
     std::string getOrigin(){return origin;}
@@ -22,8 +22,8 @@ public:
     void setOrigin(std::string nation){origin=nation;}
     void setStat(double s){stat=s;}
     void setPosition(size_t x, size_t y){_x = x; _y = y;}
-    void setSpritePosition(){std::cout << "x = " << _x * LARGEUR_CASE << std::endl; std::cout << "y = " << _y*LARGEUR_CASE << std::endl; sprite.setPosition(_x*LARGEUR_CASE, _y*HAUTEUR_CASE);}
-    void setSpriteColor(){if(origin == "French"){sprite.setFillColor(sf::Color::Blue); std::cout << "Blue team !" << std::endl;}; if(origin == "Portugese"){sprite.setFillColor(sf::Color::Green);};}
+    void setSpritePosition();
+    void setSpriteColor();
     void setPoste(std::string p){poste=p;}
     virtual std::string toInfo() const;
     /* Autres méthodes*/
