@@ -1,6 +1,7 @@
 all : compile
 
 compile:
+	g++ -c utility.cpp -I"SFML-2.5.1\include"
 	g++ -c character.cpp -I"SFML-2.5.1\include"
 	g++ -c player.cpp -I"SFML-2.5.1\include"
 	g++ -c field.cpp -I"SFML-2.5.1\include"
@@ -9,7 +10,7 @@ compile:
 	g++ -c referee.cpp -I"SFML-2.5.1\include"
 	g++ -c team.cpp -I"SFML-2.5.1\include"
 	g++ -c main.cpp -I"SFML-2.5.1\include"
-	g++ main.o character.o player.o field.o game.o goal.o referee.o team.o -o main -L"SFML-2.5.1\lib" -lsfml-graphics -lsfml-window -lsfml-system
+	g++ main.o utility.o character.o player.o field.o game.o goal.o referee.o team.o -o main -L"SFML-2.5.1\lib" -lsfml-graphics -lsfml-window -lsfml-system
 
 clean:
 	rm -f main *.o

@@ -5,16 +5,18 @@ class Character{
 
 public:
     /* Constructeurs et Destructeurs */
+    Character():name("Unknown"), origin("Unknown"), present(0), _x(0), _y(0), stat(0){}; //Constructeur par défaut
     Character( std::string n, std::string o) : name(n), origin(o), present(0), _x(0), _y(0){};//{sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur vide" << std::endl;};
     Character(const Character & c): name(c.name), origin(c.origin), present(c.present), _x(c._x), _y(c._y){};//{sprite = sf::CircleShape(6); setSpriteColor(); std::cout << "Appel Constructeur" << std::endl;};
 
     /* Getters */
     std::string getName()const{return name;}
-    std::string getOrigin(){return origin;}
-    double getStat(){return stat;}
-    size_t getX(){return _x;}
-    size_t getY(){return _y;}
-    bool on_field(){return present;}
+    std::string getOrigin()const{return origin;}
+    std::string getPoste()const{return poste;}
+    double getStat()const{return stat;}
+    size_t getX()const{return _x;}
+    size_t getY()const{return _y;}
+    bool on_field()const{return present;}
     sf::CircleShape getSprite(){return sprite;}
 
     /* Setters */
