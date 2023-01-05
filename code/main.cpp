@@ -1,40 +1,19 @@
-//#pragma once
-#include "character.hpp"
-#include "player.hpp"
-#include "game.hpp"
-#include "field.hpp"
-#include "referee.hpp"
-#include "team.hpp"
+#include "headers/character.hpp"
+#include "headers/player.hpp"
+#include "headers/game.hpp"
+#include "headers/field.hpp"
+#include "headers/referee.hpp"
+#include "headers/team.hpp"
 
 int main(){
-    Player p1("Karim Benzema", "France");
-    std::cout << p1.getStat() << std::endl;
-    std::cout << p1.getPoste() << std::endl;
-    /*p1.initStat("../data/France_team.txt");
-    //std::cout << p1.getStat() << std::endl;
-    p1.initLeftPosition();    
-    std::cout << "La position du joueur est : (" <<p1.getX() << ',' << p1.getY() <<')' << std::endl;
 
-    Player p2("Lucas Digne", "French");
-    //p2.initStat("../data/France_team.txt");
-    //p2.initPoste("../data/France_team.txt");
-    p2.initInfo("../data/France_team.txt");
-    std::cout << p2 << std::endl;*/
-
-    // p2.initStat2(p2,"../data/French_team.csv");
-    //std::cout << p2.getStat() << std::endl;
-    //std::stringstream ss;
-    //ss << p2;
-    //Team t("France", "Kylian Mbappe, Lucas Digne, Paul Pogba");
-    //t.printTeam();
-
-    /*  Création de la fenêtre 
+    /*  Création de la fenêtre */
     sf::RenderWindow window(sf::VideoMode(LARGEUR_ECRAN,HAUTEUR_ECRAN), "Football");
     sf::Texture terrain;
     terrain.loadFromFile("../images/Field_no_grid.png");
     sf::Sprite s(terrain);    
 
-    /* Test Joueurs 
+    /* Test Joueurs */
     std::vector<sf::CircleShape> portuguese_team;
 
     sf::CircleShape portuguese_player(6);
@@ -47,7 +26,7 @@ int main(){
     portuguese_player2.setPosition(sf::Vector2f(400,400));
     portuguese_team.push_back(portuguese_player2);
     
-    /* Test Afficher Equipe de joueurs 
+    /* Test Afficher Equipe de joueurs */
     std::vector<Player> french_team;
 
     Player french_player("Antoine Griezmann", "French");
@@ -66,7 +45,7 @@ int main(){
     french_team.push_back(french_player_2);
     
 
-    /* Carré de sélection de case 
+    /* Carré de sélection de case */
     sf::RectangleShape cursor(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
     cursor.setFillColor(sf::Color::Transparent);
     cursor.setOutlineColor(sf::Color::Red);
@@ -119,7 +98,7 @@ int main(){
         cursor.setPosition(sf::Vector2f(x*LARGEUR_CASE + 32, y*HAUTEUR_CASE + 29));
         window.draw(cursor);
         window.display();
-    }*/
+    }
 
    return 0;
 }

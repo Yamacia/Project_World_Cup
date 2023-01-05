@@ -1,4 +1,4 @@
-#include "goal.hpp"
+#include "headers/goal.hpp"
 
 void Goal::catch_ball(){
 

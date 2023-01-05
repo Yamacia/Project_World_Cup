@@ -1,5 +1,5 @@
-#include "player.hpp"
-#include "utility.hpp"
+#include "headers/player.hpp"
+#include "headers/utility.hpp"
 #include<vector>
 using namespace std;
 
@@ -7,12 +7,13 @@ using namespace std;
 
 Player::Player(std::string n, std::string o): Character(n, o)
 {
-    string fichier="../data/" +origin+"_team.txt";
+    string fichier = "../data/" + origin + "_team.txt";
 
-    this->stat=initStat(fichier,n);
-    this->poste=initPoste(fichier,n);
+    this->stat = initStat(fichier,n);
+    this->poste= initPoste(fichier,n);
 
 }
+
 
 /* Fonction qui initialise les statistiques des joueurs à partir d'un fichier txt 
 

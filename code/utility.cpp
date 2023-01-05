@@ -1,4 +1,4 @@
-#include "utility.hpp"
+#include "headers/utility.hpp"
 
 double initStat(std::string fichier, std::string name){
     std::ifstream file(fichier, std::ios::in);  // on ouvre le fichier en lecture
