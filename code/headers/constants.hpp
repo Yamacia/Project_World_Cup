@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 /* Postes des joueurs
 Légende :

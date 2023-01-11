@@ -4,6 +4,7 @@
 #include "headers/field.hpp"
 #include "headers/referee.hpp"
 #include "headers/team.hpp"
+#include "headers/inputmanager.hpp"
 
 int main(){
 
@@ -11,7 +12,13 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(LARGEUR_ECRAN,HAUTEUR_ECRAN), "Football");
     sf::Texture terrain;
     terrain.loadFromFile("../images/Field_no_grid.png");
-    sf::Sprite s(terrain);    
+    sf::Sprite s(terrain);
+    sf::Music main_theme;
+    main_theme.openFromFile("../musique/world_cup.wav");
+    main_theme.play();    
+
+    /* Lancement engine pour inputs */
+    InputManager::Instance().Start(window);
 
     /* Test Joueurs */
     std::vector<sf::CircleShape> portuguese_team;
@@ -49,7 +56,7 @@ int main(){
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
+            if (event.type == sf::Event::Closed || InputManager::Instance().GetKey(sf::Keyboard::Key::Escape))
             {
                 window.close();
                 std::cout << "Closing the game intentionally..." << std::endl;
@@ -57,15 +64,15 @@ int main(){
             
             if(event.type == sf::Event::KeyPressed)
             {
-                if(event.key.code == sf::Keyboard::Left && x > 0)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && x > 0)
                     x--;
-                if(event.key.code == sf::Keyboard::Right && x < LARGEUR_TERRAIN)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && x < LARGEUR_TERRAIN)
                     x++;
-                if(event.key.code == sf::Keyboard::Up && y > 0)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up) && y > 0)
                     y--;
-                if(event.key.code == sf::Keyboard::Down && y < HAUTEUR_TERRAIN)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down) && y < HAUTEUR_TERRAIN)
                     y++;
-                if(event.key.code == sf::Keyboard::Enter)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter))
                 {
                     std::cout << "Case (" << x << "," << y << ")" << std::endl;
                     if(x == 4 && y == 7)
