@@ -13,8 +13,13 @@ int main(){
     sf::Texture terrain;
     terrain.loadFromFile("../images/Field_no_grid.png");
     sf::Sprite s(terrain);
+
+    /* Création musique principale */
     sf::Music main_theme;
     main_theme.openFromFile("../musique/world_cup.wav");
+
+    /* Musique en boucle */
+    main_theme.setLoop(true);
     main_theme.play();    
 
     /* Lancement engine pour inputs */
@@ -53,6 +58,7 @@ int main(){
 
     while(window.isOpen())
     {
+
         sf::Event event;
         while (window.pollEvent(event))
         {

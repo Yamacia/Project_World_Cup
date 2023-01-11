@@ -8,7 +8,9 @@ private:
 	bool oldIsPressesKeyboard[sf::Keyboard::Key::KeyCount];
 	bool newIsPressesMouse[sf::Mouse::Button::ButtonCount];
 	bool newIsPressesKeyboard[sf::Keyboard::Key::KeyCount];
-	sf::Vector2f oldMousePosition, newMousePosition, mouseVelosity;
+	sf::Vector2f oldMousePosition;
+    sf::Vector2f newMousePosition;
+    sf::Vector2f mouseVelosity;
 
 	InputManager();
 
