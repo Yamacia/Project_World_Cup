@@ -12,18 +12,16 @@ std::string Character::toInfo() const{
 
 void Character::setSpritePosition()
 {
-    std::cout << "x = " << _x * LARGEUR_CASE << std::endl; 
-    std::cout << "y = " << _y*LARGEUR_CASE << std::endl; 
     sprite.setPosition(_x*LARGEUR_CASE, _y*HAUTEUR_CASE);
 }
 
 void Character::setSpriteColor(){
-    if(origin == "French")
+    if(origin == "France")
     {
         sprite.setFillColor(sf::Color::Blue); 
-        std::cout << "Blue team !" << std::endl;
+        // std::cout << "Blue team !" << std::endl;
     }
-    if(origin == "Portugese")
+    if(origin == "Portugal")
     {
         sprite.setFillColor(sf::Color::Green);
     }

@@ -11,6 +11,7 @@ Player::Player(std::string n, std::string o): Character(n, o)
 
     this->stat = initStat(fichier,n);
     this->poste= initPoste(fichier,n);
+    initLeftPosition();
 
 }
 

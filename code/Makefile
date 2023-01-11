@@ -29,7 +29,7 @@ clean:
 	rm -f main *.o
 
 cleanw:
-	erase -f main *.o
+	erase -f main.exe *.o
 
 cleanclasses:
 	rm -f main1 *.o
