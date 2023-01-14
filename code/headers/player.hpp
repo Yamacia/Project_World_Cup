@@ -12,19 +12,25 @@ class Player : public Character {
         Player(std::ifstream& f);
         //void initStat( std::string fichier);
         //void initPoste(std::string fichier);
-
+        
+        
         void initInfo(std::string fichier);
         void initLeftPosition();
         std::string toInfo() const;
         void move(){_x++; _y++;}
         // void move();
-        // bool has_ball() const;
+        bool has_ball() const {return chosen;}
+        void set_ball() {chosen=1;}
         // void dribble() const;
         // void shoot() const;
         // void pass() const;
         // void stop() const;
         // void disturb() const;
         // void tackle() const;
+
+    private:
+
+    bool chosen;
     
     
 };

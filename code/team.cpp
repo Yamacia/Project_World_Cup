@@ -48,9 +48,20 @@ void Team::printTeam(){
 
 }
 
+/* A revoir
+
 void Team::init(){
 
+    for (auto i: roster){
+        if (i.has_ball()!=0){
+            i.move();
+            cout << i.getX() << endl;
+            cout << i.getY() << endl;
+        }
+    }
+    
 }
+*/
 
 void Team::update(){
     

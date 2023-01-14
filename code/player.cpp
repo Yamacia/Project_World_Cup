@@ -11,6 +11,7 @@ Player::Player(std::string n, std::string o): Character(n, o)
 
     this->stat = initStat(fichier,n);
     this->poste= initPoste(fichier,n);
+    this->chosen=0;
     initLeftPosition();
 
 }
@@ -52,6 +53,7 @@ void Player::initStat(string fichier){
                 cerr << "Impossible d'ouvrir le fichier !" << endl;
  
 }
+
 */
 /* Fonction qui initialise les postes des joueurs à partir d'un fichier txt 
 
@@ -202,6 +204,8 @@ std::string Player::toInfo() const{
 
 /*
 void Player::move(){
+
+
 
 }
 

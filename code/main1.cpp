@@ -6,9 +6,9 @@
 #include "headers/team.hpp"
 
 int main(){
-    Player p1("Karim Benzema", "France");
-    std::cout << p1.getStat() << std::endl;
-    std::cout << p1.getPoste() << std::endl;
+    //Player p1("Karim Benzema", "France");
+    //std::cout << p1.getStat() << std::endl;
+    //std::cout << p1.getPoste() << std::endl;
     /*p1.initStat("../data/France_team.txt");
     //std::cout << p1.getStat() << std::endl;
     p1.initLeftPosition();    
@@ -25,6 +25,8 @@ int main(){
     //std::stringstream ss;
     //ss << p2;
     Team t("France", "Kylian Mbappe, Lucas Digne, Paul Pogba");
+    
+    //t.init();
     //t.printTeam();
    return 0;
 }

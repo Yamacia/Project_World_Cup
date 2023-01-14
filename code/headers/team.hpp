@@ -11,7 +11,7 @@ class Team{
     void printTeam(); //Probleme..
     
 
-    void init();
+    void init(); // A revoir
     void update();
     
     private:
