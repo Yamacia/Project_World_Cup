@@ -4,7 +4,9 @@
 GameInstance::GameInstance()
 {
     loadMusic();
+    loadPlaylist();
     loadMenu();
+    song = true;
 }
 
 GameInstance::~GameInstance()
@@ -81,9 +83,11 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 {
                     std::cout << "Case (" << _x << "," << _y << ")" << std::endl;
                     if(_x == 4 && _y == 7)
-                        std::cout << "Theo Rouyer a choisi cette case." << std::endl;
+                        std::cout << "Theo Rouyer est beaucoup trop nul." << std::endl;
                     if(_x == 4 && _y == 2)
-                        std::cout << "Leonard Pannetier a choisi cette case." << std::endl;
+                        std::cout << "Leonard Pannetier vient du Sud." << std::endl;
+                    if(_x == 12 && _y == 4)
+                        std::cout << "Louis Leclercq est vraiment pas beau." << std::endl;
                 }
             }
         }
@@ -132,7 +136,6 @@ void GameInstance::menuLoop(sf::RenderWindow& window)
      
     while(window.isOpen())
     {
-
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -160,6 +163,11 @@ void GameInstance::menuLoop(sf::RenderWindow& window)
                 {
                     gameStart(window);
                     gameLoop(window);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 1)
+                {
+                    loadOption(window);
+                    drawOption(window);
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 2)
                 {
@@ -233,8 +241,183 @@ void GameInstance::loadMusic()
 {
     /* Création musique principale */
     main_theme.openFromFile("../musique/world_cup.wav");
+    current_song = 0;
 
     /* Musique en boucle */
     main_theme.setLoop(true);
+    main_theme.setVolume(10);
     main_theme.play();    
+}
+
+void GameInstance::toggleSong()
+{
+    if(song)
+    {
+        main_theme.stop();
+        song = false;
+    }
+    else
+    {
+        main_theme.play();
+        song = true;
+    }
+}
+
+void GameInstance::loadOption(sf::RenderWindow& window)
+{
+    sf::Texture *arrow_cursor = new sf::Texture;
+    arrow_cursor->loadFromFile("../images/Selection.png");
+    menu_cursor.setTexture(*arrow_cursor);
+    size_t pixel_x = 188;
+    size_t pixel_y = 225;
+    menu_cursor.setPosition(pixel_x,pixel_y);
+    size_t selected = 0;
+
+    while(window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed || InputManager::Instance().GetKey(sf::Keyboard::Key::Escape))
+            {
+                window.close();
+                std::cout << "Closing the game intentionally..." << std::endl;
+            }
+
+            if(event.type == sf::Event::KeyPressed)
+            {
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up) && selected > 0)
+                {
+                    selected--;
+                    pixel_y -= 80;
+                    menu_cursor.setPosition(pixel_x,pixel_y);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down) && selected < 2)
+                {
+                    selected++;
+                    pixel_y += 80;
+                    menu_cursor.setPosition(pixel_x,pixel_y);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 0)
+                {
+                    toggleSong();
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && selected == 1)
+                {
+                    if(current_song == 0)
+                        current_song = 2;
+                    else
+                        current_song--;
+                    selectSong(current_song);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && selected == 1)
+                {
+                    if(current_song == 2)
+                        current_song = 0;
+                    else
+                        current_song++;
+                    selectSong(current_song);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 2)
+                {
+                    gameMenu(window);
+                    menuLoop(window);
+                }
+            }
+            drawOption(window);
+        }
+    }
+}
+
+void GameInstance::selectSong(size_t number)
+{
+    std::string& new_song = playlist[number];
+    song = true;
+    main_theme.openFromFile(new_song);
+    main_theme.play();
+    main_theme.setLoop(true);
+}
+
+void GameInstance::loadPlaylist()
+{
+    playlist.push_back("../musique/world_cup.wav");
+    playlist.push_back("../musique/waving_flag.wav");
+    playlist.push_back("../musique/espana.wav");    
+}
+
+void GameInstance::drawOption(sf::RenderWindow& window)
+{
+    sf::Texture *text_box = new sf::Texture;
+    text_box->loadFromFile("../images/box_blank.png");
+
+    sf::Sprite toggle_box(*text_box);
+    toggle_box.setTextureRect(sf::IntRect(0, 0, 230, 48));
+    toggle_box.setPosition(255,225);
+
+    sf::Sprite song_box(*text_box);
+    song_box.setTextureRect(sf::IntRect(0, 0, 230, 48));
+    song_box.setPosition(255,305);
+
+    sf::Sprite return_box(*text_box);
+    return_box.setTextureRect(sf::IntRect(0, 0, 230, 48));
+    return_box.setPosition(255,385);
+
+    sf::Font *font = new sf::Font;
+    font->loadFromFile("../font/arial.ttf");
+
+    sf::Text toggle;
+    toggle.setFont(*font);
+    toggle.setCharacterSize(30);
+    toggle.setFillColor(sf::Color::White);
+    if(song)
+    {
+        toggle.setString("Active");
+        toggle.setPosition(sf::Vector2f(330,229));
+    }
+    else
+    {
+        toggle.setString("Desactive");
+        toggle.setPosition(sf::Vector2f(305,229));
+    }
+
+    sf::Text playing_song;
+    playing_song.setCharacterSize(15);
+    playing_song.setFont(*font);
+    playing_song.setFillColor(sf::Color::White);
+    switch(current_song)
+    {
+        case 0:
+            playing_song.setString("iShowSpeed - World Cup");
+            playing_song.setPosition(sf::Vector2f(290,320));
+            break;
+        case 1:
+            playing_song.setString("K'NAAN - Waving Flag");
+            playing_song.setPosition(sf::Vector2f(300,320));
+
+            break;
+        case 2:
+            playing_song.setString("Amine - La Roja");
+            playing_song.setPosition(sf::Vector2f(320,320));
+            break;
+        default:
+            break;
+    }
+
+    sf::Text return_text;
+    return_text.setCharacterSize(30);
+    return_text.setString("Retour");
+    return_text.setFont(*font);
+    return_text.setFillColor(sf::Color::White);
+    return_text.setPosition(sf::Vector2f(325,389));
+
+    window.clear(sf::Color::Black);
+    window.draw(background);
+    window.draw(toggle_box);
+    window.draw(song_box);
+    window.draw(return_box);
+    window.draw(toggle);
+    window.draw(playing_song);
+    window.draw(menu_cursor);
+    window.draw(return_text);
+    window.display();
 }
