@@ -19,8 +19,5 @@ int main(){
     GameManager.gameMenu(window);
     GameManager.menuLoop(window);
 
-    /* Main Game */
-    // GameManager.gameStart(window);
-    // GameManager.gameLoop(window);
     return 0;
 }

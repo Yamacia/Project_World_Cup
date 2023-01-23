@@ -48,10 +48,10 @@ void GameInstance::loadMenu()
 void GameInstance::gameLoop(sf::RenderWindow& window)
 {
     /* Carré de sélection de case */
-    sf::RectangleShape cursor(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
-    cursor.setFillColor(sf::Color::Transparent);
-    cursor.setOutlineColor(sf::Color::Red);
-    cursor.setOutlineThickness(2);
+    game_cursor.setSize(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
+    game_cursor.setFillColor(sf::Color::Transparent);
+    game_cursor.setOutlineColor(sf::Color::Red);
+    game_cursor.setOutlineThickness(2);
     size_t _x = 0;
     size_t _y = 0;
 
@@ -87,21 +87,24 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 }
             }
         }
-        window.clear(sf::Color::Black);
-        window.draw(background);
-
-        for(auto player : team_1)
-        {
-            sf::CircleShape sprite = player.getSprite();
-            window.draw(sprite);
-        }     
-        
-        cursor.setPosition(sf::Vector2f(_x*LARGEUR_CASE + 32, _y*HAUTEUR_CASE + 29));
-        window.draw(cursor);        
-        window.display();
+        game_cursor.setPosition(sf::Vector2f(_x*LARGEUR_CASE + 32, _y*HAUTEUR_CASE + 29));
+        gameDraw(window);
     }
 }
 
+void GameInstance::gameDraw(sf::RenderWindow& window)
+{
+    window.clear(sf::Color::Black);
+    window.draw(background);
+
+    for(auto player : team_1)
+    {
+        sf::CircleShape sprite = player.getSprite();
+        window.draw(sprite);
+    }     
+    window.draw(game_cursor);        
+    window.display();
+}
 
 
 void GameInstance::gameMenu(sf::RenderWindow& window)
@@ -119,17 +122,58 @@ void GameInstance::loadBackgroundMenu()
 
 void GameInstance::menuLoop(sf::RenderWindow& window)
 {
-    sf::Text text;
-    sf::Font font;
-    font.loadFromFile("../font/arial.ttf");
-    std::cout << "Succesfully loaded font : Arial" << std::endl;
+    sf::Texture *arrow_cursor = new sf::Texture;
+    arrow_cursor->loadFromFile("../images/Selection.png");
+    menu_cursor.setTexture(*arrow_cursor);
+    size_t pixel_x = 188;
+    size_t pixel_y = 225;
+    menu_cursor.setPosition(pixel_x,pixel_y);
+    size_t selected = 0;
+     
+    while(window.isOpen())
+    {
 
-    text.setFont(font);
-    text.setFillColor(sf::Color::White);
-    text.setString("Jouer");
-    text.setCharacterSize(12);
-    text.setPosition(320,249);
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed || InputManager::Instance().GetKey(sf::Keyboard::Key::Escape))
+            {
+                window.close();
+                std::cout << "Closing the game intentionally..." << std::endl;
+            }
 
+            if(event.type == sf::Event::KeyPressed)
+            {
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up) && selected > 0)
+                {
+                    selected--;
+                    pixel_y -= 80;
+                    menu_cursor.setPosition(pixel_x,pixel_y);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down) && selected < 2)
+                {
+                    selected++;
+                    pixel_y += 80;
+                    menu_cursor.setPosition(pixel_x,pixel_y);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 0)
+                {
+                    gameStart(window);
+                    gameLoop(window);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 2)
+                {
+                    window.close();
+                }
+            }
+            menuDraw(window);
+        }
+    }
+
+}
+
+void GameInstance::menuDraw(sf::RenderWindow& window)
+{
     sf::Texture *text_box = new sf::Texture;
     text_box->loadFromFile("../images/box_blank.png");
     sf::Sprite play_box(*text_box);
@@ -143,32 +187,19 @@ void GameInstance::menuLoop(sf::RenderWindow& window)
     sf::Sprite exit_box(*text_box);
     exit_box.setTextureRect(sf::IntRect(0, 0, 230, 48));
     exit_box.setPosition(255,385);
-     
-    while(window.isOpen())
+
+    window.clear(sf::Color::Black);
+    window.draw(background);
+    window.draw(play_box);
+    window.draw(option_box);
+    window.draw(exit_box);
+    window.draw(menu_cursor);
+
+    for(auto &text : menu)
     {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed || InputManager::Instance().GetKey(sf::Keyboard::Key::Escape))
-            {
-                window.close();
-                std::cout << "Closing the game intentionally..." << std::endl;
-            }
-        }
-
-        window.clear(sf::Color::Black);
-        window.draw(background);
-        window.draw(play_box);
-        window.draw(option_box);
-        window.draw(exit_box);
-
-        for(auto &text : menu)
-        {
-            window.draw(text);
-        }
-
-        window.display();
+        window.draw(text);
     }
+    window.display();
 
 }
 
