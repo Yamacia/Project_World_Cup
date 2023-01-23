@@ -12,7 +12,7 @@ protected:
     sf::Music main_theme;
     sf::RectangleShape cursor;
 
-    sf::Text menu[3];
+    std::vector<sf::Text> menu;
 
 
 public:

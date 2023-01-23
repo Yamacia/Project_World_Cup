@@ -19,27 +19,29 @@ GameInstance& GameInstance::Instance()
 
 void GameInstance::loadMenu()
 {
-    sf::Font font;
-    font.loadFromFile("../font/arial.ttf");
+    sf::Font *font = new sf::Font;
+    font->loadFromFile("../font/arial.ttf");
     std::cout << "Succesfully loaded font : Arial" << std::endl;
+    sf::Text text;
+    text.setFont(*font);
 
-    menu[0].setFont(font);
-    menu[0].setFillColor(sf::Color::White);
-    menu[0].setString("Jouer");
-    menu[0].setCharacterSize(12);
-    menu[0].setPosition(sf::Vector2f(320,72));
+    text.setFillColor(sf::Color::White);
+    text.setString("Jouer");
+    text.setCharacterSize(30);
+    text.setPosition(sf::Vector2f(330,229));
+    menu.push_back(text);
 
-    menu[1].setFont(font);
-    menu[1].setFillColor(sf::Color::White);
-    menu[1].setString("Option");
-    menu[1].setCharacterSize(12);
-    menu[1].setPosition(sf::Vector2f(320,152));
+    text.setFillColor(sf::Color::White);
+    text.setString("Option");
+    text.setCharacterSize(30);
+    text.setPosition(sf::Vector2f(320,309));
+    menu.push_back(text);
 
-    menu[2].setFont(font);
-    menu[2].setFillColor(sf::Color::White);
-    menu[2].setString("Quitter");
-    menu[2].setCharacterSize(12);
-    menu[2].setPosition(sf::Vector2f(320,232));
+    text.setFillColor(sf::Color::White);
+    text.setString("Quitter");
+    text.setCharacterSize(30);
+    text.setPosition(sf::Vector2f(320,389));    
+    menu.push_back(text);
 
 }
 
@@ -160,7 +162,10 @@ void GameInstance::menuLoop(sf::RenderWindow& window)
         window.draw(option_box);
         window.draw(exit_box);
 
-        window.draw(text);
+        for(auto &text : menu)
+        {
+            window.draw(text);
+        }
 
         window.display();
     }
