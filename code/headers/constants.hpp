@@ -27,3 +27,7 @@ const size_t CENTRE_CASE = 24;
 /* Taille de l'écran (basée sur l'image) */
 const size_t LARGEUR_ECRAN = 744;
 const size_t HAUTEUR_ECRAN = 476;
+
+/* Taille d'une petite boite de dialogue */
+const size_t LARGEUR_BOX = 230;
+const size_t HAUTEUR_BOX = 48;

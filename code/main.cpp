@@ -16,8 +16,7 @@ int main(){
     InputManager::Instance().Start(window);
 
     /* Menu screen */
-    GameManager.gameMenu(window);
-    GameManager.menuLoop(window);
+    GameManager.menuStart(window);
 
     return 0;
 }

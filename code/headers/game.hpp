@@ -19,24 +19,29 @@ protected:
 
 
 public:
+    static GameInstance& Instance();
     GameInstance();
     ~GameInstance();
 
-    /* Méthodes générales */
-    static GameInstance& Instance();
+    /* Playlist */
     void loadMusic();
     void loadPlaylist();
 
+    /* Création graphique */
+    sf::Sprite createBox(size_t l_pos, size_t h_pos);
+    sf::Text createText(std::string string, size_t size, size_t l_pos, size_t h_pos);
+    size_t cursorPosition(size_t x, size_t y, size_t selected);
+
     /* Méthodes menu */
-    void gameMenu(sf::RenderWindow& window);
-    void loadMenu();
+    void menuStart(sf::RenderWindow& window);
     void loadBackgroundMenu();
     void menuLoop(sf::RenderWindow& window);
     void menuDraw(sf::RenderWindow& window);
 
     /* Méthodes options */
-    void loadOption(sf::RenderWindow& window);
-    void drawOption(sf::RenderWindow& window);
+    void optionStart(sf::RenderWindow& window);
+    void optionLoop(sf::RenderWindow& window);
+    void optionDraw(sf::RenderWindow& window);
     void toggleSong();
     void selectSong(size_t number);
 
