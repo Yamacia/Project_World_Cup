@@ -11,7 +11,7 @@ classes:
 	g++ -c team.cpp -I"SFML-2.5.1\include"
 	g++ -c inputmanager.cpp -I"SFML-2.5.1\include"
 	g++ -c main1.cpp -I"SFML-2.5.1\include"
-	g++ main1.o utility.o character.o player.o field.o game.o goal.o referee.o team.o -o main1 -L"SFML-2.5.1\lib" -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+	g++ main1.o utility.o character.o player.o field.o game.o goal.o referee.o team.o inputmanager.o -o main1 -L"SFML-2.5.1\lib" -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 
 compile:
