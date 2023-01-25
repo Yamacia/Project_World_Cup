@@ -13,9 +13,16 @@ protected:
     sf::RectangleShape game_cursor;
     sf::Music main_theme;
     std::vector<sf::Text> menu;
+    sf::Text toggle_song;
+    sf::Text playing_song;
     std::vector<std::string> playlist;
     size_t current_song;
     bool song;
+    bool in_game;
+
+    size_t turn;
+    std::vector<sf::Text> actions;
+    bool toggle_boxes;
 
 
 public:
@@ -29,6 +36,7 @@ public:
 
     /* Création graphique */
     sf::Sprite createBox(size_t l_pos, size_t h_pos);
+    sf::Sprite createBigBox(size_t l_pos, size_t h_pos);
     sf::Text createText(std::string string, size_t size, size_t l_pos, size_t h_pos);
     size_t cursorPosition(size_t x, size_t y, size_t selected);
 
@@ -44,6 +52,7 @@ public:
     void optionDraw(sf::RenderWindow& window);
     void toggleSong();
     void selectSong(size_t number);
+    void updateSong();
 
     /* Méthodes jeu */
     void gameStart(sf::RenderWindow& window);
@@ -51,5 +60,8 @@ public:
     void loadBackground();
     void gameLoop(sf::RenderWindow& window);
     void gameDraw(sf::RenderWindow& window);
+    void updateTurn();
 
+    /* Constantes */
+    sf::Text return_text = createText("Retour", 30, 325, 389);
 };

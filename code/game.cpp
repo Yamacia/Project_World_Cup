@@ -14,6 +14,9 @@ GameInstance::GameInstance()
     loadMusic();
     loadPlaylist();
     song = true;
+
+    turn = 1;
+    in_game = false;
 }
 
 /* Destructeur de GameInstance */
@@ -53,6 +56,17 @@ sf::Sprite GameInstance::createBox(size_t l_pos, size_t h_pos)
     return box;
 }
 
+/* Crée une grande boite de dialogue à la position désirée */
+sf::Sprite GameInstance::createBigBox(size_t l_pos, size_t h_pos)
+{
+    sf::Texture *text_box = new sf::Texture;
+    text_box->loadFromFile("../images/big_box_blank.png");
+    sf::Sprite box(*text_box);
+    box.setTextureRect(sf::IntRect(0, 0, LARGEUR_BIG, HAUTEUR_BIG));
+    box.setPosition(l_pos,h_pos);
+    return box;
+}
+
 /* Crée le texte à la position et taille désirées */
 sf::Text GameInstance::createText(std::string string, size_t size, size_t l_pos, size_t h_pos)
 {
@@ -88,7 +102,7 @@ void GameInstance::menuStart(sf::RenderWindow& window)
     text = createText("Jouer", 30, 330, 229);
     menu.push_back(text);
 
-    text = createText("Option", 30, 320, 309);
+    text = createText("Options", 30, 320, 309);
     menu.push_back(text);
 
     text = createText("Quitter", 30, 320, 389);
@@ -134,6 +148,7 @@ void GameInstance::menuLoop(sf::RenderWindow& window)
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 0)
                 {
+                    in_game = true;
                     gameStart(window);
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 1)
@@ -176,6 +191,9 @@ void GameInstance::menuDraw(sf::RenderWindow& window)
 /* Charge les options */
 void GameInstance::optionStart(sf::RenderWindow& window)
 {
+    if(in_game)
+        actions.pop_back();
+    updateSong();
     optionLoop(window);
 }
 
@@ -207,6 +225,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                 if((InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && selected == 0) || (InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && selected == 0))
                 {
                     toggleSong();
+                    updateSong();
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && selected == 1)
                 {
@@ -215,6 +234,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                     else
                         current_song--;
                     selectSong(current_song);
+                    updateSong();
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && selected == 1)
                 {
@@ -223,10 +243,14 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                     else
                         current_song++;
                     selectSong(current_song);
+                    updateSong();
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 2)
                 {
-                    menuStart(window);
+                    if(!in_game)
+                        menuStart(window);
+                    else
+                        gameStart(window);
                 }
             }
             optionDraw(window);
@@ -241,44 +265,17 @@ void GameInstance::optionDraw(sf::RenderWindow& window)
     sf::Sprite song_box = createBox(255, 305);
     sf::Sprite return_box = createBox(255,385);
 
-    sf::Text toggle;
-    if(song)
-    {
-        toggle = createText("Active", 30, 330, 229);
-    }
-    else
-    {
-        toggle = createText("Desactive", 30, 305, 229);
-    }
-
-    sf::Text playing_song;
-    switch(current_song)
-    {
-        case 0:
-            playing_song = createText("iShowSpeed - World Cup", 15, 290, 320);
-            break;
-        case 1:
-            playing_song = createText("K'NAAN - Waving Flag", 15, 300, 320);
-            break;
-        case 2:
-            playing_song = createText("Amine - La Roja", 15, 320, 320);
-            break;
-        default:
-            break;
-    }
-
-    sf::Text return_text = createText("Retour", 30, 325, 389);
-
     window.clear(sf::Color::Black);
     window.draw(background);
     window.draw(toggle_box);
     window.draw(song_box);
     window.draw(return_box);
-    window.draw(toggle);
+    window.draw(toggle_song);
     window.draw(playing_song);
     window.draw(menu_cursor);
     window.draw(return_text);
     window.display();
+
 }
 
 /* Active ou désactive la musique */
@@ -306,11 +303,48 @@ void GameInstance::selectSong(size_t number)
     main_theme.setLoop(true);
 }
 
+/* Met à jour les options de chanson */
+void GameInstance::updateSong()
+{
+    if(song)
+    {
+        toggle_song = createText("Active", 30, 330, 229);
+    }
+    else
+    {
+        toggle_song = createText("Desactive", 30, 305, 229);
+    }
+
+    switch(current_song)
+    {
+        case 0:
+            playing_song = createText("iShowSpeed - World Cup", 15, 290, 320);
+            break;
+        case 1:
+            playing_song = createText("K'NAAN - Waving Flag", 15, 300, 320);
+            break;
+        case 2:
+            playing_song = createText("Amine - La Roja", 15, 320, 320);
+            break;
+        default:
+            break;
+    }
+}
+
 /* Démarre le jeu */
 void GameInstance::gameStart(sf::RenderWindow& window)
 {
     loadTeam();
     loadBackground();
+
+    sf::Text text;
+
+    text = createText("Tab pour cacher l'affichage", 15, 505, 425);
+    actions.push_back(text);
+
+    text = createText("Tour " + std::to_string(turn), 30, 190, 223);
+    actions.push_back(text);
+ 
     gameLoop(window);
 }
 
@@ -343,6 +377,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
     game_cursor.setOutlineThickness(2);
     size_t _x = 0;
     size_t _y = 0;
+    toggle_boxes = true;
 
     while(window.isOpen())
     {
@@ -355,40 +390,33 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 window.close();
                 std::cout << "Closing the game intentionally..." << std::endl;
             }
-            
             if(event.type == sf::Event::KeyPressed)
             {
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && _x > 0)
-                    _x--;
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && _x < LARGEUR_TERRAIN)
-                    _x++;
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up) && _y > 0)
-                    _y--;
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down) && _y < HAUTEUR_TERRAIN)
-                    _y++;
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter))
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Tab))
                 {
-                    std::cout << "Case (" << _x << "," << _y << ")" << std::endl;
-                    if(_x == 4 && _y == 7)
-                        std::cout << "Theo Rouyer est beaucoup trop nul." << std::endl;
-                    if(_x == 4 && _y == 2)
-                        std::cout << "Leonard Pannetier vient du Sud." << std::endl;
-                    if(_x == 12 && _y == 4)
-                        std::cout << "Louis Leclercq est vraiment pas beau." << std::endl;
+                    toggle_boxes = !toggle_boxes;
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
+                {
+                    updateTurn();
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::P))
+                {
+                    optionStart(window);
                 }
             }
+            
         }
-        game_cursor.setPosition(sf::Vector2f(_x*LARGEUR_CASE + 32, _y*HAUTEUR_CASE + 29));
         gameDraw(window);
     }
 }
 
 /* Affiche l'interface graphique (Jeu) */
 void GameInstance::gameDraw(sf::RenderWindow& window)
-{
+{   
     window.clear(sf::Color::Black);
     window.draw(background);
-    window.draw(game_cursor);        
+    // window.draw(game_cursor);
 
     for(auto player : team_1)
     {
@@ -396,7 +424,46 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
         window.draw(sprite);
     }
 
+    /* Interface de dialogue (affichée ou non selon l'utilisateur) */
+    if(toggle_boxes)
+    {
+        sf::Sprite large_box = createBigBox(35, 218);
+        sf::Sprite option_1 = createBox(480, 246);
+        sf::Sprite option_2 = createBox(480, 301);
+        sf::Sprite option_3 = createBox(480, 356);
+        sf::Sprite option_4 = createBox(480, 411);
+
+        window.draw(large_box);  
+        window.draw(option_1);
+        window.draw(option_2);          
+        window.draw(option_3);    
+        window.draw(option_4);
+        for(auto &text : actions)
+        {
+            window.draw(text);
+        }
+    }
+
     window.display();
 }
 
+/* Met à jour le tour actuel */
+void GameInstance::updateTurn()
+{
+    turn++;
+    actions.pop_back();
+    sf::Text text_turn = createText("Tour " + std::to_string(turn), 30, 190, 223);
+    if(turn == 69)
+        text_turn = createText("Tour " + std::to_string(turn) + " Nice.", 30, 157, 223);
+    actions.push_back(text_turn);
+}
 
+
+// if(_x == 4 && _y == 7)
+//     std::cout << "Theo Rouyer est beaucoup trop nul." << std::endl;
+// if(_x == 4 && _y == 2)
+//     std::cout << "Leonard Pannetier vient du Sud." << std::endl;
+// if(_x == 12 && _y == 4)
+//     std::cout << "Louis Leclercq est vraiment pas beau." << std::endl;
+
+// game_cursor.setPosition(sf::Vector2f(_x*LARGEUR_CASE + 32, _y*HAUTEUR_CASE + 29));

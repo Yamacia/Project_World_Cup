@@ -31,3 +31,7 @@ const size_t HAUTEUR_ECRAN = 476;
 /* Taille d'une petite boite de dialogue */
 const size_t LARGEUR_BOX = 230;
 const size_t HAUTEUR_BOX = 48;
+
+/* Taille d'une grande boite de dialogue */
+const size_t LARGEUR_BIG = 420; // Blaze it
+const size_t HAUTEUR_BIG = 245;
