@@ -19,8 +19,8 @@ class Player : public Character {
         std::string toInfo() const;
         void move(){_x++; _y++;}
         // void move();
-        bool has_ball() const {std::cout << this->ball << std:: endl; return ball;}
-        void set_ball(bool ball) { /*std::cout << ball << std:: endl;*/ this->ball = ball;}
+        bool has_ball() const {; return ball;}
+        void set_ball(bool ball) {this->ball = ball;}
         // void dribble() const;
         // void shoot() const;
         // void pass() const;

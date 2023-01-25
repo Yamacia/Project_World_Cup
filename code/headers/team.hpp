@@ -14,7 +14,7 @@ class Team{
 
     void init(); // A revoir
     void update();
-    Player who_ball();
+    Player* who_ball();
     Player* operator()(std::string player);
 
     std::list<Player> roster; 

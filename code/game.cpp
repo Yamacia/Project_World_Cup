@@ -547,8 +547,8 @@ void GameInstance::updateTurn()
 void GameInstance::whoHasBall()
 {
     std::cout << "methode WhoHasBall" << std::endl;
-    Player player = team_gauche.who_ball();
-    std::cout << player.getName() + " a la balle" << std::endl;
+    Player* player = team_gauche.who_ball();
+    std::cout << player->getName() + " a la balle" << std::endl;
 }
 
 void GameInstance::displayOptions()

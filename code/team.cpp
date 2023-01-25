@@ -31,7 +31,7 @@ Team::Team(string  country, string  players){
                 Player current_player (retour, country);
                 std::string fichier = "../data/" + country + "_team.txt";
                 current_player.initInfo(fichier);
-                //cout << current_player << endl;
+                cout << current_player << endl;
                 roster.push_back(current_player);
 
                 
@@ -72,18 +72,20 @@ void Team::update(){
     
 }
 
-Player Team::who_ball()
+Player* Team::who_ball()
 {
-    for (auto& player : roster)
+    for (Player i : roster)
     {
-        if(player.has_ball())
+        std::cout << i << std::endl;
+        std::cout << "Stat de combat : " + std::to_string(i.getStat()) << std::endl;
+        if(i.has_ball())
         {
-            std::cout << player.getName()  + " a la balle !"<< std::endl;
-            return player;
+            std::cout << i.getName() + " possède la balle" << std::endl;
+            return &i;
         }
     };
     static Player p("","");
-    return p;
+    return &p;
 }
 
 Player* Team::operator()(std::string player)
