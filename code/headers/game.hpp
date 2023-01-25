@@ -7,8 +7,8 @@ class GameInstance
 {
 protected:
     /* Les deux équipes qui jouent */
-    std::vector<Player> team_gauche;
-    std::vector<Player> team_droite;
+    Team team_gauche;
+    Team team_droite;
     size_t score_gauche;
     size_t score_droite;
 
@@ -77,6 +77,8 @@ public:
     void gameLoop(sf::RenderWindow& window);
     void gameDraw(sf::RenderWindow& window);
     void updateTurn();
+    void whoHasBall();
+    void displayOptions();
 
     /* Constantes */
     sf::Text return_text = createText("Retour", 30, 325, 389);
@@ -84,4 +86,9 @@ public:
     sf::Text tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
     sf::Text sc_gauche = createText(std::to_string(score_gauche), 30, 285, 5);
     sf::Text sc_droite = createText(std::to_string(score_droite), 30, 445, 5);
+    sf::Text big_dialog_box = createText("", 20, 50, 268);
+    sf::Text text_1 = createText("", 20, 490, 256);
+    sf::Text text_2 = createText("", 20, 490, 311);
+    sf::Text text_3 = createText("", 20, 490, 366);
+
 };

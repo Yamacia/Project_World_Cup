@@ -359,11 +359,10 @@ void GameInstance::gameStart(sf::RenderWindow& window)
 /* Charge les équipes sur l'interface graphique */
 void GameInstance::loadTeam()
 {
-    Player french_player("Antoine Griezmann", "France");
-    team_gauche.push_back(french_player);
 
-    Player french_player_2("Olivier Giroud", "France");
-    team_gauche.push_back(french_player_2);
+    team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud");
+    // team_gauche("Antoine Griezmann").set_ball(true);
+
 
 }
 
@@ -396,10 +395,10 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
     size_t _x = 0;
     size_t _y = 0;
     toggle_boxes = true;
-
+    // whoHasBall();
+    displayOptions();
     while(window.isOpen())
     {
-
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -442,9 +441,9 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
     window.draw(background);
     // window.draw(game_cursor);
 
-    for(auto player : team_gauche)
+    for(Player i : team_gauche.roster)
     {
-        sf::CircleShape sprite = player.getSprite();
+        sf::CircleShape sprite = i.getSprite();
         window.draw(sprite);
     }
 
@@ -462,6 +461,10 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
         window.draw(option_2);          
         window.draw(option_3);    
         window.draw(option_4);
+        window.draw(text_1);
+        window.draw(text_2);
+        window.draw(text_3);
+        window.draw(big_dialog_box);
         window.draw(tour);
         window.draw(tab);
         window.draw(scoreboard);
@@ -487,6 +490,23 @@ void GameInstance::updateTurn()
     sc_droite = createText(std::to_string(score_droite), 30, 445, 5);
 }
 
+void GameInstance::whoHasBall()
+{
+    std::string player_ball = ""; 
+    player_ball = team_gauche.who_ball();
+    std::cout << "A la balle : " << std::endl;
+    std::cout << player_ball << std::endl;
+    big_dialog_box = createText(player_ball + " a la balle, que voulez-vous faire ?", 20, 50, 268);
+}
+
+void GameInstance::displayOptions()
+{
+    std::string temp = "_";
+    text_1 = createText("Passer (" + temp + "%)", 20, 490, 256);
+    text_2 = createText("Dribbler (" + temp + "%)", 20, 490, 311);
+    text_3 = createText("Tirer (" + temp + "%)", 20, 490, 366);
+
+}
 
 // if(_x == 4 && _y == 7)
 //     std::cout << "Theo Rouyer est beaucoup trop nul." << std::endl;
@@ -496,3 +516,4 @@ void GameInstance::updateTurn()
 //     std::cout << "Louis Leclercq est vraiment pas beau." << std::endl;
 
 // game_cursor.setPosition(sf::Vector2f(_x*LARGEUR_CASE + 32, _y*HAUTEUR_CASE + 29));
+

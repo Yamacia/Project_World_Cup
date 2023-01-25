@@ -19,8 +19,8 @@ class Player : public Character {
         std::string toInfo() const;
         void move(){_x++; _y++;}
         // void move();
-        bool has_ball() const {return chosen;}
-        void set_ball() {chosen=1;}
+        bool has_ball() const {return ball;}
+        void set_ball(bool ball) {this->ball = ball;}
         // void dribble() const;
         // void shoot() const;
         // void pass() const;
@@ -30,7 +30,7 @@ class Player : public Character {
 
     private:
 
-    bool chosen;
+    bool ball;
     
     
 };

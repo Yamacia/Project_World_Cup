@@ -2,6 +2,11 @@
 
 using namespace std;
 
+Team::Team()
+{
+
+}
+
 Team::Team(string  country, string  players){
     string retour = "";
     int i = 0;
@@ -65,4 +70,26 @@ void Team::init(){
 
 void Team::update(){
     
+}
+
+std::string Team::who_ball()
+{
+    std::string player_string = "";
+    for (auto& player : roster)
+    {
+        if(player.has_ball())
+        {
+            player_string = player.getName();
+            std::cout << player_string  + " a la balle "<< std::endl;
+        }
+    };
+}
+
+Player Team::operator()(std::string player)
+{
+    for(Player i : roster)
+    {
+        if(i.getName() == player)
+            return i;
+    };
 }
