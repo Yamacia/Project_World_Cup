@@ -91,4 +91,5 @@ Player Team::operator()(std::string player)
         if(i.getName() == player)
             return i;
     };
+    return Player("", "");
 }

@@ -466,6 +466,16 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
                     }   
                 }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && !toggle_boxes && cursor_x > 0)
+                {
+                    cursor_x--;
+                    game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && !toggle_boxes && cursor_x < LARGEUR_TERRAIN)
+                {
+                    cursor_x++;
+                    game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
+                }
             }
             
         }

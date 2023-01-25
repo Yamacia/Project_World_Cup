@@ -16,7 +16,6 @@ Player::Player(std::string n, std::string o): Character(n, o)
 
 }
 
-
 /* Fonction qui initialise les statistiques des joueurs à partir d'un fichier txt 
 
 void Player::initStat(string fichier){
