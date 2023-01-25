@@ -208,9 +208,6 @@ void Player::move(){
 
 }
 
-bool Player::has_ball() const {
-
-}
 
 void Player::dribble() const{
 

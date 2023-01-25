@@ -372,7 +372,7 @@ void GameInstance::loadTeam()
 {
 
     team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud");
-    team_gauche("Antoine Griezmann").set_ball(true);
+    team_gauche("Antoine Griezmann")->set_ball(true);
 
 
 }

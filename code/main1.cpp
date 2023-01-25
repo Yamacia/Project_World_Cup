@@ -25,7 +25,11 @@ int main(){
     //std::stringstream ss;
     //ss << p2;
     Team t("France", "Kylian Mbappe, Lucas Digne, Paul Pogba");
-    
+    //Player p= t("Kylian Mbappe");
+    //p.set_ball(false);
+    //std::cout << p.has_ball() << std::endl;
+    t("Kylian Mbappe")->set_ball(true);
+    t("Kylian Mbappe")->has_ball();
     //t.init();
     //t.printTeam();
    return 0;
