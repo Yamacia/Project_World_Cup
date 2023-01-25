@@ -6,22 +6,36 @@
 class GameInstance
 {
 protected:
-    std::vector<Player> team_1;
-    std::vector<Player> team_2;
-    sf::Sprite background;
-    sf::Sprite menu_cursor;
-    sf::RectangleShape game_cursor;
-    sf::Music main_theme;
-    std::vector<sf::Text> menu;
-    sf::Text toggle_song;
-    sf::Text playing_song;
-    std::vector<std::string> playlist;
-    size_t current_song;
-    bool song;
-    bool in_game;
+    /* Les deux équipes qui jouent */
+    std::vector<Player> team_gauche;
+    std::vector<Player> team_droite;
+    size_t score_gauche;
+    size_t score_droite;
 
-    size_t turn;
-    std::vector<sf::Text> actions;
+    /* Attributs généraux (background, musique)*/
+    sf::Sprite background;
+    sf::Sprite logo;
+    sf::Music main_theme;
+    std::vector<std::string> playlist;
+
+    /* Attributs Menu */
+    sf::Sprite menu_cursor;
+    std::vector<sf::Text> menu;
+
+    /* Attributs Options*/
+    sf::Text toggle_song;
+    sf::Text playing_song; // chanson en cours
+    size_t current_song; // ID de la chanson en cours
+    bool song; // savoir si la chanson est active ou non
+
+    /* Attributs Jeu */
+    sf::Sprite scoreboard;
+    bool in_game; // savoir si on a lancé une partie ou non
+    size_t turn; // Tour actuel
+    sf::RectangleShape game_cursor; 
+    std::vector<sf::Text> actions_attaque;  // Actions réalisables si on a la balle
+    std::vector<sf::Text> actions_defense;  // Actions réalisables si on a la balle
+
     bool toggle_boxes;
 
 
@@ -43,6 +57,7 @@ public:
     /* Méthodes menu */
     void menuStart(sf::RenderWindow& window);
     void loadBackgroundMenu();
+    void loadLogo();
     void menuLoop(sf::RenderWindow& window);
     void menuDraw(sf::RenderWindow& window);
 
@@ -58,10 +73,15 @@ public:
     void gameStart(sf::RenderWindow& window);
     void loadTeam();
     void loadBackground();
+    void loadScore();
     void gameLoop(sf::RenderWindow& window);
     void gameDraw(sf::RenderWindow& window);
     void updateTurn();
 
     /* Constantes */
     sf::Text return_text = createText("Retour", 30, 325, 389);
+    sf::Text tab = createText("Appuyez sur Tab pour cacher le menu", 12, 492, 425);
+    sf::Text tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
+    sf::Text sc_gauche = createText(std::to_string(score_gauche), 30, 285, 5);
+    sf::Text sc_droite = createText(std::to_string(score_droite), 30, 445, 5);
 };

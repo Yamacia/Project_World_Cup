@@ -17,6 +17,8 @@ GameInstance::GameInstance()
 
     turn = 1;
     in_game = false;
+    score_gauche = 0;
+    score_droite = 0;
 }
 
 /* Destructeur de GameInstance */
@@ -97,6 +99,7 @@ size_t GameInstance::cursorPosition(size_t x, size_t y, size_t selected)
 void GameInstance::menuStart(sf::RenderWindow& window)
 {
     loadBackgroundMenu();
+    loadLogo();
     sf::Text text;
 
     text = createText("Jouer", 30, 330, 229);
@@ -118,6 +121,16 @@ void GameInstance::loadBackgroundMenu()
     sf::Texture *menu_screen = new sf::Texture;
     menu_screen->loadFromFile("../images/menu.png");
     background.setTexture(*menu_screen);
+}
+
+/* Charge le logo du jeu */
+void GameInstance::loadLogo()
+{
+    sf::Texture *menu_logo = new sf::Texture;
+    menu_logo->loadFromFile("../images/logo.png");
+    logo.setTexture(*menu_logo);
+    logo.setTextureRect(sf::IntRect(0,0,202,190));
+    logo.setPosition(275,10);
 }
 
 /* Crée une fenêtre interactive (Menu) */
@@ -175,6 +188,7 @@ void GameInstance::menuDraw(sf::RenderWindow& window)
 
     window.clear(sf::Color::Black);
     window.draw(background);
+    window.draw(logo);
     window.draw(play_box);
     window.draw(option_box);
     window.draw(exit_box);
@@ -192,7 +206,7 @@ void GameInstance::menuDraw(sf::RenderWindow& window)
 void GameInstance::optionStart(sf::RenderWindow& window)
 {
     if(in_game)
-        actions.pop_back();
+        tour = createText("", 30, 190, 223);
     updateSong();
     optionLoop(window);
 }
@@ -245,7 +259,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                     selectSong(current_song);
                     updateSong();
                 }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 2)
+                if((InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 2) || (InputManager::Instance().GetKey(sf::Keyboard::Key::P)))
                 {
                     if(!in_game)
                         menuStart(window);
@@ -267,6 +281,7 @@ void GameInstance::optionDraw(sf::RenderWindow& window)
 
     window.clear(sf::Color::Black);
     window.draw(background);
+    window.draw(logo);
     window.draw(toggle_box);
     window.draw(song_box);
     window.draw(return_box);
@@ -336,15 +351,8 @@ void GameInstance::gameStart(sf::RenderWindow& window)
 {
     loadTeam();
     loadBackground();
-
-    sf::Text text;
-
-    text = createText("Tab pour cacher l'affichage", 15, 505, 425);
-    actions.push_back(text);
-
-    text = createText("Tour " + std::to_string(turn), 30, 190, 223);
-    actions.push_back(text);
- 
+    loadScore();
+    tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
     gameLoop(window);
 }
 
@@ -352,10 +360,10 @@ void GameInstance::gameStart(sf::RenderWindow& window)
 void GameInstance::loadTeam()
 {
     Player french_player("Antoine Griezmann", "France");
-    team_1.push_back(french_player);
+    team_gauche.push_back(french_player);
 
     Player french_player_2("Olivier Giroud", "France");
-    team_1.push_back(french_player_2);
+    team_gauche.push_back(french_player_2);
 
 }
 
@@ -365,6 +373,16 @@ void GameInstance::loadBackground()
     sf::Texture *terrain = new sf::Texture;
     terrain->loadFromFile("../images/Field_no_grid.png");
     background.setTexture(*terrain);
+}
+
+/* Charge l'interface des scores */
+void GameInstance::loadScore()
+{
+    sf::Texture *score = new sf::Texture;
+    score->loadFromFile("../images/scoreboard.png");
+    scoreboard.setTexture(*score);
+    scoreboard.setTextureRect(sf::IntRect(0,0,230,86));
+    scoreboard.setPosition(260,0);
 }
 
 /* Crée une fenêtre interactive (Jeu) */
@@ -396,6 +414,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 {
                     toggle_boxes = !toggle_boxes;
                 }
+                /* Debuggage : pas dans le final */
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
                 {
                     updateTurn();
@@ -403,6 +422,11 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::P))
                 {
                     optionStart(window);
+                }
+                /* Debuggage : pas dans le final */
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::R))
+                {
+                    score_gauche++;
                 }
             }
             
@@ -418,7 +442,7 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
     window.draw(background);
     // window.draw(game_cursor);
 
-    for(auto player : team_1)
+    for(auto player : team_gauche)
     {
         sf::CircleShape sprite = player.getSprite();
         window.draw(sprite);
@@ -438,7 +462,12 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
         window.draw(option_2);          
         window.draw(option_3);    
         window.draw(option_4);
-        for(auto &text : actions)
+        window.draw(tour);
+        window.draw(tab);
+        window.draw(scoreboard);
+        window.draw(sc_gauche);
+        window.draw(sc_droite);
+        for(auto &text : actions_attaque)
         {
             window.draw(text);
         }
@@ -451,11 +480,11 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
 void GameInstance::updateTurn()
 {
     turn++;
-    actions.pop_back();
-    sf::Text text_turn = createText("Tour " + std::to_string(turn), 30, 190, 223);
+    tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
     if(turn == 69)
-        text_turn = createText("Tour " + std::to_string(turn) + " Nice.", 30, 157, 223);
-    actions.push_back(text_turn);
+        tour = createText("Tour " + std::to_string(turn) + " Nice.", 30, 157, 223);
+    sc_gauche = createText(std::to_string(score_gauche), 30, 285, 5);
+    sc_droite = createText(std::to_string(score_droite), 30, 445, 5);
 }
 
 
