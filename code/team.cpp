@@ -72,15 +72,14 @@ void Team::update(){
     
 }
 
-std::string Team::who_ball()
+Player Team::who_ball()
 {
-    std::string player_string = "";
     for (auto& player : roster)
     {
         if(player.has_ball())
         {
-            player_string = player.getName();
-            std::cout << player_string  + " a la balle "<< std::endl;
+            std::cout << player.getName()  + " a la balle "<< std::endl;
+            return player;
         }
     };
 }

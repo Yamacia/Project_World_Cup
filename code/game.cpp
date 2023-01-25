@@ -353,6 +353,17 @@ void GameInstance::gameStart(sf::RenderWindow& window)
     loadBackground();
     loadScore();
     tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
+
+    game_cursor.setSize(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
+    game_cursor.setFillColor(sf::Color::Transparent);
+    game_cursor.setOutlineColor(sf::Color::Red);
+    game_cursor.setOutlineThickness(2);
+
+    game_selector.setSize(sf::Vector2f(LARGEUR_BOX, HAUTEUR_BOX));
+    game_selector.setFillColor(sf::Color::Transparent);
+    game_selector.setOutlineColor(sf::Color::Red);
+    game_selector.setOutlineThickness(2);
+
     gameLoop(window);
 }
 
@@ -388,12 +399,14 @@ void GameInstance::loadScore()
 void GameInstance::gameLoop(sf::RenderWindow& window)
 {
     /* Carré de sélection de case */
-    game_cursor.setSize(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
-    game_cursor.setFillColor(sf::Color::Transparent);
-    game_cursor.setOutlineColor(sf::Color::Red);
-    game_cursor.setOutlineThickness(2);
-    size_t _x = 0;
-    size_t _y = 0;
+    size_t cursor_x = 0;
+    size_t cursor_y = 0;
+    game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
+
+    /* Rectangle de sélection d'action */
+    size_t selector = 0;
+    game_selector.setPosition(480, 246);
+
     toggle_boxes = true;
     // whoHasBall();
     displayOptions();
@@ -427,6 +440,32 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 {
                     score_gauche++;
                 }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up))
+                {
+                    if(toggle_boxes && selector > 0)
+                    {
+                        selector--;
+                        game_selector.setPosition(game_selector.getPosition().x, game_selector.getPosition().y - 55);
+                    }
+                    if(!toggle_boxes && cursor_y > 0)
+                    {
+                        cursor_y--;
+                        game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
+                    }
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down))
+                {
+                    if(toggle_boxes && selector < 2)
+                    {
+                        selector++;
+                        game_selector.setPosition(game_selector.getPosition().x, game_selector.getPosition().y + 55);
+                    }
+                    if(!toggle_boxes && cursor_y < HAUTEUR_TERRAIN)
+                    {
+                        cursor_y++;
+                        game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
+                    }   
+                }
             }
             
         }
@@ -445,6 +484,11 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
     {
         sf::CircleShape sprite = i.getSprite();
         window.draw(sprite);
+    }
+
+    if(!toggle_boxes)
+    {
+        window.draw(game_cursor);
     }
 
     /* Interface de dialogue (affichée ou non selon l'utilisateur) */
@@ -470,6 +514,7 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
         window.draw(scoreboard);
         window.draw(sc_gauche);
         window.draw(sc_droite);
+        window.draw(game_selector);
         for(auto &text : actions_attaque)
         {
             window.draw(text);
@@ -492,11 +537,6 @@ void GameInstance::updateTurn()
 
 void GameInstance::whoHasBall()
 {
-    std::string player_ball = ""; 
-    player_ball = team_gauche.who_ball();
-    std::cout << "A la balle : " << std::endl;
-    std::cout << player_ball << std::endl;
-    big_dialog_box = createText(player_ball + " a la balle, que voulez-vous faire ?", 20, 50, 268);
 }
 
 void GameInstance::displayOptions()

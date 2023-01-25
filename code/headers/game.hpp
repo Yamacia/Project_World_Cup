@@ -32,7 +32,8 @@ protected:
     sf::Sprite scoreboard;
     bool in_game; // savoir si on a lancé une partie ou non
     size_t turn; // Tour actuel
-    sf::RectangleShape game_cursor; 
+    sf::RectangleShape game_cursor;
+    sf::RectangleShape game_selector; 
     std::vector<sf::Text> actions_attaque;  // Actions réalisables si on a la balle
     std::vector<sf::Text> actions_defense;  // Actions réalisables si on a la balle
 
