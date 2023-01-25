@@ -7,7 +7,7 @@ class Player : public Character {
     public: 
         //Player(std::string n, std::string o):Character(n,o){};
         Player(std::string n, std::string o);
-        Player(const Player & p): Character(p){};
+        Player(const Player & p): Character(p){this->ball = p.ball;};
         //Player (std::string n, std::string o, std::string p, double s): Character(n,o,p,s){};
         Player(std::ifstream& f);
         //void initStat( std::string fichier);

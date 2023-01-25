@@ -78,10 +78,11 @@ Player Team::who_ball()
     {
         if(player.has_ball())
         {
-            std::cout << player.getName()  + " a la balle "<< std::endl;
+            std::cout << player.getName()  + " a la balle !"<< std::endl;
             return player;
         }
     };
+    return Player("", "");
 }
 
 Player Team::operator()(std::string player)

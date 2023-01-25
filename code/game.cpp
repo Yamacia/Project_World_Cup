@@ -372,7 +372,7 @@ void GameInstance::loadTeam()
 {
 
     team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud");
-    // team_gauche("Antoine Griezmann").set_ball(true);
+    team_gauche("Antoine Griezmann").set_ball(true);
 
 
 }
@@ -408,7 +408,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
     game_selector.setPosition(480, 246);
 
     toggle_boxes = true;
-    // whoHasBall();
+    whoHasBall();
     displayOptions();
     while(window.isOpen())
     {
@@ -488,7 +488,6 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
 {   
     window.clear(sf::Color::Black);
     window.draw(background);
-    // window.draw(game_cursor);
 
     for(Player i : team_gauche.roster)
     {
@@ -547,6 +546,9 @@ void GameInstance::updateTurn()
 
 void GameInstance::whoHasBall()
 {
+    std::cout << "methode WhoHasBall" << std::endl;
+    Player player = team_gauche.who_ball();
+    std::cout << player.getName() + " a la balle" << std::endl;
 }
 
 void GameInstance::displayOptions()
