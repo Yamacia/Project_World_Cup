@@ -112,6 +112,26 @@ void Team::updatePosition()
     };
 }
 
+void Team::randomPlayerBall()
+{
+    int random_player = rand()%roster.size();
+
+    int int_i = 0;
+    list<Player>::iterator i = roster.begin();
+    bool found = false;
+
+    while(i != roster.end() && !found)
+    {
+        if(int_i == random_player){
+            i->set_ball(true);
+            found =true;
+        }
+        int_i++;
+        i++;
+    };
+
+}
+
 Player* Team::operator()(std::string player)
 {
     Player* p= new Player;

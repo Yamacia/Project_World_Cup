@@ -316,10 +316,7 @@ void Player::move(){
 
 }
 
-
-void Player::dribble() const{
-
-}*/
+*/
 
 size_t Player::dribble_proba(size_t Nbadversaire) const
 {
@@ -328,17 +325,37 @@ size_t Player::dribble_proba(size_t Nbadversaire) const
         return 100;
     }
     else
+    {
         return (size_t)((50*stat) / Nbadversaire);
+    }
+
+}
+
+bool Player::dribble(size_t proba)
+{
+    size_t roll_dice = rand()%100;
+    if(roll_dice < proba)
+    {
+        setPosition(_x + 1, _y);
+        return true;
+    }
+    return false;
 }
 
 size_t Player::shoot_proba() const
 {
-    return (size_t)((100*stat) / ((CAGE_DROITE_X - _x) + (CAGE_DROITE_Y - _y)));
+    return (size_t)((100*stat) / ((abs((int)(CAGE_DROITE_X - _x)) + abs((int)(CAGE_DROITE_Y - _y))) + 1));
 }
 
-void Player::shoot() const{
-
-
+bool Player::shoot(size_t proba)
+{
+    // srand(time(NULL));
+    size_t roll_dice = rand()%100;
+    if(roll_dice < proba)
+    {
+        return true;
+    }
+    return false;
 }
 /*
 void Player::pass() const{

@@ -15,8 +15,9 @@ GameInstance::GameInstance()
     loadMusic();
     loadPlaylist();
     song = true;
+    succesful_action = false;
 
-    turn = 1;
+    turn = 0;
     in_game = false;
     score_gauche = 0;
     score_droite = 0;
@@ -57,7 +58,8 @@ sf::Sprite GameInstance::createBox(size_t l_pos, size_t h_pos)
     box.setTextureRect(sf::IntRect(0, 0, LARGEUR_BOX, HAUTEUR_BOX));
     box.setPosition(l_pos,h_pos);
     return box;
-    delete [] text_box;
+    delete text_box;
+    text_box = nullptr;
 }
 
 /* Crée une grande boite de dialogue à la position désirée */
@@ -69,7 +71,8 @@ sf::Sprite GameInstance::createBigBox(size_t l_pos, size_t h_pos)
     box.setTextureRect(sf::IntRect(0, 0, LARGEUR_BIG, HAUTEUR_BIG));
     box.setPosition(l_pos,h_pos);
     return box;
-    delete [] text_box;
+    delete text_box;
+    text_box = nullptr;
 }
 
 /* Crée le texte à la position et taille désirées */
@@ -86,7 +89,8 @@ sf::Text GameInstance::createText(std::string string, size_t size, size_t l_pos,
     text.setPosition(sf::Vector2f(l_pos,h_pos));
 
     return text;
-    delete [] font;
+    delete font;
+    font = nullptr;
 }
 
 /* Bouge le curseur de choix (Menu / Option) à la case désirée */
@@ -354,6 +358,8 @@ void GameInstance::updateSong()
 void GameInstance::gameStart(sf::RenderWindow& window)
 {
     loadTeam();
+    team_gauche.randomPlayerBall();
+
     loadBackground();
     loadScore();
     tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
@@ -368,20 +374,29 @@ void GameInstance::gameStart(sf::RenderWindow& window)
     game_selector.setOutlineColor(sf::Color::Red);
     game_selector.setOutlineThickness(2);
 
-    gameLoop(window);
+    gamePlay(window);
 }
 
 /* Charge les équipes sur l'interface graphique */
 void GameInstance::loadTeam()
 {
-
     team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud, Karim Benzema, Kylian Mbappe");
 
-    team_gauche("Antoine Griezmann")->set_ball(true); // marche pas LOL
-
     team_droite = Team("Portugal", "Christiano Ronaldo");
+}
 
-
+void GameInstance::giveBall()
+{
+    loadTeam();
+    if(player_with_ball.getOrigin() == "France")
+    {
+        std::cout << "Balle donnée au Portugal" << std::endl;
+        team_droite.randomPlayerBall();
+    }
+    else
+    {
+        team_gauche.randomPlayerBall();
+    }
 }
 
 /* Charge l'image de fond du jeu */
@@ -403,6 +418,15 @@ void GameInstance::loadScore()
 }
 
 /* Crée une fenêtre interactive (Jeu) */
+void GameInstance::gamePlay(sf::RenderWindow& window)
+{
+    toggle_boxes = true;
+    updateTurn(window);
+    gameLoop(window);
+
+    window.close();
+}
+
 void GameInstance::gameLoop(sf::RenderWindow& window)
 {
     /* Carré de sélection de case */
@@ -413,11 +437,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
     /* Rectangle de sélection d'action */
     size_t selector = 0;
     game_selector.setPosition(480, 246);
-
-    toggle_boxes = true;
-    whoHasBall();
-    displayOptions();
-    while(window.isOpen())
+    while(window.isOpen() && turn < 9000)
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -434,12 +454,16 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                     toggle_boxes = !toggle_boxes;
                 }
                 /* Debuggage : pas dans le final */
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Numpad0) && toggle_boxes)
                 {
-                    team_gauche.updatePosition();
-                    team_droite.updatePosition();
-                    updateTurn();
+                    updateTurn(window);
                 }
+                /* Debuggage : pas dans le final */
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && !toggle_boxes)
+                {
+                    std::cout << "Case (" << cursor_x  << "," << cursor_y << ")" << std::endl;
+                }
+
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::P))
                 {
                     optionStart(window);
@@ -486,7 +510,40 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                     game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
                 }
             }
-            
+            if(player_with_ball.getOrigin() == "France")
+            {
+                
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes)
+                {
+                    if(selector == 1)
+                    {
+                        if(player_with_ball.getX() <= LARGEUR_TERRAIN)
+                        {
+                            succesful_action = player_with_ball.dribble(player_with_ball.dribble_proba(terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite)));
+                            confirmTurn(window);
+                            updateTurn(window);
+                        }
+                        else
+                        {
+                            dribbleErrorMessage(window);
+                        }
+                    }
+                    if(selector == 2)
+                    {
+                        succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba());
+                        if(succesful_action)
+                        {
+                            confirmGoal();
+                        }
+                        confirmTurn(window);
+                        updateTurn(window);
+                    }
+                }
+            }
+            else
+            {
+
+            }    
         }
         gameDraw(window);
     }
@@ -541,34 +598,73 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
         window.draw(sc_gauche);
         window.draw(sc_droite);
         window.draw(game_selector);
-        for(auto &text : actions_attaque)
-        {
-            window.draw(text);
-        }
     }
 
     window.display();
 }
 
 /* Met à jour le tour actuel */
-void GameInstance::updateTurn()
+void GameInstance::updateTurn(sf::RenderWindow& window)
 {
     turn++;
     tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
-    if(turn == 69)
+    if(turn == 42)
         tour = createText("Tour " + std::to_string(turn) + " Nice.", 30, 157, 223);
     sc_gauche = createText(std::to_string(score_gauche), 30, 285, 5);
     sc_droite = createText(std::to_string(score_droite), 30, 445, 5);
+
+    updateTeamPositions();
+    whoHasBall();
+    displayOptions();
+    gameDraw(window);
+}
+
+void GameInstance::confirmTurn(sf::RenderWindow& window)
+{
+    if(succesful_action)
+    {
+        big_dialog_box = createText("L'action a reussie", 20, 50, 268);
+    }
+    else
+    {
+        big_dialog_box = createText("L'action a echouee.", 20, 50, 268);
+        giveBall();
+    }
+    gameDraw(window);
+    sf::Event event;
+    while(window.pollEvent(event))
+    {
+        while(true)
+        {
+            if (event.type == sf::Event::Closed || InputManager::Instance().GetKey(sf::Keyboard::Key::Escape))
+            {
+                window.close();
+                std::cout << "Closing the game intentionally..." << std::endl;
+            }
+            if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
+                break;
+        }
+    }
 }
 
 void GameInstance::whoHasBall()
 {
-    std::cout << "methode WhoHasBall" << std::endl;
     for(Player i : team_gauche.roster)
     {
         std::string player_name = i.getName();
         if(team_gauche(player_name)->has_ball())
         {
+            std::cout << "Balle pour la France" << std::endl;
+            big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
+            player_with_ball = i;
+        }
+    };
+    for(Player i : team_droite.roster)
+    {
+        std::string player_name = i.getName();
+        if(team_droite(player_name)->has_ball())
+        {
+            std::cout << "Balle pour le Portugal" << std::endl;
             big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
             player_with_ball = i;
         }
@@ -577,13 +673,58 @@ void GameInstance::whoHasBall()
 
 void GameInstance::displayOptions()
 {
-    size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
-    std::cout << NbAdversaire + " adversaires sur cette case" << std::endl;
-    std::string temp = "_";
-    text_1 = createText("Passer (voir options)", 20, 490, 256);
-    text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
-    text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba()) + "%)", 20, 490, 366);
+    if(player_with_ball.getOrigin() == "France")
+    {
+        size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
+        std::cout << std::to_string(NbAdversaire) + " adversaires sur cette case au tour " + std::to_string(turn) << std::endl;
+        std::string temp = "_";
+        text_1 = createText("Passer (voir options)", 20, 490, 256);
+        text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
+        text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba()) + "%)", 20, 490, 366);
+    }
+    else
+    {
+        text_1 = createText("Cry", 20, 490, 256);
+        text_2 = createText("About", 20, 490, 311);
+        text_3 = createText("It.", 20, 490, 366);
+    }
 
+
+}
+
+void GameInstance::updateTeamPositions()
+{
+    team_gauche.updatePosition();
+    team_droite.updatePosition();
+    updateBallPosition();
+}
+
+void GameInstance::updateBallPosition()
+{
+    if(player_with_ball.getOrigin() == "France")
+    {
+        team_gauche(player_with_ball.getName())->setPosition(player_with_ball.getX(), player_with_ball.getY());
+    }
+}
+
+void GameInstance::dribbleErrorMessage(sf::RenderWindow& window)
+{
+    big_dialog_box = createText("Erreur : Vous ne pouvez plus avancer.", 20, 50, 268);
+    gameDraw(window);
+}
+
+void GameInstance::confirmGoal()
+{
+    if(player_with_ball.getOrigin() == "France")
+    {
+        score_gauche++;
+    }
+    else
+    {
+        score_droite++;
+    }
+    loadTeam();
+    whoHasBall();
 }
 
 // if(_x == 4 && _y == 7)

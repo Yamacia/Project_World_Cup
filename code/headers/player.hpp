@@ -22,8 +22,8 @@ class Player : public Character {
 
         /*Méthodes d'actions */
         void move(){_x++; _y++;}
-        // void dribble() const;
-        void shoot() const;
+        bool dribble(size_t proba);
+        bool shoot(size_t proba);
         // void pass() const;
         // void stop() const;
         // void disturb() const;

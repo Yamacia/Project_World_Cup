@@ -35,9 +35,8 @@ protected:
     size_t turn; // Tour actuel
     sf::RectangleShape game_cursor;
     sf::RectangleShape game_selector; 
-    std::vector<sf::Text> actions_attaque;  // Actions réalisables si on a la balle
-    std::vector<sf::Text> actions_defense;  // Actions réalisables si on a la balle
     Player player_with_ball;
+    bool succesful_action;
 
     bool toggle_boxes;
 
@@ -75,13 +74,22 @@ public:
     /* Méthodes jeu */
     void gameStart(sf::RenderWindow& window);
     void loadTeam();
+    void giveBall();
     void loadBackground();
     void loadScore();
+    void gamePlay(sf::RenderWindow& window);
     void gameLoop(sf::RenderWindow& window);
     void gameDraw(sf::RenderWindow& window);
-    void updateTurn();
+    void updateTurn(sf::RenderWindow& window);
+    void confirmTurn(sf::RenderWindow& window);
     void whoHasBall();
     void displayOptions();
+    void updateTeamPositions();
+    void updateBallPosition();
+    void confirmGoal();
+
+    /* Message d'erreur */
+    void dribbleErrorMessage(sf::RenderWindow& window);
 
     /* Constantes */
     sf::Text return_text = createText("Retour", 30, 325, 389);

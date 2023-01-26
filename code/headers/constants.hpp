@@ -5,6 +5,9 @@
 #include <sstream>
 #include <memory>
 #include <cstdlib>
+#include <random>
+#include <chrono>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -45,3 +48,6 @@ const size_t CAGE_DROITE_Y = 5;
 /* Position cages à gauche */
 const size_t CAGE_GAUCHE_X = 0;
 const size_t CAGE_GAUCHE_Y = 5;
+
+/* Nombre de tours d'une partie */
+const size_t MAX_TOURS = 60;

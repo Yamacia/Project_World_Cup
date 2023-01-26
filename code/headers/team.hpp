@@ -14,6 +14,7 @@ class Team{
 
     void init(); // A revoir
     void updatePosition();
+    void randomPlayerBall();
     Player* operator()(std::string player);
 
     std::list<Player> roster; 
