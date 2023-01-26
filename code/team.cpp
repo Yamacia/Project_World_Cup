@@ -67,8 +67,35 @@ void Team::init(){
 }
 */
 
-void Team::update(){
-    
+void Team::updatePosition()
+{
+    list<Player>::iterator i = roster.begin();
+    srand(time(NULL));
+    while(i != roster.end())
+    {
+        if(i->has_ball() == false)
+        {
+            size_t random_x = rand()%2;
+            size_t random_y = rand()%2;
+            if(random_x == 1 && i->getX() < LARGEUR_TERRAIN + 1)
+            {
+                i->setPosition(i->getX() + 1, i->getY());
+            }
+            else if(random_x == 0 && i->getX() > 1)
+            {
+                i->setPosition(i->getX() - 1, i->getY());
+            }
+            if(random_y == 1 && i->getY() < HAUTEUR_TERRAIN + 1)
+            {
+                i->setPosition(i->getX(), i->getY() + 1);
+            }
+            else if(random_y == 0 && i->getY() > 1)
+            {
+                i->setPosition(i->getX(), i->getY() - 1);
+            }
+        }
+        i++;
+    };
 }
 
 Player* Team::operator()(std::string player)

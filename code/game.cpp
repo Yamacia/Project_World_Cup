@@ -436,6 +436,8 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 /* Debuggage : pas dans le final */
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
                 {
+                    team_gauche.updatePosition();
+                    team_droite.updatePosition();
                     updateTurn();
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::P))
@@ -578,7 +580,7 @@ void GameInstance::displayOptions()
     size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
     std::cout << NbAdversaire + " adversaires sur cette case" << std::endl;
     std::string temp = "_";
-    text_1 = createText("Passer (" + temp + "%)", 20, 490, 256);
+    text_1 = createText("Passer (voir options)", 20, 490, 256);
     text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
     text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba()) + "%)", 20, 490, 366);
 

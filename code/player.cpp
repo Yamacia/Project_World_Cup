@@ -13,7 +13,7 @@ Player::Player(std::string n, std::string o): Character(n, o)
     this->ball=false;
     if(origin == "France")
         initLeftPosition();
-    if(origin == "Portugal")
+    else
         initRightPosition();
 
 }

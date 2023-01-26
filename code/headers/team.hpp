@@ -13,7 +13,7 @@ class Team{
     
 
     void init(); // A revoir
-    void update();
+    void updatePosition();
     Player* operator()(std::string player);
 
     std::list<Player> roster; 
