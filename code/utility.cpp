@@ -2,7 +2,6 @@
 
 double initStat(std::string fichier, std::string name){
     std::ifstream file(fichier, std::ios::in);  // on ouvre le fichier en lecture
-    
     double res=0;
 
         if(file)  // si l'ouverture a réussi

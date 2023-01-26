@@ -29,6 +29,7 @@ protected:
     bool song; // savoir si la chanson est active ou non
 
     /* Attributs Jeu */
+    Field terrain;
     sf::Sprite scoreboard;
     bool in_game; // savoir si on a lancé une partie ou non
     size_t turn; // Tour actuel

@@ -1,5 +1,7 @@
 #include "headers/field.hpp"
 
+Field::Field()
+{}
 
 Field::Field(size_t w, size_t h)
 {   
@@ -41,4 +43,17 @@ Field::Field (const Field & f)
         }
     }
 
+}
+
+size_t Field::howManyOpponent(size_t x, size_t y, Team opponent_team)
+{
+    size_t compteur = 0;
+    for(Player i : opponent_team.roster)
+    {
+        if(i.getX() == x && i.getY() == y)
+        {
+            compteur++;
+        }
+    };
+    return compteur;
 }

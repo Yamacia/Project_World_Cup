@@ -3,6 +3,7 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
+#include "../code/headers/constants.hpp"
 #include "../code/headers/utility.hpp"
 #include "../code/headers/character.hpp"
 #include "../code/headers/player.hpp"

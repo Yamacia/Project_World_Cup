@@ -11,6 +11,7 @@ GameInstance& GameInstance::Instance()
 /* Initialise la musique au lancer */
 GameInstance::GameInstance()
 {
+    terrain = Field(LARGEUR_TERRAIN, HAUTEUR_TERRAIN);
     loadMusic();
     loadPlaylist();
     song = true;
@@ -374,9 +375,11 @@ void GameInstance::gameStart(sf::RenderWindow& window)
 void GameInstance::loadTeam()
 {
 
-    team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud");
+    team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud, Karim Benzema, Kylian Mbappe");
 
     team_gauche("Antoine Griezmann")->set_ball(true); // marche pas LOL
+
+    team_droite = Team("Portugal", "Christiano Ronaldo");
 
 
 }
@@ -495,6 +498,14 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
 
     for(Player i : team_gauche.roster)
     {
+        i.setSpriteball();
+        sf::CircleShape sprite = i.getSprite();
+        window.draw(sprite);
+    }
+
+    for(Player i : team_droite.roster)
+    {
+        i.setSpriteball();
         sf::CircleShape sprite = i.getSprite();
         window.draw(sprite);
     }
@@ -556,19 +567,19 @@ void GameInstance::whoHasBall()
         std::string player_name = i.getName();
         if(team_gauche(player_name)->has_ball())
         {
-            std::cout << player_name + " a la balle" << std::endl;
             big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
             player_with_ball = i;
-            player_with_ball.setSpriteBall();
         }
     };
 }
 
 void GameInstance::displayOptions()
 {
+    size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
+    std::cout << NbAdversaire + " adversaires sur cette case" << std::endl;
     std::string temp = "_";
     text_1 = createText("Passer (" + temp + "%)", 20, 490, 256);
-    text_2 = createText("Dribbler (" + temp + "%)", 20, 490, 311);
+    text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
     text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba()) + "%)", 20, 490, 366);
 
 }

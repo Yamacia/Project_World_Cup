@@ -1,4 +1,4 @@
-Cristiano Ronaldo 0.93 BU
+Christiano Ronaldo 0.93 BU
 Bruno Fernandes 0.88 MOC
 Gonçalo Guedes 0.87 AC
 Diogo Jota 0.85 AG
@@ -15,4 +15,3 @@ Ruben Dias 0.74 DC
 Otavio Monteiro 0.72 AG
 Pepe Ferreira 0.63 DC
 José Fonte 0.6 DC
-

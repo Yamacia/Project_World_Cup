@@ -17,13 +17,15 @@ class Player : public Character {
         
         void initInfo(std::string fichier);
         void initLeftPosition();
+        void initRightPosition();
         std::string toInfo() const;
         void move(){_x++; _y++;}
         // void move();
         bool has_ball() const {return ball;}
         void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
-        void setSpriteBall();
-        Player operator=(const Player p);
+        Player& operator=(const Player &p);
+        void setSpriteball();
+        size_t dribble_proba(size_t Nbadversaire) const;
         // void dribble() const;
         size_t shoot_proba() const;
         void shoot() const;

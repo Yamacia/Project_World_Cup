@@ -27,7 +27,6 @@ Team::Team(string  country, string  players){
             
             if (retour!="")
             {
-               
                 Player current_player (retour, country);
                 std::string fichier = "../data/" + country + "_team.txt";
                 current_player.initInfo(fichier);

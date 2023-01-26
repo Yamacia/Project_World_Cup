@@ -8,11 +8,13 @@ using namespace std;
 Player::Player(std::string n, std::string o): Character(n, o)
 {
     string fichier = "../data/" + origin + "_team.txt";
-
     this->stat = initStat(fichier,n);
     this->poste= initPoste(fichier,n);
     this->ball=false;
-    initLeftPosition();
+    if(origin == "France")
+        initLeftPosition();
+    if(origin == "Portugal")
+        initRightPosition();
 
 }
 
@@ -136,49 +138,49 @@ void Player::initLeftPosition()
 {
     if (poste== "DG")
     {
-            _x=1;
-            _y=0;
-            cout << _x << ' ' << _y << endl;
+        _x=1;
+        _y=1;
+        cout << _x << ' ' << _y << endl;
     }
     
     if (poste =="DC")
     {
-            _x=1;
-            _y=4;
-            cout << _x << ' ' << _y<<endl;
+        _x=1;
+        _y=4;
+        cout << _x << ' ' << _y<<endl;
     }
 
     if (poste== "DD")
     {
-            _x=1;
-            _y=8;
-            cout << _x << ' ' << _y <<endl;
+        _x=1;
+        _y=8;
+        cout << _x << ' ' << _y <<endl;
     }
 
     if (poste== "MG")
     {
     
-            _x=3;
-            _y=1;
-            cout << _x << ' ' << _y << endl;
+        _x=3;
+        _y=1;
+        cout << _x << ' ' << _y << endl;
     }
 
     if (poste=="MC")
     {
-            _x=3;
-            _y=4;
-            cout << _x << ' ' << _y << endl;
+        _x=3;
+        _y=4;
+        cout << _x << ' ' << _y << endl;
     }
 
     if (poste== "MD"){
-            _x=3;
-            _y=7;
-            cout << _x << ' ' << _y << endl;
+        _x=3;
+        _y=7;
+        cout << _x << ' ' << _y << endl;
     }
     if (poste== "AG"){
-            _x=5;
-            _y=1;
-            cout << _x << ' ' << _y << endl;   
+        _x=5;
+        _y=1;
+        cout << _x << ' ' << _y << endl;   
     }
 
     if (poste=="AC"){
@@ -188,9 +190,83 @@ void Player::initLeftPosition()
     }
 
     if (poste=="AD"){
-            _x=5;
-            _y=7;
-            cout << _x << ' ' << _y << endl;
+        _x=5;
+        _y=7;
+        cout << _x << ' ' << _y << endl;
+    }
+
+    if(poste=="BU"){
+        _x=7;
+        _y=5;
+        cout << _x << ' ' << _y << endl;
+    }
+}
+
+void Player::initRightPosition()
+{
+    if (poste== "DG")
+    {
+        _x=14;
+        _y=1;
+        cout << _x << ' ' << _y << endl;
+    }
+    
+    if (poste =="DC")
+    {
+        _x=14;
+        _y=4;
+        cout << _x << ' ' << _y<<endl;
+    }
+
+    if (poste== "DD")
+    {
+        _x=14;
+        _y=8;
+        cout << _x << ' ' << _y <<endl;
+    }
+
+    if (poste== "MG")
+    {
+    
+        _x=12;
+        _y=1;
+        cout << _x << ' ' << _y << endl;
+    }
+
+    if (poste=="MC")
+    {
+        _x=12;
+        _y=4;
+        cout << _x << ' ' << _y << endl;
+    }
+
+    if (poste== "MD"){
+        _x=12;
+        _y=7;
+        cout << _x << ' ' << _y << endl;
+    }
+    if (poste== "AG"){
+        _x=10;
+        _y=1;
+        cout << _x << ' ' << _y << endl;   
+    }
+
+    if (poste=="AC"){
+        _x=9;
+        _y=4;
+        cout << _x << ' ' << _y << endl;
+    }
+
+    if (poste=="AD"){
+        _x=10;
+        _y=7;
+        cout << _x << ' ' << _y << endl;
+    }
+
+    if(poste=="BU"){
+        _x=8;
+        _y=5;
+        cout << _x << ' ' << _y << endl;
     }
 }
 
@@ -200,9 +276,23 @@ std::string Player::toInfo() const{
         return retour;
 }
 
-void Player::setSpriteBall()
+Player& Player::operator=(const Player &p){
+    name=p.name;
+    origin=p.origin;
+    present=p.present;
+    stat=p.stat;
+    role=p.role;
+    poste=p.poste;
+    _x=p._x;
+    _y=p._y;
+    sprite=p.sprite;
+    ball=p.ball;
+    return *this;
+}
+
+void Player::setSpriteball()
 {
-    if(ball)
+    if(has_ball())
     {
         sprite.setOutlineColor(sf::Color::Red);
         sprite.setOutlineThickness(2);
@@ -212,13 +302,6 @@ void Player::setSpriteBall()
         sprite.setOutlineColor(sf::Color::Transparent);
         sprite.setOutlineThickness(0);
     }
-
-}
-
-
-Player Player::operator=(const Player p){
-    Player i(p);
-    return i;
 }
 
 /*
@@ -233,9 +316,19 @@ void Player::dribble() const{
 
 }*/
 
+size_t Player::dribble_proba(size_t Nbadversaire) const
+{
+    if(Nbadversaire <= 0)
+    {
+        return 100;
+    }
+    else
+        return (size_t)((50*stat) / Nbadversaire);
+}
+
 size_t Player::shoot_proba() const
 {
-    return (size_t)(100 / ((CAGE_DROITE_X - _x) + (CAGE_DROITE_Y - _y)));
+    return (size_t)((100*stat) / ((CAGE_DROITE_X - _x) + (CAGE_DROITE_Y - _y)));
 }
 
 void Player::shoot() const{
