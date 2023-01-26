@@ -7,20 +7,55 @@
 #include "../code/headers/utility.hpp"
 #include "../code/headers/character.hpp"
 #include "../code/headers/player.hpp"
-//#include "../code/headers/field.hpp"
-//#include "../code/goal.hpp"
+#include "../code/headers/field.hpp"
+#include "../code/headers/goal.hpp"
 //#include "../code/referee.hpp"
-//#include "../code/team.hpp"
+#include "../code/headers/team.hpp"
 
 TEST_CASE("1: Player")
 {
-  Player player1("Kylian Mbappe", "France");
-  /*REQUIRE(player1.getName() == "Kylian Mbappe");
+  Player player1("Kylian Mbappe", "France"); //Test du constructeur avec deux Parametres
+  REQUIRE(player1.getName() == "Kylian Mbappe");
   REQUIRE(player1.on_field()==0);
   player1.setPresence();
   REQUIRE(player1.on_field()==1);
-  Player player2(player1);
+
+  
+  Player player2(player1); //Test du constructeur par copie
   CHECK(player2.getOrigin()==player1.getOrigin());
-  REQUIRE(player2.on_field()==1);*/
+  REQUIRE(player2.on_field()==1);
+  CHECK(player2.has_ball()==0);
+  player2.set_ball(1);
+  CHECK(player2.has_ball()==1);
+
+  Player player3("Phil Foden", "England");
+  Player player4=player3; //Test de la surcharge de l'operateur
+  REQUIRE(player4.getName()==player3.getName());
 }
 
+
+TEST_CASE("2: Goal")
+{
+  Goal goal1("Rui Patricio", "Portugal"); //Test du constructeur avec deux parametres
+  CHECK(goal1.getPoste()=="GO");
+  Goal goal2;
+  goal2=goal1; //Test de l'operateur =
+  CHECK(goal2.getName()=="Rui Patricio");
+  REQUIRE(goal2.getStat()==goal1.getStat());
+  goal2.initGoalGauche();
+  REQUIRE(goal2.getX()==1);
+  REQUIRE(goal2.getY()==5);
+}
+
+
+TEST_CASE("3: Team")
+{
+  Team team_france("France", "Kylian Mbappe, Lucas Digne, Paul Pogba, Hugo Lloris");
+  /*for(const auto& iter : team_france.roster)
+    {
+      
+      std::cout << iter << std::endl;
+      REQUIRE();
+    }*/
+    
+}
