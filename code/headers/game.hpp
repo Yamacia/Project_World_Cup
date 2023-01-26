@@ -87,6 +87,7 @@ public:
     void updateTeamPositions();
     void updateBallPosition();
     void confirmGoal();
+    void gameEnd(sf::RenderWindow& window);
 
     /* Message d'erreur */
     void dribbleErrorMessage(sf::RenderWindow& window);
@@ -101,5 +102,5 @@ public:
     sf::Text text_1 = createText("", 20, 490, 256);
     sf::Text text_2 = createText("", 20, 490, 311);
     sf::Text text_3 = createText("", 20, 490, 366);
-
+    sf::Text info_dialog = createText("", 20, 50, 420);
 };

@@ -390,7 +390,6 @@ void GameInstance::giveBall()
     loadTeam();
     if(player_with_ball.getOrigin() == "France")
     {
-        std::cout << "Balle donnée au Portugal" << std::endl;
         team_droite.randomPlayerBall();
     }
     else
@@ -423,6 +422,8 @@ void GameInstance::gamePlay(sf::RenderWindow& window)
     toggle_boxes = true;
     updateTurn(window);
     gameLoop(window);
+    
+    gameEnd(window);
 
     window.close();
 }
@@ -437,7 +438,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
     /* Rectangle de sélection d'action */
     size_t selector = 0;
     game_selector.setPosition(480, 246);
-    while(window.isOpen() && turn < 9000)
+    while(window.isOpen() && turn < 60)
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -519,7 +520,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                     {
                         if(player_with_ball.getX() <= LARGEUR_TERRAIN)
                         {
-                            succesful_action = player_with_ball.dribble(player_with_ball.dribble_proba(terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite)));
+                            succesful_action = player_with_ball.dribble_right(player_with_ball.dribble_proba(terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite)));
                             confirmTurn(window);
                             updateTurn(window);
                         }
@@ -527,10 +528,11 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         {
                             dribbleErrorMessage(window);
                         }
+
                     }
                     if(selector == 2)
                     {
-                        succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba());
+                        succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba_right());
                         if(succesful_action)
                         {
                             confirmGoal();
@@ -542,7 +544,23 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
             }
             else
             {
-
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes)
+                {
+                    if(player_with_ball.getX() > 1)
+                    {
+                        succesful_action = player_with_ball.dribble_left(player_with_ball.dribble_proba(terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_gauche)));
+                    }
+                    else
+                    {
+                        succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba_left());
+                        if(succesful_action)
+                        {
+                            confirmGoal();
+                        }
+                    }
+                    confirmTurn(window);
+                    updateTurn(window);
+                }
             }    
         }
         gameDraw(window);
@@ -598,6 +616,7 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
         window.draw(sc_gauche);
         window.draw(sc_droite);
         window.draw(game_selector);
+        window.draw(info_dialog);
     }
 
     window.display();
@@ -642,7 +661,7 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
                 std::cout << "Closing the game intentionally..." << std::endl;
             }
             if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
-                break;
+                return;
         }
     }
 }
@@ -654,7 +673,6 @@ void GameInstance::whoHasBall()
         std::string player_name = i.getName();
         if(team_gauche(player_name)->has_ball())
         {
-            std::cout << "Balle pour la France" << std::endl;
             big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
             player_with_ball = i;
         }
@@ -664,8 +682,7 @@ void GameInstance::whoHasBall()
         std::string player_name = i.getName();
         if(team_droite(player_name)->has_ball())
         {
-            std::cout << "Balle pour le Portugal" << std::endl;
-            big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
+            big_dialog_box = createText(player_name + " a la balle. \nIl va essayer d'avancer. \nVotre equipe va essayer de le bloquer.", 20, 50, 268);
             player_with_ball = i;
         }
     };
@@ -676,17 +693,19 @@ void GameInstance::displayOptions()
     if(player_with_ball.getOrigin() == "France")
     {
         size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
-        std::cout << std::to_string(NbAdversaire) + " adversaires sur cette case au tour " + std::to_string(turn) << std::endl;
+        info_dialog = createText(std::to_string(NbAdversaire) + " adversaires sur cette case.", 20, 50, 420);
         std::string temp = "_";
         text_1 = createText("Passer (voir options)", 20, 490, 256);
         text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
-        text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba()) + "%)", 20, 490, 366);
+        text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba_right()) + "%)", 20, 490, 366);
     }
     else
     {
-        text_1 = createText("Cry", 20, 490, 256);
-        text_2 = createText("About", 20, 490, 311);
-        text_3 = createText("It.", 20, 490, 366);
+        size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_gauche);
+        info_dialog = createText(std::to_string(NbAdversaire) + " adversaires sur cette case.", 20, 50, 420);
+        text_1 = createText("Confirmer", 20, 490, 256);
+        text_2 = createText("Confirmer", 20, 490, 311);
+        text_3 = createText("Confirmer.", 20, 490, 366);
     }
 
 
@@ -705,6 +724,10 @@ void GameInstance::updateBallPosition()
     {
         team_gauche(player_with_ball.getName())->setPosition(player_with_ball.getX(), player_with_ball.getY());
     }
+    else
+    {
+        team_droite(player_with_ball.getName())->setPosition(player_with_ball.getX(), player_with_ball.getY());
+    }
 }
 
 void GameInstance::dribbleErrorMessage(sf::RenderWindow& window)
@@ -715,16 +738,54 @@ void GameInstance::dribbleErrorMessage(sf::RenderWindow& window)
 
 void GameInstance::confirmGoal()
 {
+    loadTeam();
+
     if(player_with_ball.getOrigin() == "France")
     {
         score_gauche++;
+        team_droite.randomPlayerBall();
     }
     else
     {
         score_droite++;
+        team_gauche.randomPlayerBall();
     }
-    loadTeam();
     whoHasBall();
+}
+
+void GameInstance::gameEnd(sf::RenderWindow& window)
+{
+    if(score_gauche > score_droite)
+    {
+        big_dialog_box = createText("Vous avez gagne !", 20, 50, 268);
+    }
+    if(score_gauche > score_droite)
+    {
+        big_dialog_box = createText("Vous avez perdu !", 20, 50, 268);
+    }
+    else
+    {
+        big_dialog_box = createText("Match nul !", 20, 50, 268);
+    }
+
+    gameDraw(window);
+
+    while(window.isOpen())
+    {
+        sf::Event event;
+        while(window.pollEvent(event))
+        {
+
+            if (event.type == sf::Event::Closed || InputManager::Instance().GetKey(sf::Keyboard::Key::Escape))
+            {
+                window.close();
+                std::cout << "Closing the game intentionally..." << std::endl;
+            }
+            if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter))
+                return;
+
+        }
+    }
 }
 
 // if(_x == 4 && _y == 7)

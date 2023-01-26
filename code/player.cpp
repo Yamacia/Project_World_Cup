@@ -331,7 +331,7 @@ size_t Player::dribble_proba(size_t Nbadversaire) const
 
 }
 
-bool Player::dribble(size_t proba)
+bool Player::dribble_right(size_t proba)
 {
     size_t roll_dice = rand()%100;
     if(roll_dice < proba)
@@ -342,9 +342,26 @@ bool Player::dribble(size_t proba)
     return false;
 }
 
-size_t Player::shoot_proba() const
+bool Player::dribble_left(size_t proba)
+{
+    size_t roll_dice = rand()%100;
+    if(roll_dice < proba)
+    {
+        setPosition(_x - 1, _y);
+        return true;
+    }
+    return false;
+}
+
+
+size_t Player::shoot_proba_right() const
 {
     return (size_t)((100*stat) / ((abs((int)(CAGE_DROITE_X - _x)) + abs((int)(CAGE_DROITE_Y - _y))) + 1));
+}
+
+size_t Player::shoot_proba_left() const
+{
+    return (size_t)((100*stat) / ((abs((int)(CAGE_GAUCHE_X - _x)) + abs((int)(CAGE_GAUCHE_Y - _y))) + 1));
 }
 
 bool Player::shoot(size_t proba)

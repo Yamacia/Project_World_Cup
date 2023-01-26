@@ -46,7 +46,7 @@ const size_t CAGE_DROITE_X = 14;
 const size_t CAGE_DROITE_Y = 5;
 
 /* Position cages à gauche */
-const size_t CAGE_GAUCHE_X = 0;
+const size_t CAGE_GAUCHE_X = 1;
 const size_t CAGE_GAUCHE_Y = 5;
 
 /* Nombre de tours d'une partie */
