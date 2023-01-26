@@ -21,7 +21,8 @@ double initStat(std::string fichier, std::string name){
                     //cout << retour[i] << " + " << retour[i+1] << endl;
                     if (retour[i]+' '+retour[i+1] == name)
                     {
-                        //cout << retour[i]  << ' ' << retour[i+1] << endl;
+                        //std::cout << retour[i]  << ' ' << retour[i+1] << std::endl;
+                        //std::cout << retour[i+2] << std::endl;
                         res=stod(retour[i+2]);
                         found = true;
                     }

@@ -5,34 +5,45 @@
 class Player : public Character {
 
     public: 
-        //Player(std::string n, std::string o):Character(n,o){};
+        /*Constructeurs*/
         Player():Character(){};
         Player(std::string n, std::string o);
         Player(const Player & p): Character(p), ball(p.ball){}
-        //Player (std::string n, std::string o, std::string p, double s): Character(n,o,p,s){};
-        Player(std::ifstream& f);
         //void initStat( std::string fichier);
         //void initPoste(std::string fichier);
         
-        
-        void initInfo(std::string fichier);
+        /*Méthode virtuelle*/
+        std::string toInfo() const;
+
+        /*Méthodes de positionnement*/
+        bool initInfo(std::string fichier);
         void initLeftPosition();
         void initRightPosition();
-        std::string toInfo() const;
+
+        /*Méthodes d'actions */
         void move(){_x++; _y++;}
-        // void move();
-        bool has_ball() const {return ball;}
-        void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
-        Player& operator=(const Player &p);
-        void setSpriteball();
-        size_t dribble_proba(size_t Nbadversaire) const;
         // void dribble() const;
-        size_t shoot_proba() const;
         void shoot() const;
         // void pass() const;
         // void stop() const;
         // void disturb() const;
         // void tackle() const;
+
+        /*Getters*/
+        bool has_ball() const {return ball;}
+        
+        /*Setters*/
+        void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
+        void setSpriteball();
+
+        /*Operator*/
+        Player& operator=(const Player &p);
+        
+        
+        /*Méthodes de calculs*/
+        size_t dribble_proba(size_t Nbadversaire) const;
+        size_t shoot_proba() const;
+        
         
 
     private:

@@ -96,13 +96,13 @@ void Player::initPoste(string fichier){
 
 /* Fonction qui initialise les infos des joueurs à partir d'un fichier txt 
 */
-void Player::initInfo(string fichier){
+bool Player::initInfo(string fichier){
         ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
-    
-
+        bool found=false;
+        //bool trouve=false;
         if(file)  // si l'ouverture a réussi
         {   
-            bool found=false;
+            
             string ligne;
             string mot;
             vector<string> retour;
@@ -125,11 +125,14 @@ void Player::initInfo(string fichier){
                     }
                 }
             }
+
             file.close();  // on ferme le fichier
         }
         else  // sinon
                 cerr << "Impossible d'ouvrir le fichier !" << endl;
- 
+
+    
+ return found;
 }
 
 /* Fonction qui initialise la position des joueurs en fonction de leur postes sur la partie gauche du terrain 
@@ -202,6 +205,8 @@ void Player::initLeftPosition()
     }
 }
 
+/* Fonction qui initialise la position des joueurs en fonction de leur postes sur la partie droite du terrain 
+*/
 void Player::initRightPosition()
 {
     if (poste== "DG")
@@ -340,9 +345,6 @@ void Player::pass() const{
 
 }
 
-void Player::stop() const{
-
-}
 void Player::disturb() const{
 
 }

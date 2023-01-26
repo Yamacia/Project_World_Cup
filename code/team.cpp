@@ -10,6 +10,7 @@ Team::Team()
 Team::Team(string  country, string  players){
     string retour = "";
     int i = 0;
+    bool found=false;
     // int cpt=0;
     while (players[i] != '\0')
     {
@@ -29,9 +30,22 @@ Team::Team(string  country, string  players){
             {
                 Player current_player (retour, country);
                 std::string fichier = "../data/" + country + "_team.txt";
-                current_player.initInfo(fichier);
-                cout << current_player << endl;
-                roster.push_back(current_player);
+                
+                found=current_player.initInfo(fichier);
+                //cout << "Found :" << found << std::endl;
+                if (found ==false)
+                {
+                    Goal current_goal(retour,country);
+                    std::string fichier_goal= "../data/" + country + "_goal.txt";
+                    current_goal.initInfo(fichier_goal);
+                    cout << current_goal << endl;
+                    roster.push_back(current_goal);
+                }
+                else
+                {
+                    cout << current_player << endl;
+                    roster.push_back(current_player);
+                }
 
                 
             }
