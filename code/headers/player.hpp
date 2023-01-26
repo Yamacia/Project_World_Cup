@@ -6,6 +6,7 @@ class Player : public Character {
 
     public: 
         //Player(std::string n, std::string o):Character(n,o){};
+        Player():Character(){};
         Player(std::string n, std::string o);
         Player(const Player & p): Character(p), ball(p.ball){}
         //Player (std::string n, std::string o, std::string p, double s): Character(n,o,p,s){};
@@ -19,14 +20,16 @@ class Player : public Character {
         std::string toInfo() const;
         void move(){_x++; _y++;}
         // void move();
-        bool has_ball() const {; return ball;}
+        bool has_ball() const {std::cout << ball << std::endl; return ball;}
         void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
+        Player operator=(const Player p);
         // void dribble() const;
         // void shoot() const;
         // void pass() const;
         // void stop() const;
         // void disturb() const;
         // void tackle() const;
+        
 
     private:
 

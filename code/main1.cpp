@@ -7,6 +7,8 @@
 
 int main(){
     //Player p1("Karim Benzema", "France");
+    //Player p2=p1;
+    //std::cout << p2 << std::endl;
     //std::cout << p1.getStat() << std::endl;
     //std::cout << p1.getPoste() << std::endl;
     /*p1.initStat("../data/France_team.txt");
@@ -28,6 +30,7 @@ int main(){
     //Player p= t("Kylian Mbappe");
     //p.set_ball(false);
     //std::cout << p.has_ball() << std::endl;
+    //std::cout << t("Kylian Mbappe")/*->set_ball(true);*/ << std::endl;
     t("Kylian Mbappe")->set_ball(true);
     t("Kylian Mbappe")->has_ball();
     //t.init();

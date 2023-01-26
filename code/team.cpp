@@ -75,17 +75,46 @@ void Team::update(){
 Player* Team::operator()(std::string player)
 {
     std::cout << "Looking for : " + player << std::endl;
+    Player* p= new Player;
+    bool found=false;
+    list<Player>::iterator i = roster.begin();
+    /*for(Player i : roster)*/
+    while(i != roster.end() && found == false )
+    {
+        std::cout << "Current is : " + i->getName() << std::endl;
+        if(i->getName() == player && found==false){
+            std::cout << *i << std::endl;
+            //static Player p(i);
+            p=&(*i);
+            //std::cout << "Operateur a retourne : " + p->getName() << std::endl;
+            //return &p;
+            found =true;
+        }
+            i++;
+    };
+    //static Player p("",""); // pas trouvé
+    return p;
+    delete [] p;
+}
+
+/*
+Player* Team::operator()(std::string player)
+{
+    std::cout << "Looking for : " + player << std::endl;
+    
     for(Player i : roster)
     {
         std::cout << "Current is : " + i.getName() << std::endl;
         if(i.getName() == player){
             std::cout << i << std::endl;
             static Player p(i);
+            //p=i;
             std::cout << "Operateur a retourne : " + p.getName() << std::endl;
             return &p;
+            //found =true;
         }
             
     };
     static Player p("",""); // pas trouvé
     return &p;
-}
+}*/

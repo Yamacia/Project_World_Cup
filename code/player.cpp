@@ -200,6 +200,10 @@ std::string Player::toInfo() const{
         return retour;
 }
 
+Player Player::operator=(const Player p){
+    Player i(p);
+    return i;
+}
 
 /*
 void Player::move(){
