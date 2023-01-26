@@ -10,7 +10,7 @@ Team::Team()
 Team::Team(string  country, string  players){
     string retour = "";
     int i = 0;
-    int cpt=0;
+    // int cpt=0;
     while (players[i] != '\0')
     {
         if (players[i] != ',')
@@ -74,25 +74,17 @@ void Team::update(){
 
 Player* Team::operator()(std::string player)
 {
-    std::cout << "Looking for : " + player << std::endl;
     Player* p= new Player;
     bool found=false;
     list<Player>::iterator i = roster.begin();
-    /*for(Player i : roster)*/
     while(i != roster.end() && found == false )
     {
-        //std::cout << "Current is : " + i->getName() << std::endl;
         if(i->getName() == player && found==false){
-            std::cout << *i << std::endl;
-            //static Player p(i);
             p=&(*i);
-            //std::cout << "Operateur a retourne : " + p->getName() << std::endl;
-            //return &p;
             found =true;
         }
             i++;
     };
-    //static Player p("",""); // pas trouvé
     return p;
     delete [] p;
 }

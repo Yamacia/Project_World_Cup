@@ -36,3 +36,11 @@ const size_t HAUTEUR_BOX = 48;
 /* Taille d'une grande boite de dialogue */
 const size_t LARGEUR_BIG = 420; // Blaze it
 const size_t HAUTEUR_BIG = 245;
+
+/* Position cages à droite */
+const size_t CAGE_DROITE_X = 14;
+const size_t CAGE_DROITE_Y = 5;
+
+/* Position cages à gauche */
+const size_t CAGE_GAUCHE_X = 0;
+const size_t CAGE_GAUCHE_Y = 5;

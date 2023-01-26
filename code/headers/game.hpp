@@ -36,6 +36,7 @@ protected:
     sf::RectangleShape game_selector; 
     std::vector<sf::Text> actions_attaque;  // Actions réalisables si on a la balle
     std::vector<sf::Text> actions_defense;  // Actions réalisables si on a la balle
+    Player player_with_ball;
 
     bool toggle_boxes;
 

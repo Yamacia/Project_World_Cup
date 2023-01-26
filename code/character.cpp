@@ -2,6 +2,19 @@
 #include <string>
 #include <iostream>
 
+Character::Character(): name("Unknown"), origin("Unknown"), present(0), stat(0.0), _x(0), _y(0)
+{}
+
+Character::Character(std::string n, std::string o) : name(n), origin(o), present(0), _x(0), _y(0)
+{}
+
+Character::Character(const Character &c) : name(c.name), origin(c.origin), present(c.present), stat(c.stat), poste(c.poste), _x(c._x), _y(c._y)
+{
+    sprite = sf::CircleShape(6); 
+    setSpriteColor(); 
+    setSpritePosition();
+}
+
 std::string Character::toInfo() const{
     std::string retour="";
 

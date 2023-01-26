@@ -20,11 +20,13 @@ class Player : public Character {
         std::string toInfo() const;
         void move(){_x++; _y++;}
         // void move();
-        bool has_ball() const {std::cout << ball << std::endl; return ball;}
+        bool has_ball() const {return ball;}
         void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
+        void setSpriteBall();
         Player operator=(const Player p);
         // void dribble() const;
-        // void shoot() const;
+        size_t shoot_proba() const;
+        void shoot() const;
         // void pass() const;
         // void stop() const;
         // void disturb() const;

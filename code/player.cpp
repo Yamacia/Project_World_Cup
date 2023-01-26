@@ -200,6 +200,22 @@ std::string Player::toInfo() const{
         return retour;
 }
 
+void Player::setSpriteBall()
+{
+    if(ball)
+    {
+        sprite.setOutlineColor(sf::Color::Red);
+        sprite.setOutlineThickness(2);
+    }
+    else
+    {
+        sprite.setOutlineColor(sf::Color::Transparent);
+        sprite.setOutlineThickness(0);
+    }
+
+}
+
+
 Player Player::operator=(const Player p){
     Player i(p);
     return i;
@@ -215,12 +231,18 @@ void Player::move(){
 
 void Player::dribble() const{
 
+}*/
+
+size_t Player::shoot_proba() const
+{
+    return (size_t)(100 / ((CAGE_DROITE_X - _x) + (CAGE_DROITE_Y - _y)));
 }
 
 void Player::shoot() const{
 
-}
 
+}
+/*
 void Player::pass() const{
 
 }

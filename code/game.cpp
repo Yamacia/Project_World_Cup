@@ -56,6 +56,7 @@ sf::Sprite GameInstance::createBox(size_t l_pos, size_t h_pos)
     box.setTextureRect(sf::IntRect(0, 0, LARGEUR_BOX, HAUTEUR_BOX));
     box.setPosition(l_pos,h_pos);
     return box;
+    delete [] text_box;
 }
 
 /* Crée une grande boite de dialogue à la position désirée */
@@ -67,6 +68,7 @@ sf::Sprite GameInstance::createBigBox(size_t l_pos, size_t h_pos)
     box.setTextureRect(sf::IntRect(0, 0, LARGEUR_BIG, HAUTEUR_BIG));
     box.setPosition(l_pos,h_pos);
     return box;
+    delete [] text_box;
 }
 
 /* Crée le texte à la position et taille désirées */
@@ -83,6 +85,7 @@ sf::Text GameInstance::createText(std::string string, size_t size, size_t l_pos,
     text.setPosition(sf::Vector2f(l_pos,h_pos));
 
     return text;
+    delete [] font;
 }
 
 /* Bouge le curseur de choix (Menu / Option) à la case désirée */
@@ -551,9 +554,13 @@ void GameInstance::whoHasBall()
     for(Player i : team_gauche.roster)
     {
         std::string player_name = i.getName();
-        std::cout << "le joueur est : " + player_name << std::endl;
         if(team_gauche(player_name)->has_ball())
+        {
             std::cout << player_name + " a la balle" << std::endl;
+            big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
+            player_with_ball = i;
+            player_with_ball.setSpriteBall();
+        }
     };
 }
 
@@ -562,7 +569,7 @@ void GameInstance::displayOptions()
     std::string temp = "_";
     text_1 = createText("Passer (" + temp + "%)", 20, 490, 256);
     text_2 = createText("Dribbler (" + temp + "%)", 20, 490, 311);
-    text_3 = createText("Tirer (" + temp + "%)", 20, 490, 366);
+    text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba()) + "%)", 20, 490, 366);
 
 }
 
