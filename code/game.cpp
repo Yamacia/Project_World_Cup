@@ -372,7 +372,8 @@ void GameInstance::loadTeam()
 {
 
     team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud");
-    team_gauche("Antoine Griezmann")->set_ball(true);
+
+    team_gauche("Antoine Griezmann")->set_ball(true); // marche pas LOL
 
 
 }
@@ -547,8 +548,12 @@ void GameInstance::updateTurn()
 void GameInstance::whoHasBall()
 {
     std::cout << "methode WhoHasBall" << std::endl;
-    Player* player = team_gauche.who_ball();
-    std::cout << player->getName() + " a la balle" << std::endl;
+    for(Player i : team_gauche.roster)
+    {
+        std::string player_name = i.getName();
+        if(team_gauche(player_name)->has_ball())
+            std::cout << player_name + " a la balle" << std::endl;
+    };
 }
 
 void GameInstance::displayOptions()

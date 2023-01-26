@@ -7,7 +7,7 @@ class Player : public Character {
     public: 
         //Player(std::string n, std::string o):Character(n,o){};
         Player(std::string n, std::string o);
-        Player(const Player & p): Character(p){ this->ball = p.ball;}
+        Player(const Player & p): Character(p), ball(p.ball){}
         //Player (std::string n, std::string o, std::string p, double s): Character(n,o,p,s){};
         Player(std::ifstream& f);
         //void initStat( std::string fichier);
@@ -20,7 +20,7 @@ class Player : public Character {
         void move(){_x++; _y++;}
         // void move();
         bool has_ball() const {; return ball;}
-        void set_ball(bool ball) {this->ball = ball;}
+        void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
         // void dribble() const;
         // void shoot() const;
         // void pass() const;

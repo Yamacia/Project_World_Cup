@@ -72,32 +72,20 @@ void Team::update(){
     
 }
 
-Player* Team::who_ball()
-{
-    for (Player i : roster)
-    {
-        std::cout << i << std::endl;
-        std::cout << "Stat de combat : " + std::to_string(i.getStat()) << std::endl;
-        if(i.has_ball())
-        {
-            std::cout << i.getName() + " possède la balle" << std::endl;
-            return &i;
-        }
-    };
-    static Player p("","");
-    return &p;
-}
-
 Player* Team::operator()(std::string player)
 {
+    std::cout << "Looking for : " + player << std::endl;
     for(Player i : roster)
     {
+        std::cout << "Current is : " + i.getName() << std::endl;
         if(i.getName() == player){
+            std::cout << i << std::endl;
             static Player p(i);
+            std::cout << "Operateur a retourne : " + p.getName() << std::endl;
             return &p;
         }
             
     };
-    static Player p("","");
+    static Player p("",""); // pas trouvé
     return &p;
 }
