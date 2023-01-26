@@ -81,7 +81,7 @@ Player* Team::operator()(std::string player)
     /*for(Player i : roster)*/
     while(i != roster.end() && found == false )
     {
-        std::cout << "Current is : " + i->getName() << std::endl;
+        //std::cout << "Current is : " + i->getName() << std::endl;
         if(i->getName() == player && found==false){
             std::cout << *i << std::endl;
             //static Player p(i);

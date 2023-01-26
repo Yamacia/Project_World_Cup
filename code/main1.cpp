@@ -31,8 +31,8 @@ int main(){
     //p.set_ball(false);
     //std::cout << p.has_ball() << std::endl;
     //std::cout << t("Kylian Mbappe")/*->set_ball(true);*/ << std::endl;
-    t("Kylian Mbappe")->set_ball(true);
-    t("Kylian Mbappe")->has_ball();
+    //t("Kylian Mbappe")->set_ball(true);
+    //t("Kylian Mbappe")->has_ball();
     //t.init();
     //t.printTeam();
    return 0;

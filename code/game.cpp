@@ -551,6 +551,7 @@ void GameInstance::whoHasBall()
     for(Player i : team_gauche.roster)
     {
         std::string player_name = i.getName();
+        std::cout << "le joueur est : " + player_name << std::endl;
         if(team_gauche(player_name)->has_ball())
             std::cout << player_name + " a la balle" << std::endl;
     };

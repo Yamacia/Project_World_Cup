@@ -9,7 +9,7 @@ class Team{
     public:
     Team(); 
     Team(std::string country, std::string players);
-    void printTeam(); //Probleme..
+    void printTeam(); 
     
 
     void init(); // A revoir
