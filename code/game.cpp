@@ -567,7 +567,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         updateTurn(window);
                     }
                 }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && toggle_boxes)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::LControl) && toggle_boxes)
                 {
                     if(selector == 0 && !pass_action)
                     {
@@ -676,16 +676,32 @@ void GameInstance::updateTurn(sf::RenderWindow& window)
 
 void GameInstance::confirmTurn(sf::RenderWindow& window)
 {
-    if(succesful_action)
+    if(player_with_ball.getOrigin() == "France")
     {
-        big_dialog_box = createText("L'action a reussie", 20, 50, 268);
+        if(succesful_action)
+        {
+            big_dialog_box = createText("L'action a reussi", 20, 50, 268);
+        }
+        else
+        {
+            big_dialog_box = createText("L'action a echoue.", 20, 50, 268);
+            giveBall();
+        }
     }
     else
     {
-        big_dialog_box = createText("L'action a echouee.", 20, 50, 268);
-        giveBall();
+        if(succesful_action)
+        {
+            big_dialog_box = createText(player_with_ball.getName() + " a reussi a avancer", 20, 50, 268);
+        }
+        else
+        {
+            big_dialog_box = createText("Vous avez récupéré la balle !", 20, 50, 268);
+            giveBall();
+        }
     }
-    std::cout << "Back to default " << std::endl;
+    info_dialog = createText("Appuyez sur Espace pour continuer.", 20, 50, 420);
+
     pass_action = false;
     gameDraw(window);
     sf::Event event;
@@ -735,7 +751,7 @@ void GameInstance::displayOptions()
         size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
         info_dialog = createText(std::to_string(NbAdversaire) + " adversaires sur cette case.", 20, 50, 420);
         std::string temp = "_";
-        text_1 = createText("Passer (voir options)", 20, 490, 256);
+        text_1 = createText("Passer (Control)", 20, 490, 256);
         text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
         text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba_right()) + "%)", 20, 490, 366);
     }
