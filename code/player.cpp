@@ -23,6 +23,9 @@ Player::Player(std::string n, std::string o): Character(n, o)
     }
 }
 
+Player::~Player(){
+
+}
 /* Fonction qui initialise les infos des joueurs à partir d'un fichier txt */
 bool Player::initInfo(string fichier){
         ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
@@ -49,7 +52,7 @@ bool Player::initInfo(string fichier){
                     }
                 }
             }
-
+            retour.clear();
             file.close();  // on ferme le fichier
         }
         else  // sinon

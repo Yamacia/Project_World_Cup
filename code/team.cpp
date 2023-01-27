@@ -55,6 +55,11 @@ Team::Team(string  country, string  players){
     }
 }
 
+/*Destructeur*/
+Team::~Team(){
+    roster.clear();
+}
+
 /*Affiche l'équipe*/
 void Team::printTeam(){
 

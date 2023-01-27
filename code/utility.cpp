@@ -1,6 +1,6 @@
 #include "headers/utility.hpp"
 
-/*Fonction qui indique si elle a pu extraire la stat du joueur depuis un fichier*/
+/*Fonction qui retourne la stat du joueur depuis un fichier*/
 double initStat(std::string fichier, std::string name){
     std::ifstream file(fichier, std::ios::in);  // on ouvre le fichier en lecture
     double res=0;

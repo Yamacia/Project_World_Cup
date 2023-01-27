@@ -19,6 +19,7 @@ Goal::Goal(string n, string o){
         initGoalDroit();
 }
 
+Goal::~Goal(){}
 
 /*Redifinition de la fonction virtuelle */
 std::string Goal::toInfo() const{

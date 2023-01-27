@@ -9,7 +9,7 @@ class Player : public Character {
         Player():Character(){};
         Player(std::string n, std::string o);
         Player(const Player & p): Character(p), ball(p.ball){}
-    
+        ~Player();
         
         /*Méthode virtuelle*/
         std::string toInfo() const;

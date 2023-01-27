@@ -8,7 +8,7 @@ class Goal: public Player{
         Goal():Player(){};
         Goal(std::string n, std::string o);
         Goal(const Goal & g): Player(g), _gball(g._gball){} //Constructeur par copie
-
+        ~Goal();
         /*Méthode de positionnement*/
         void initGoalDroit();
         void initGoalGauche();

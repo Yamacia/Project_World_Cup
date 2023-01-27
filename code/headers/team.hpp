@@ -11,6 +11,8 @@ class Team{
     Team(); 
     Team(std::string country, std::string players);
 
+
+    ~Team();
     /*Setter*/
     const std::list<Player>& getTeam(){return roster;}
 
