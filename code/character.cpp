@@ -38,11 +38,17 @@ void Character::setSpriteColor(){
     if(origin == "France")
     {
         sprite.setFillColor(sf::Color::Blue); 
+        if (poste=="GO"){
+            sprite.setFillColor(sf::Color::Magenta);
+        }
         // std::cout << "Blue team !" << std::endl;
     }
     if(origin == "Portugal")
     {
         sprite.setFillColor(sf::Color::Green);
+        if (poste=="GO"){
+            sprite.setFillColor(sf::Color::Magenta);
+        }
     }
 }
 

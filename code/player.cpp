@@ -11,10 +11,19 @@ Player::Player(std::string n, std::string o): Character(n, o)
     this->stat = initStat(fichier,n);
     this->poste= initPoste(fichier,n);
     this->ball=false;
-    if(origin == "France")
+    
+    if(origin == "France"){
+        
         initLeftPosition();
-    else
+    }
+    else{
+        
         initRightPosition();
+
+    }
+
+    
+    
 
 }
 
@@ -417,6 +426,8 @@ bool Player::pass(int proba)
     }
     return false;
 }
+
+
 
 /*
 void Player::disturb() const{

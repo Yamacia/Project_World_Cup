@@ -14,6 +14,7 @@ class Player : public Character {
         
         /*Méthode virtuelle*/
         std::string toInfo() const;
+        
 
         /*Méthodes de positionnement*/
         bool initInfo(std::string fichier);
@@ -36,6 +37,7 @@ class Player : public Character {
         /*Setters*/
         void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
         void setSpriteball();
+        
 
         /*Operator*/
         Player& operator=(const Player &p);
