@@ -21,11 +21,11 @@ class Player : public Character {
         void initRightPosition();
 
         /*Méthodes d'actions */
-        void move(){_x++; _y++;}
+        void move();
         bool dribble_right(size_t proba);
         bool dribble_left(size_t proba);
         bool shoot(size_t proba);
-        // void pass() const;
+        bool pass(size_t proba);
         // void stop() const;
         // void disturb() const;
         // void tackle() const;
@@ -45,6 +45,7 @@ class Player : public Character {
         size_t dribble_proba(size_t Nbadversaire) const;
         size_t shoot_proba_left() const;
         size_t shoot_proba_right() const;
+        size_t pass_proba(Player p) const;
         
         
 

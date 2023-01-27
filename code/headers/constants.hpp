@@ -8,6 +8,7 @@
 #include <random>
 #include <chrono>
 #include <functional>
+#include <cmath>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>

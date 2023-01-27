@@ -37,6 +37,7 @@ protected:
     sf::RectangleShape game_selector; 
     Player player_with_ball;
     bool succesful_action;
+    bool pass_action;
 
     bool toggle_boxes;
 
@@ -86,6 +87,7 @@ public:
     void displayOptions();
     void updateTeamPositions();
     void updateBallPosition();
+    void passOptions(sf::RenderWindow& window);
     void confirmGoal();
     void gameEnd(sf::RenderWindow& window);
 
@@ -103,4 +105,8 @@ public:
     sf::Text text_2 = createText("", 20, 490, 311);
     sf::Text text_3 = createText("", 20, 490, 366);
     sf::Text info_dialog = createText("", 20, 50, 420);
+
+    Player* player_option_1;
+    Player* player_option_2;
+    Player* player_option_3;
 };

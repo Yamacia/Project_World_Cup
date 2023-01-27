@@ -510,14 +510,44 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                     cursor_x++;
                     game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
                 }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && toggle_boxes)
+                {
+                    pass_action = false;
+                }
             }
             if(player_with_ball.getOrigin() == "France")
             {
-                
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes)
                 {
-                    if(selector == 1)
+                    if(selector == 0 && pass_action)
                     {
+                        succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_1));
+                        team_gauche(player_with_ball.getName())->set_ball(false);
+                        player_option_1->set_ball(true);
+                        confirmTurn(window);
+                        updateTurn(window);
+                    }
+                    if(selector == 1 && pass_action)
+                    {
+                        std::cout << "Passe 2 !" << std::endl;
+                        succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_2));
+                        team_gauche(player_with_ball.getName())->set_ball(false);
+                        player_option_2->set_ball(true);
+                        confirmTurn(window);
+                        updateTurn(window);
+                    }
+                    if(selector == 2 && pass_action)
+                    {
+                        std::cout << "Passe 3 !" << std::endl;
+                        succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_3));
+                        team_gauche(player_with_ball.getName())->set_ball(false);
+                        player_option_3->set_ball(true);
+                        confirmTurn(window);
+                        updateTurn(window);
+                    }
+                    if(selector == 1 && !pass_action)
+                    {
+                        std::cout << "Dribble !" << std::endl;
                         if(player_with_ball.getX() <= LARGEUR_TERRAIN)
                         {
                             succesful_action = player_with_ball.dribble_right(player_with_ball.dribble_proba(terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite)));
@@ -530,8 +560,9 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         }
 
                     }
-                    if(selector == 2)
+                    if(selector == 2 && !pass_action)
                     {
+                        std::cout << "Tir !" << std::endl;
                         succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba_right());
                         if(succesful_action)
                         {
@@ -541,10 +572,20 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         updateTurn(window);
                     }
                 }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && toggle_boxes)
+                {
+                    if(selector == 0 && !pass_action)
+                    {
+                        passOptions(window);
+                        pass_action = true;
+                    }
+                    
+                }
             }
             else
             {
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes)
+                pass_action = false;
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action)
                 {
                     if(player_with_ball.getX() > 1)
                     {
@@ -661,7 +702,9 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
                 std::cout << "Closing the game intentionally..." << std::endl;
             }
             if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
+            {                
                 return;
+            }
         }
     }
 }
@@ -736,6 +779,20 @@ void GameInstance::dribbleErrorMessage(sf::RenderWindow& window)
     gameDraw(window);
 }
 
+void GameInstance::passOptions(sf::RenderWindow& window)
+{
+    player_option_1 = team_gauche.randomPlayerPass();
+    player_option_2 = team_gauche.randomPlayerPass();
+    player_option_3 = team_gauche.randomPlayerPass();
+
+    text_1 = createText(player_option_1->getName() + " (" + std::to_string(player_with_ball.pass_proba(*player_option_1)) + "%)", 20, 490, 256);
+    text_2 = createText(player_option_2->getName() + " (" + std::to_string(player_with_ball.pass_proba(*player_option_2)) + "%)", 20, 490, 311);
+    text_3 = createText(player_option_3->getName() + " (" + std::to_string(player_with_ball.pass_proba(*player_option_3)) + "%)", 20, 490, 366);
+
+    gameDraw(window);
+
+}
+
 void GameInstance::confirmGoal()
 {
     loadTeam();
@@ -768,7 +825,7 @@ void GameInstance::gameEnd(sf::RenderWindow& window)
         big_dialog_box = createText("Match nul !", 20, 50, 268);
     }
 
-    gameDraw(window);
+        gameDraw(window);
 
     while(window.isOpen())
     {

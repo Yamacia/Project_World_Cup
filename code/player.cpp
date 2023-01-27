@@ -309,14 +309,31 @@ void Player::setSpriteball()
     }
 }
 
-/*
+
 void Player::move(){
 
-
+    size_t random_x = rand()%2;
+    size_t random_y = rand()%2;
+    if(random_x == 1 && _x < LARGEUR_TERRAIN + 1)
+    {
+        setPosition(_x + 1, _y);
+    }
+    else if(random_x == 0 && _x > 1)
+    {
+        setPosition(_x - 1, _y);
+    }
+    if(random_y == 1 && _y < HAUTEUR_TERRAIN + 1)
+    {
+        setPosition(_x, _y + 1);
+    }
+    else if(random_y == 0 && _y > 1)
+    {
+        setPosition(_x, _y - 1);
+    }
 
 }
 
-*/
+
 
 size_t Player::dribble_proba(size_t Nbadversaire) const
 {
@@ -366,7 +383,6 @@ size_t Player::shoot_proba_left() const
 
 bool Player::shoot(size_t proba)
 {
-    // srand(time(NULL));
     size_t roll_dice = rand()%100;
     if(roll_dice < proba)
     {
@@ -374,11 +390,28 @@ bool Player::shoot(size_t proba)
     }
     return false;
 }
-/*
-void Player::pass() const{
 
+size_t Player::pass_proba(Player p) const
+{
+    std::cout << "x1 = " << this->_x << " et x2 = " << p._x << std::endl;
+    std::cout << "y1 = " << this->_y << " et y2 = " << p._y << std::endl;
+    std::cout << "x^2 = " << pow((this->_x - p._x),2) << " et y^2 = " << pow((this->_y - p._y),2) << std::endl;
+
+    return (size_t)(100 - pow((this->_x - p._x),2) - pow((this->_y - p._y),2));
 }
 
+bool Player::pass(size_t proba)
+{
+    size_t roll_dice = rand()%100;
+    if(roll_dice < proba)
+    {
+
+        return true;
+    }
+    return false;
+}
+
+/*
 void Player::disturb() const{
 
 }

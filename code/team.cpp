@@ -89,24 +89,7 @@ void Team::updatePosition()
     {
         if(i->has_ball() == false)
         {
-            size_t random_x = rand()%2;
-            size_t random_y = rand()%2;
-            if(random_x == 1 && i->getX() < LARGEUR_TERRAIN + 1)
-            {
-                i->setPosition(i->getX() + 1, i->getY());
-            }
-            else if(random_x == 0 && i->getX() > 1)
-            {
-                i->setPosition(i->getX() - 1, i->getY());
-            }
-            if(random_y == 1 && i->getY() < HAUTEUR_TERRAIN + 1)
-            {
-                i->setPosition(i->getX(), i->getY() + 1);
-            }
-            else if(random_y == 0 && i->getY() > 1)
-            {
-                i->setPosition(i->getX(), i->getY() - 1);
-            }
+            i->move();
         }
         i++;
     };
@@ -129,6 +112,29 @@ void Team::randomPlayerBall()
         int_i++;
         i++;
     };
+
+}
+
+Player* Team::randomPlayerPass()
+{
+    Player* p = new Player;
+    int random_player = rand()%roster.size();
+
+    int int_i = 0;
+    list<Player>::iterator i = roster.begin();
+    bool found = false;
+
+    while(i != roster.end() && !found)
+    {
+        if(int_i == random_player){
+            p=&(*i);
+            found =true;
+        }
+        int_i++;
+        i++;
+    };
+    return p;
+    delete [] p;
 
 }
 
