@@ -38,6 +38,7 @@ protected:
     Player player_with_ball;
     bool succesful_action;
     bool pass_action;
+    bool goal_confirmed;
 
     bool toggle_boxes;
 

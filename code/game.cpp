@@ -374,6 +374,7 @@ void GameInstance::gameStart(sf::RenderWindow& window)
     game_selector.setOutlineColor(sf::Color::Red);
     game_selector.setOutlineThickness(2);
 
+    goal_confirmed = false;
     gamePlay(window);
 }
 
@@ -676,33 +677,36 @@ void GameInstance::updateTurn(sf::RenderWindow& window)
 
 void GameInstance::confirmTurn(sf::RenderWindow& window)
 {
-    if(player_with_ball.getOrigin() == "France")
+    if(!goal_confirmed)
     {
-        if(succesful_action)
+        if(player_with_ball.getOrigin() == "France")
         {
-            big_dialog_box = createText("L'action a reussi", 20, 50, 268);
+            if(succesful_action)
+            {
+                big_dialog_box = createText("L'action a reussi", 20, 50, 268);
+            }
+            else
+            {
+                big_dialog_box = createText("L'action a echoue.", 20, 50, 268);
+                giveBall();
+            }
         }
         else
         {
-            big_dialog_box = createText("L'action a echoue.", 20, 50, 268);
-            giveBall();
+            if(succesful_action)
+            {
+                big_dialog_box = createText(player_with_ball.getName() + " a reussi a avancer", 20, 50, 268);
+            }
+            else
+            {
+                big_dialog_box = createText("Vous avez recupere la balle !", 20, 50, 268);
+                giveBall();
+            }
         }
     }
-    else
-    {
-        if(succesful_action)
-        {
-            big_dialog_box = createText(player_with_ball.getName() + " a reussi a avancer", 20, 50, 268);
-        }
-        else
-        {
-            big_dialog_box = createText("Vous avez récupéré la balle !", 20, 50, 268);
-            giveBall();
-        }
-    }
+    
     info_dialog = createText("Appuyez sur Espace pour continuer.", 20, 50, 420);
 
-    pass_action = false;
     gameDraw(window);
     sf::Event event;
     while(window.pollEvent(event))
@@ -715,7 +719,10 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
                 std::cout << "Closing the game intentionally..." << std::endl;
             }
             if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
-            {                
+            {   
+                std::cout << "Return" << std::endl; 
+                pass_action = false;
+                goal_confirmed = false;            
                 return;
             }
         }
@@ -724,24 +731,28 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
 
 void GameInstance::whoHasBall()
 {
-    for(Player i : team_gauche.roster)
+    if(!goal_confirmed)
     {
-        std::string player_name = i.getName();
-        if(team_gauche(player_name)->has_ball())
+        for(Player i : team_gauche.roster)
         {
-            big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
-            player_with_ball = i;
-        }
-    };
-    for(Player i : team_droite.roster)
-    {
-        std::string player_name = i.getName();
-        if(team_droite(player_name)->has_ball())
+            std::string player_name = i.getName();
+            if(team_gauche(player_name)->has_ball())
+            {
+                big_dialog_box = createText(player_name + " a la balle. \nQue voulez-vous faire ?", 20, 50, 268);
+                player_with_ball = i;
+            }
+        };
+        for(Player i : team_droite.roster)
         {
-            big_dialog_box = createText(player_name + " a la balle. \nIl va essayer d'avancer. \nVotre equipe va essayer de le bloquer.", 20, 50, 268);
-            player_with_ball = i;
-        }
-    };
+            std::string player_name = i.getName();
+            if(team_droite(player_name)->has_ball())
+            {
+                big_dialog_box = createText(player_name + " a la balle. \nIl va essayer d'avancer. \nVotre equipe va essayer de le bloquer.", 20, 50, 268);
+                player_with_ball = i;
+            }
+        };
+    }
+    
 }
 
 void GameInstance::displayOptions()
@@ -750,7 +761,6 @@ void GameInstance::displayOptions()
     {
         size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
         info_dialog = createText(std::to_string(NbAdversaire) + " adversaires sur cette case.", 20, 50, 420);
-        std::string temp = "_";
         text_1 = createText("Passer (Control)", 20, 490, 256);
         text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
         text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba_right()) + "%)", 20, 490, 366);
@@ -808,8 +818,9 @@ void GameInstance::passOptions(sf::RenderWindow& window)
 
 void GameInstance::confirmGoal()
 {
+    big_dialog_box = createText("But de " + player_with_ball.getName() + " !", 20, 50, 268);
+    goal_confirmed = true;
     loadTeam();
-
     if(player_with_ball.getOrigin() == "France")
     {
         score_gauche++;

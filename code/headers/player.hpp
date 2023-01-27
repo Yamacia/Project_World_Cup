@@ -22,10 +22,10 @@ class Player : public Character {
 
         /*Méthodes d'actions */
         void move();
-        bool dribble_right(size_t proba);
-        bool dribble_left(size_t proba);
-        bool shoot(size_t proba);
-        bool pass(size_t proba);
+        bool dribble_right(int proba);
+        bool dribble_left(int proba);
+        bool shoot(int proba);
+        bool pass(int proba);
         // void stop() const;
         // void disturb() const;
         // void tackle() const;
@@ -42,10 +42,10 @@ class Player : public Character {
         
         
         /*Méthodes de calculs*/
-        size_t dribble_proba(size_t Nbadversaire) const;
-        size_t shoot_proba_left() const;
-        size_t shoot_proba_right() const;
-        size_t pass_proba(Player p) const;
+        int dribble_proba(size_t Nbadversaire) const;
+        int shoot_proba_left() const;
+        int shoot_proba_right() const;
+        int pass_proba(Player p) const;
         
         
 

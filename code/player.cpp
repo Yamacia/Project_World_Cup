@@ -335,7 +335,7 @@ void Player::move(){
 
 
 
-size_t Player::dribble_proba(size_t Nbadversaire) const
+int Player::dribble_proba(size_t Nbadversaire) const
 {
     if(Nbadversaire <= 0)
     {
@@ -343,14 +343,14 @@ size_t Player::dribble_proba(size_t Nbadversaire) const
     }
     else
     {
-        return (size_t)((50*stat) / Nbadversaire);
+        return max((int)((50*stat) / Nbadversaire),0);
     }
 
 }
 
-bool Player::dribble_right(size_t proba)
+bool Player::dribble_right(int proba)
 {
-    size_t roll_dice = rand()%100;
+    int roll_dice = rand()%100;
     if(roll_dice < proba)
     {
         setPosition(_x + 1, _y);
@@ -359,9 +359,9 @@ bool Player::dribble_right(size_t proba)
     return false;
 }
 
-bool Player::dribble_left(size_t proba)
+bool Player::dribble_left(int proba)
 {
-    size_t roll_dice = rand()%100;
+    int roll_dice = rand()%100;
     if(roll_dice < proba)
     {
         setPosition(_x - 1, _y);
@@ -371,19 +371,19 @@ bool Player::dribble_left(size_t proba)
 }
 
 
-size_t Player::shoot_proba_right() const
+int Player::shoot_proba_right() const
 {
-    return (size_t)((100*stat) / ((abs((int)(CAGE_DROITE_X - _x)) + abs((int)(CAGE_DROITE_Y - _y))) + 1));
+    return max((int)((100*stat) / ((abs((int)(CAGE_DROITE_X - _x)) + abs((int)(CAGE_DROITE_Y - _y))) + 1)),0);
 }
 
-size_t Player::shoot_proba_left() const
+int Player::shoot_proba_left() const
 {
-    return (size_t)((100*stat) / ((abs((int)(CAGE_GAUCHE_X - _x)) + abs((int)(CAGE_GAUCHE_Y - _y))) + 1));
+    return max((int)((100*stat) / ((abs((int)(CAGE_GAUCHE_X - _x)) + abs((int)(CAGE_GAUCHE_Y - _y))) + 1)),0);
 }
 
-bool Player::shoot(size_t proba)
+bool Player::shoot(int proba)
 {
-    size_t roll_dice = rand()%100;
+    int roll_dice = rand()%100;
     if(roll_dice < proba)
     {
         return true;
@@ -391,18 +391,18 @@ bool Player::shoot(size_t proba)
     return false;
 }
 
-size_t Player::pass_proba(Player p) const
+int Player::pass_proba(Player p) const
 {
     // std::cout << "x1 = " << this->_x << " et x2 = " << p._x << std::endl;
     // std::cout << "y1 = " << this->_y << " et y2 = " << p._y << std::endl;
     // std::cout << "x^2 = " << pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) << " et y^2 = " << pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2) << std::endl;
 
-    return (size_t)(100 - pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) - pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2));
+    return max((int)(100 - pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) - pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2)),0);
 }
 
-bool Player::pass(size_t proba)
+bool Player::pass(int proba)
 {
-    size_t roll_dice = rand()%100;
+    int roll_dice = rand()%100;
     if(roll_dice < proba)
     {
 
