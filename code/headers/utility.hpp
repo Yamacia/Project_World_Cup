@@ -5,6 +5,7 @@
 #include <fstream>
 #include "constants.hpp"
 
+/*Fonctions utiles pour les classes*/
 double initStat(std::string fichier, std::string name);
 std::string initPoste(std::string fichier, std::string name);
 sf::Sprite createBox(size_t l_pos, size_t h_pos);

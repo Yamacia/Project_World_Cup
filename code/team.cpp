@@ -3,15 +3,13 @@
 using namespace std;
 
 Team::Team()
-{
+{}
 
-}
-
+/*Constructeur à partir du pays d'origine et de la liste des joueurs souhaitée*/
 Team::Team(string  country, string  players){
     string retour = "";
     int i = 0;
     bool found=false;
-    // int cpt=0;
     while (players[i] != '\0')
     {
         if (players[i] != ',')
@@ -29,24 +27,23 @@ Team::Team(string  country, string  players){
             if (retour!="")
             {
                 Player current_player (retour, country);
-                std::string fichier = "../data/" + country + "_team.txt";
+                std::string fichier = "../data/" + country + "_team.txt"; //Charge le fichier correspondant
                 
-                found=current_player.initInfo(fichier);
-                //cout << "Found :" << found << std::endl;
-                if (found ==false)
+                found = current_player.initInfo(fichier);
+                
+                if (found == false) //Si c'est un goal
                 {
-                    Goal current_goal(retour,country);
-                    std::string fichier_goal= "../data/" + country + "_goal.txt";
+                    Goal current_goal(retour, country);
+                    std::string fichier_goal = "../data/" + country + "_goal.txt";
                     current_goal.initInfo(fichier_goal);
-                    cout << current_goal << endl;
+                    //cout << current_goal << endl;
                     roster.push_back(current_goal);
                 }
-                else
+                else //Si c'est un joueur autre que goal
                 {
                     cout << current_player << endl;
                     roster.push_back(current_player);
                 }
-
                 
             }
           
@@ -58,6 +55,7 @@ Team::Team(string  country, string  players){
     }
 }
 
+/*Affiche l'équipe*/
 void Team::printTeam(){
 
     for(list<Player>::iterator it = roster.begin(); it != roster.end(); it++){
@@ -66,21 +64,6 @@ void Team::printTeam(){
 
 }
 
-
-/* A revoir
-
-void Team::init(){
-
-    for (auto i: roster){
-        if (i.has_ball()!=0){
-            i.move();
-            cout << i.getX() << endl;
-            cout << i.getY() << endl;
-        }
-    }
-    
-}
-*/
 
 /* Met à jour la position de tous les joueurs de l'équipe */
 void Team::updatePosition()

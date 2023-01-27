@@ -3,6 +3,7 @@
 Field::Field()
 {}
 
+/*Constructeur avec largeur et hauteur en parametres */
 Field::Field(size_t w, size_t h)
 {   
     width=w;
@@ -18,12 +19,12 @@ Field::Field(size_t w, size_t h)
     {
         for (long unsigned int j=0; j < height; j++)
         {
-            field[k][j] = '*'; //A modifier 
+            field[k][j] = '*'; 
         }
     }
 }
 
-
+/*Constructeur par copie*/
 Field::Field (const Field & f)
 {
     width  = f.getWidth();
@@ -43,6 +44,20 @@ Field::Field (const Field & f)
         }
     }
 
+}
+
+/*Destructeur*/
+Field::~Field()
+{
+  std::cout << "Suppression en cours .. " << std::endl;
+  
+  for (long unsigned int i=0 ; i<width; i++)
+  {
+    delete [] field[i];
+  }
+  delete [] field;
+
+  std::cout << "Fait" << std::endl;
 }
 
 /* Permet de savoir combien d'adversaires sont présent sur une case précise */

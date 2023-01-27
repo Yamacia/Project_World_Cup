@@ -3,112 +3,30 @@
 #include<vector>
 using namespace std;
 
-
-
+/*Constructeur à partir du nom et de l'origine du joueur souhaité*/
 Player::Player(std::string n, std::string o): Character(n, o)
 {
-    string fichier = "../data/" + origin + "_team.txt"; // Initialise le joueur selon sa nationalité
+    string fichier = "../data/" + origin + "_team.txt"; 
+    /*Initalisation des infos du joueur à partir du fichier correspondant dans data */
     this->stat = initStat(fichier,n);
     this->poste= initPoste(fichier,n);
     this->ball=false;
     
     if(origin == "France"){
         
-        initLeftPosition();
+        initLeftPosition(); //Met en place la position des joueurs en fonction de leur poste 
     }
     else{
         
         initRightPosition();
 
     }
-
-    
-    
-
 }
 
-/* Fonction qui initialise les statistiques des joueurs à partir d'un fichier txt 
-
-void Player::initStat(string fichier){
-
-    ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
-    
-
-        if(file)  // si l'ouverture a réussi
-        {   
-            bool found=false;
-            string mot;
-            vector<string> retour;
-
-            while (file.peek()!=EOF){
-                file >> mot;
-                //cout << mot << endl;
-                retour.push_back(mot);
-            }
-            if(!found){
-                for (size_t i = 0; i < retour.size(); i+=4)
-                {
-                    //cout << retour[i] << " + " << retour[i+1] << endl;
-                    if (retour[i]+' '+retour[i+1] == this->name)
-                    {
-                        //cout << retour[i]  << ' ' << retour[i+1] << endl;
-                        this->setStat(stod(retour[i+2]));
-                        found = true;
-                    }
-                }
-            }
-            file.close();  // on ferme le fichier
-        }
-        else  // sinon
-                cerr << "Impossible d'ouvrir le fichier !" << endl;
- 
-}
-
-*/
-/* Fonction qui initialise les postes des joueurs à partir d'un fichier txt 
-
-void Player::initPoste(string fichier){
-        ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
-    
-
-        if(file)  // si l'ouverture a réussi
-        {   
-            bool found=false;
-            string ligne;
-            string mot;
-            vector<string> retour;
-
-            while (file.peek()!=EOF){
-                file >> mot;
-                //cout << mot << endl;
-                retour.push_back(mot);
-            }
-            if(!found){
-                for (size_t i = 0; i < retour.size(); i+=4)
-                {
-                    //cout << retour[i] << " + " << retour[i+1] << endl;
-                    if (retour[i]+' '+retour[i+1] == this->name)
-                    {
-                        cout << retour[i]  << ' ' << retour[i+1] << endl;
-                        this->setPoste(retour[i+3]);
-                        found = true;
-                    }
-                }
-            }
-            file.close();  // on ferme le fichier
-        }
-        else  // sinon
-                cerr << "Impossible d'ouvrir le fichier !" << endl;
- 
-}
-*/
-
-/* Fonction qui initialise les infos des joueurs à partir d'un fichier txt 
-*/
+/* Fonction qui initialise les infos des joueurs à partir d'un fichier txt */
 bool Player::initInfo(string fichier){
         ifstream file(fichier, ios::in);  // on ouvre le fichier en lecture
         bool found=false;
-        //bool trouve=false;
         if(file)  // si l'ouverture a réussi
         {   
             
@@ -118,16 +36,13 @@ bool Player::initInfo(string fichier){
 
             while (file.peek()!=EOF){
                 file >> mot;
-                //cout << mot << endl;
                 retour.push_back(mot);
             }
             if(!found){
                 for (size_t i = 0; i < retour.size(); i+=4)
                 {
-                    //cout << retour[i] << " + " << retour[i+1] << endl;
                     if (retour[i]+' '+retour[i+1] == this->name)
                     {
-                        //cout << retour[i]  << ' ' << retour[i+1] << endl;
                         this->setStat(stod(retour[i+2]));
                         this->setPoste(retour[i+3]);
                         found = true;
@@ -284,6 +199,7 @@ void Player::initRightPosition()
     }
 }
 
+/* Retourne les information du joueur dans un string*/
 std::string Player::toInfo() const{
         std::string retour="";
         retour = name + ", " + origin + ", " + poste + ", " + to_string(stat);
@@ -294,7 +210,6 @@ std::string Player::toInfo() const{
 Player& Player::operator=(const Player &p){
     name=p.name;
     origin=p.origin;
-    present=p.present;
     stat=p.stat;
     role=p.role;
     poste=p.poste;
@@ -408,10 +323,6 @@ bool Player::shoot(int proba)
 /* Donne la proba de réussir la passe à un joueur */
 int Player::pass_proba(Player p) const
 {
-    // std::cout << "x1 = " << this->_x << " et x2 = " << p._x << std::endl;
-    // std::cout << "y1 = " << this->_y << " et y2 = " << p._y << std::endl;
-    // std::cout << "x^2 = " << pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) << " et y^2 = " << pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2) << std::endl;
-
     return max((int)(100 - pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) - pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2)),0);
 }
 
@@ -426,15 +337,3 @@ bool Player::pass(int proba)
     }
     return false;
 }
-
-
-
-/*
-void Player::disturb() const{
-
-}
-
-void Player::tackle() const{
-    
-}
-*/

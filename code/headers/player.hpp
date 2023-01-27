@@ -9,8 +9,7 @@ class Player : public Character {
         Player():Character(){};
         Player(std::string n, std::string o);
         Player(const Player & p): Character(p), ball(p.ball){}
-        //void initStat( std::string fichier);
-        //void initPoste(std::string fichier);
+    
         
         /*Méthode virtuelle*/
         std::string toInfo() const;
@@ -27,10 +26,7 @@ class Player : public Character {
         bool dribble_left(int proba);
         bool shoot(int proba);
         bool pass(int proba);
-        // void stop() const;
-        // void disturb() const;
-        // void tackle() const;
-
+        
         /*Getters*/
         bool has_ball() const {return ball;}
         
@@ -53,7 +49,7 @@ class Player : public Character {
 
     protected:
 
-    bool ball;
+    bool ball; /*Permet de savoir s'il possède le ballon ou non*/
     
     
 };

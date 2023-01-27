@@ -13,13 +13,12 @@ class Goal: public Player{
         void initGoalDroit();
         void initGoalGauche();
 
-        /*Méthode virtuelle*/
+        /*Méthode d'informations sur le goal*/
         std::string toInfo() const;
-
-        /*Méthode d'actions*/
-        void catch_ball();
-        void stop();
+        
+        /*Méthode d'action*/
         void move();
+        
 
     private:
         bool _gball;

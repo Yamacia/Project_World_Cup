@@ -17,18 +17,6 @@ int main(){
 
     /* Menu screen */ 
     GameManager.menuStart(window);
-
-/*
-    Goal g1("Nick Pope", "England");
-    std::cout << g1 << std::endl;
-
-    Goal g2(g1);
-
-    //std::cout << g2 <<std::endl;
-    g2.initGoalDroit();
-
-    Team t("France", "Kylian Mbappe, Lucas Digne, Paul Pogba, Hugo Lloris");
-*/   
     
     return 0;
 }

@@ -2,28 +2,29 @@
 #include <string>
 #include <iostream>
 
-Character::Character(): name("Unknown"), origin("Unknown"), present(0), stat(0.0), _x(0), _y(0)
+/*Constrcuteur vide par défaut*/
+Character::Character(): name("Unknown"), origin("Unknown"), stat(0.0), _x(0), _y(0)
 {}
 
-Character::Character(std::string n, std::string o) : name(n), origin(o), present(0), _x(0), _y(0)
+/*Constructeur à partir du nom et d'origine*/
+Character::Character(std::string n, std::string o) : name(n), origin(o), stat(0.0), _x(0), _y(0)
 {}
 
-Character::Character(const Character &c) : name(c.name), origin(c.origin), present(c.present), stat(c.stat), poste(c.poste), _x(c._x), _y(c._y)
+/*Constructeur par copie*/
+Character::Character(const Character &c) : name(c.name), origin(c.origin), stat(c.stat), poste(c.poste), _x(c._x), _y(c._y)
 {
     sprite = sf::CircleShape(6);  // Taille du sprite sur le jeu
     setSpritePosition();
     setSpriteColor();
 }
 
+/* Permet d'avoir les info sur le character*/
 std::string Character::toInfo() const{
     std::string retour="";
 
     retour = name + ", " + origin + ", " + poste;
     return retour;
 }
-
-
-
 
 /* Met à jour la position du joueur sur l'interface graphique */
 void Character::setSpritePosition()

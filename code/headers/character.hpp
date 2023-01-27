@@ -16,11 +16,9 @@ public:
     double getStat()const{return stat;}
     size_t getX()const{return _x;}
     size_t getY()const{return _y;}
-    bool on_field()const{return present;}
     sf::CircleShape getSprite(){return sprite;}
 
     /* Setters */
-    void setPresence(){present=1;}
     void setOrigin(std::string nation){origin=nation;}
     void setStat(double s){stat=s;}
     void setPosition(size_t x, size_t y){_x = x; _y = y;}
@@ -28,25 +26,24 @@ public:
     void setSpriteColor();
     void setPoste(std::string p){poste=p;}
     virtual std::string toInfo() const;
-    /* Autres méthodes*/
-    //virtual void initStat(const Character & c, std::stringstream fichier)=0;
-    //virtual void indicate_position() const = 0;
-    
+   
 
 protected: 
+
+    /* Character's informations */
     std::string name;
     std::string origin; 
-    bool present; //Presence sur le terrain
     double stat;
     Poste role;
     std::string poste;
 
-    //Character's position on the field
+    /* Character's position on the field */
     size_t _x;
     size_t _y;
 
-    // Character's sprite
+    /* Character's sprite */
     sf::CircleShape sprite;
 };
 
+/* Operator to print the Character's informations */
 std::ostream & operator<<(std::ostream& os, const Character& e);

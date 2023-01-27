@@ -2,7 +2,9 @@
 
 using namespace std;
 
+/*Constructeur*/
 Goal::Goal(string n, string o){
+
     string fichier = "../data/" + o + "_goal.txt";
     this->stat = initStat(fichier,n);
     this->name=n;
@@ -43,14 +45,7 @@ void Goal::initGoalDroit(){
     }
 }
 
-void Goal::catch_ball(){
-
-}
-
-void Goal::stop(){
-
-}
-
+/* Ne pas faire bouger le goal */
 void Goal::move()
 {
     this->setPosition(this->getX(), this->getY());
