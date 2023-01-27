@@ -53,7 +53,6 @@ TEST_CASE("2: Goal")
 TEST_CASE("3: Team")
 {
   Team team_france("France", "Kylian Mbappe, Lucas Digne, Paul Pogba, Hugo Lloris");
-
   Player p1;
   for(const auto& iter : team_france.roster)
     {
@@ -75,6 +74,5 @@ TEST_CASE("3: Team")
       }
 
     }
-  
     
 }
