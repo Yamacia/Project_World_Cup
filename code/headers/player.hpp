@@ -31,7 +31,7 @@ class Player : public Character {
         bool has_ball() const {return ball;}
         
         /*Setters*/
-        void set_ball(bool has_ball) {std::cout << "Set ball applique a : " + name << std::endl; ball = has_ball;}
+        void set_ball(bool has_ball) {ball = has_ball;}
         void setSpriteball();
         
 

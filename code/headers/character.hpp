@@ -34,7 +34,6 @@ protected:
     std::string name;
     std::string origin; 
     double stat;
-    Poste role;
     std::string poste;
 
     /* Character's position on the field */

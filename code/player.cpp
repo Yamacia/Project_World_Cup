@@ -70,21 +70,18 @@ void Player::initLeftPosition()
     {
         _x=1;
         _y=1;
-        cout << _x << ' ' << _y << endl;
     }
     
     if (poste =="DC")
     {
         _x=1;
         _y=4;
-        cout << _x << ' ' << _y<<endl;
     }
 
     if (poste== "DD")
     {
         _x=1;
         _y=8;
-        cout << _x << ' ' << _y <<endl;
     }
 
     if (poste== "MG")
@@ -92,43 +89,36 @@ void Player::initLeftPosition()
     
         _x=3;
         _y=1;
-        cout << _x << ' ' << _y << endl;
     }
 
     if (poste=="MC")
     {
         _x=3;
         _y=4;
-        cout << _x << ' ' << _y << endl;
     }
 
     if (poste== "MD"){
         _x=3;
         _y=7;
-        cout << _x << ' ' << _y << endl;
     }
     if (poste== "AG"){
         _x=5;
         _y=1;
-        cout << _x << ' ' << _y << endl;   
     }
 
     if (poste=="AC"){
         _x=6;
         _y=4;
-        cout << _x << ' ' << _y << endl;
     }
 
     if (poste=="AD"){
         _x=5;
         _y=7;
-        cout << _x << ' ' << _y << endl;
     }
 
     if(poste=="BU"){
         _x=7;
         _y=5;
-        cout << _x << ' ' << _y << endl;
     }
 }
 
@@ -140,21 +130,18 @@ void Player::initRightPosition()
     {
         _x=14;
         _y=1;
-        cout << _x << ' ' << _y << endl;
     }
     
     if (poste =="DC")
     {
         _x=14;
         _y=4;
-        cout << _x << ' ' << _y<<endl;
     }
 
     if (poste== "DD")
     {
         _x=14;
         _y=8;
-        cout << _x << ' ' << _y <<endl;
     }
 
     if (poste== "MG")
@@ -162,43 +149,36 @@ void Player::initRightPosition()
     
         _x=12;
         _y=1;
-        cout << _x << ' ' << _y << endl;
     }
 
     if (poste=="MC")
     {
         _x=12;
         _y=4;
-        cout << _x << ' ' << _y << endl;
     }
 
     if (poste== "MD"){
         _x=12;
         _y=7;
-        cout << _x << ' ' << _y << endl;
     }
     if (poste== "AG"){
         _x=10;
         _y=1;
-        cout << _x << ' ' << _y << endl;   
     }
 
     if (poste=="AC"){
         _x=9;
         _y=4;
-        cout << _x << ' ' << _y << endl;
     }
 
     if (poste=="AD"){
         _x=10;
         _y=7;
-        cout << _x << ' ' << _y << endl;
     }
 
     if(poste=="BU"){
         _x=8;
         _y=5;
-        cout << _x << ' ' << _y << endl;
     }
 }
 
@@ -214,7 +194,6 @@ Player& Player::operator=(const Player &p){
     name=p.name;
     origin=p.origin;
     stat=p.stat;
-    role=p.role;
     poste=p.poste;
     _x=p._x;
     _y=p._y;
