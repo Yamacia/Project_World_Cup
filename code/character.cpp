@@ -22,9 +22,7 @@ std::string Character::toInfo() const{
     return retour;
 }
 
-void Character::move() const
-{
-}
+
 
 
 /* Met à jour la position du joueur sur l'interface graphique */

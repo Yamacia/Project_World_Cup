@@ -25,13 +25,13 @@ public:
     void setStat(double s){stat=s;}
     void setPosition(size_t x, size_t y){_x = x; _y = y;}
     void setSpritePosition();
-    virtual void setSpriteColor();
+    void setSpriteColor();
     void setPoste(std::string p){poste=p;}
     virtual std::string toInfo() const;
     /* Autres méthodes*/
     //virtual void initStat(const Character & c, std::stringstream fichier)=0;
     //virtual void indicate_position() const = 0;
-    virtual void move() const;
+    
 
 protected: 
     std::string name;

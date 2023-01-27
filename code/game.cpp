@@ -527,14 +527,14 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
     window.clear(sf::Color::Black);
     window.draw(background);
 
-    for(Player i : team_gauche.roster) // Afficher équipe de gauche
+    for(Player i : team_gauche.getTeam()) // Afficher équipe de gauche
     {
         i.setSpriteball();
         sf::CircleShape sprite = i.getSprite();
         window.draw(sprite);
     }
 
-    for(Player i : team_droite.roster) // Afficher équipe de droite
+    for(Player i : team_droite.getTeam()) // Afficher équipe de droite
     {
         i.setSpriteball();
         sf::CircleShape sprite = i.getSprite();
@@ -646,7 +646,7 @@ void GameInstance::whoHasBall()
 {
     if(!goal_confirmed)
     {
-        for(Player i : team_gauche.roster)
+        for(Player i : team_gauche.getTeam())
         {
             std::string player_name = i.getName();
             if(team_gauche(player_name)->has_ball())
@@ -655,7 +655,7 @@ void GameInstance::whoHasBall()
                 player_with_ball = i;
             }
         };
-        for(Player i : team_droite.roster)
+        for(Player i : team_droite.getTeam())
         {
             std::string player_name = i.getName();
             if(team_droite(player_name)->has_ball())

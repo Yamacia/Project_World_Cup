@@ -2,7 +2,6 @@
 #include "headers/player.hpp"
 #include "headers/game.hpp"
 #include "headers/field.hpp"
-#include "headers/referee.hpp"
 #include "headers/team.hpp"
 #include "headers/goal.hpp"
 #include "headers/inputmanager.hpp"

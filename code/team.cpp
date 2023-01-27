@@ -66,6 +66,7 @@ void Team::printTeam(){
 
 }
 
+
 /* A revoir
 
 void Team::init(){
@@ -90,7 +91,13 @@ void Team::updatePosition()
     {
         if(i->has_ball() == false)
         {
+            if (i->getPoste()=="GO"){
+                i->setPosition(i->getX(), i->getY() );
+
+            }
+            else{
             i->move();
+            }
         }
         i++;
     };
@@ -135,7 +142,7 @@ Player* Team::randomPlayerPass()
         }
         int_i++;
         i++;
-    };
+    }
     return p;
     delete [] p;
 

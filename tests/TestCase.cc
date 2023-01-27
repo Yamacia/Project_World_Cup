@@ -47,6 +47,9 @@ TEST_CASE("2: Goal")
   goal2.initGoalGauche(); //Test de l'initialisation des positions
   REQUIRE(goal2.getX()==1);
   REQUIRE(goal2.getY()==5);
+  goal2.move();
+  REQUIRE(goal2.getX()==1);
+  REQUIRE(goal2.getY()==5);
 }
 
 

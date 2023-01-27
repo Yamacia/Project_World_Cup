@@ -9,18 +9,20 @@ class Team{
     public:
     Team(); 
     Team(std::string country, std::string players);
+
+
+    const std::list<Player>& getTeam(){return roster;}
     void printTeam(); 
     
 
-    void init(); // A revoir
     void updatePosition();
     void randomPlayerBall();
     Player* randomPlayerPass();
     Player* operator()(std::string player);
 
-    std::list<Player> roster; 
+     
 
     private:
-
+    std::list<Player> roster;
 };
 

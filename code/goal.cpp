@@ -53,5 +53,7 @@ void Goal::stop(){
 
 void Goal::move()
 {
+    this->setPosition(this->getX(), this->getY());
 }
+
 
