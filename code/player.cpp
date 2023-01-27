@@ -393,11 +393,11 @@ bool Player::shoot(size_t proba)
 
 size_t Player::pass_proba(Player p) const
 {
-    std::cout << "x1 = " << this->_x << " et x2 = " << p._x << std::endl;
-    std::cout << "y1 = " << this->_y << " et y2 = " << p._y << std::endl;
-    std::cout << "x^2 = " << pow((this->_x - p._x),2) << " et y^2 = " << pow((this->_y - p._y),2) << std::endl;
+    // std::cout << "x1 = " << this->_x << " et x2 = " << p._x << std::endl;
+    // std::cout << "y1 = " << this->_y << " et y2 = " << p._y << std::endl;
+    // std::cout << "x^2 = " << pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) << " et y^2 = " << pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2) << std::endl;
 
-    return (size_t)(100 - pow((this->_x - p._x),2) - pow((this->_y - p._y),2));
+    return (size_t)(100 - pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) - pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2));
 }
 
 bool Player::pass(size_t proba)

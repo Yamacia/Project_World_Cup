@@ -510,16 +510,12 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                     cursor_x++;
                     game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
                 }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && toggle_boxes)
-                {
-                    pass_action = false;
-                }
             }
             if(player_with_ball.getOrigin() == "France")
             {
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && pass_action)
                 {
-                    if(selector == 0 && pass_action)
+                    if(selector == 0)
                     {
                         succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_1));
                         team_gauche(player_with_ball.getName())->set_ball(false);
@@ -527,27 +523,27 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         confirmTurn(window);
                         updateTurn(window);
                     }
-                    if(selector == 1 && pass_action)
+                    if(selector == 1)
                     {
-                        std::cout << "Passe 2 !" << std::endl;
                         succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_2));
                         team_gauche(player_with_ball.getName())->set_ball(false);
                         player_option_2->set_ball(true);
                         confirmTurn(window);
                         updateTurn(window);
                     }
-                    if(selector == 2 && pass_action)
+                    if(selector == 2)
                     {
-                        std::cout << "Passe 3 !" << std::endl;
                         succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_3));
                         team_gauche(player_with_ball.getName())->set_ball(false);
                         player_option_3->set_ball(true);
                         confirmTurn(window);
                         updateTurn(window);
                     }
-                    if(selector == 1 && !pass_action)
+                }
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action)
+                {
+                    if(selector == 1)
                     {
-                        std::cout << "Dribble !" << std::endl;
                         if(player_with_ball.getX() <= LARGEUR_TERRAIN)
                         {
                             succesful_action = player_with_ball.dribble_right(player_with_ball.dribble_proba(terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite)));
@@ -560,9 +556,8 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         }
 
                     }
-                    if(selector == 2 && !pass_action)
+                    if(selector == 2)
                     {
-                        std::cout << "Tir !" << std::endl;
                         succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba_right());
                         if(succesful_action)
                         {
@@ -690,6 +685,8 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
         big_dialog_box = createText("L'action a echouee.", 20, 50, 268);
         giveBall();
     }
+    std::cout << "Back to default " << std::endl;
+    pass_action = false;
     gameDraw(window);
     sf::Event event;
     while(window.pollEvent(event))
