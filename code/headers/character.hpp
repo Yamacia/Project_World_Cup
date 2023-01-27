@@ -25,7 +25,7 @@ public:
     void setStat(double s){stat=s;}
     void setPosition(size_t x, size_t y){_x = x; _y = y;}
     void setSpritePosition();
-    void setSpriteColor();
+    virtual void setSpriteColor();
     void setPoste(std::string p){poste=p;}
     virtual std::string toInfo() const;
     /* Autres méthodes*/

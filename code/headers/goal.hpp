@@ -21,6 +21,7 @@ class Goal: public Player{
         void stop();
         void move();
 
+        void setSpriteColor();
     private:
         bool _gball;
 };

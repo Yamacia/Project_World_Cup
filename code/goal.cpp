@@ -10,7 +10,8 @@ Goal::Goal(string n, string o){
     this->poste="GO";
     this->ball = false;
     this->_gball=false;
-    this->sprite.setFillColor(sf::Color::Magenta);
+    // this->sprite.setFillColor(sf::Color::Magenta);
+    setSpriteColor();
     if(origin == "France")
         initGoalGauche();
     else
@@ -53,4 +54,9 @@ void Goal::stop(){
 
 void Goal::move()
 {
+}
+
+void Goal::setSpriteColor()
+{
+    sprite.setFillColor(sf::Color::Magenta);
 }
