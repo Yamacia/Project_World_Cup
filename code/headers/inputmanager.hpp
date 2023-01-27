@@ -12,10 +12,10 @@ private:
     sf::Vector2f newMousePosition;
     sf::Vector2f mouseVelosity;
 
-	InputManager();
+	
 
 public:
-
+	InputManager();
 	static InputManager& Instance();
 
 	bool GetKey(sf::Mouse::Button button);
