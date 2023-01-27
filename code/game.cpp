@@ -47,50 +47,7 @@ void GameInstance::loadPlaylist()
     playlist.push_back("../musique/world_cup.wav"); // iShowSpeed - World Cup
     playlist.push_back("../musique/waving_flag.wav"); // K'NAAN - Waving Flag
     playlist.push_back("../musique/espana.wav"); // Amine - La Roja
-}
-
-/* Crée une petite boite de dialogue à la position désirée */
-sf::Sprite GameInstance::createBox(size_t l_pos, size_t h_pos)
-{
-    sf::Texture *text_box = new sf::Texture;
-    text_box->loadFromFile("../images/box_blank.png");
-    sf::Sprite box(*text_box);
-    box.setTextureRect(sf::IntRect(0, 0, LARGEUR_BOX, HAUTEUR_BOX));
-    box.setPosition(l_pos,h_pos);
-    return box;
-    delete text_box;
-    text_box = nullptr;
-}
-
-/* Crée une grande boite de dialogue à la position désirée */
-sf::Sprite GameInstance::createBigBox(size_t l_pos, size_t h_pos)
-{
-    sf::Texture *text_box = new sf::Texture;
-    text_box->loadFromFile("../images/big_box_blank.png");
-    sf::Sprite box(*text_box);
-    box.setTextureRect(sf::IntRect(0, 0, LARGEUR_BIG, HAUTEUR_BIG));
-    box.setPosition(l_pos,h_pos);
-    return box;
-    delete text_box;
-    text_box = nullptr;
-}
-
-/* Crée le texte à la position et taille désirées */
-sf::Text GameInstance::createText(std::string string, size_t size, size_t l_pos, size_t h_pos)
-{
-    sf::Font *font = new sf::Font;
-    font->loadFromFile("../font/arial.ttf");
-
-    sf::Text text;
-    text.setFont(*font);
-    text.setCharacterSize(size);
-    text.setFillColor(sf::Color::White);
-    text.setString(string);
-    text.setPosition(sf::Vector2f(l_pos,h_pos));
-
-    return text;
-    delete font;
-    font = nullptr;
+    playlist.push_back("../musique/nfl_theme.wav"); // NFL Theme Song
 }
 
 /* Bouge le curseur de choix (Menu / Option) à la case désirée */
@@ -252,7 +209,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && selected == 1)
                 {
                     if(current_song == 0)
-                        current_song = 2;
+                        current_song = 3;
                     else
                         current_song--;
                     selectSong(current_song);
@@ -260,7 +217,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && selected == 1)
                 {
-                    if(current_song == 2)
+                    if(current_song == 3)
                         current_song = 0;
                     else
                         current_song++;
@@ -349,6 +306,8 @@ void GameInstance::updateSong()
         case 2:
             playing_song = createText("Amine - La Roja", 15, 320, 320);
             break;
+        case 3:
+            playing_song = createText("NFL Theme Song", 15, 320, 320);
         default:
             break;
     }
@@ -364,11 +323,6 @@ void GameInstance::gameStart(sf::RenderWindow& window)
     loadScore();
     tour = createText("Tour " + std::to_string(turn), 30, 195, 223);
 
-    game_cursor.setSize(sf::Vector2f(LARGEUR_CASE, HAUTEUR_CASE));
-    game_cursor.setFillColor(sf::Color::Transparent);
-    game_cursor.setOutlineColor(sf::Color::Red);
-    game_cursor.setOutlineThickness(2);
-
     game_selector.setSize(sf::Vector2f(LARGEUR_BOX, HAUTEUR_BOX));
     game_selector.setFillColor(sf::Color::Transparent);
     game_selector.setOutlineColor(sf::Color::Red);
@@ -381,11 +335,12 @@ void GameInstance::gameStart(sf::RenderWindow& window)
 /* Charge les équipes sur l'interface graphique */
 void GameInstance::loadTeam()
 {
-    team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud, Karim Benzema, Kylian Mbappe");
+    team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud, Karim Benzema, Kylian Mbappe, Hugo Lloris, Paul Pogba, Adrien Rabiot, Nabil Fekir, Kingsley Coman, Theo Hernandez, Lucas Digne");
 
-    team_droite = Team("Portugal", "Christiano Ronaldo");
+    team_droite = Team("Portugal", "Christiano Ronaldo, Bruno Fernandes, Gancalo Guedes, Diogo Jota, Ruben Neves, Andre Silva, Joao Cancelo, Rafael Leao, Nuno Mendes, Raphael Guerreiro, Rui Patricio");
 }
 
+/* Donne la balle à l'équipe correspondante */
 void GameInstance::giveBall()
 {
     loadTeam();
@@ -429,17 +384,13 @@ void GameInstance::gamePlay(sf::RenderWindow& window)
     window.close();
 }
 
+/* Boucle de jeu */
 void GameInstance::gameLoop(sf::RenderWindow& window)
 {
-    /* Carré de sélection de case */
-    size_t cursor_x = 0;
-    size_t cursor_y = 0;
-    game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
-
     /* Rectangle de sélection d'action */
     size_t selector = 0;
     game_selector.setPosition(480, 246);
-    while(window.isOpen() && turn < 60)
+    while(window.isOpen() && turn < MAX_TOURS)
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -460,12 +411,6 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 {
                     updateTurn(window);
                 }
-                /* Debuggage : pas dans le final */
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && !toggle_boxes)
-                {
-                    std::cout << "Case (" << cursor_x  << "," << cursor_y << ")" << std::endl;
-                }
-
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::P))
                 {
                     optionStart(window);
@@ -482,11 +427,6 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         selector--;
                         game_selector.setPosition(game_selector.getPosition().x, game_selector.getPosition().y - 55);
                     }
-                    if(!toggle_boxes && cursor_y > 0)
-                    {
-                        cursor_y--;
-                        game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
-                    }
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down))
                 {
@@ -495,21 +435,6 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         selector++;
                         game_selector.setPosition(game_selector.getPosition().x, game_selector.getPosition().y + 55);
                     }
-                    if(!toggle_boxes && cursor_y < HAUTEUR_TERRAIN)
-                    {
-                        cursor_y++;
-                        game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
-                    }   
-                }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && !toggle_boxes && cursor_x > 0)
-                {
-                    cursor_x--;
-                    game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
-                }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && !toggle_boxes && cursor_x < LARGEUR_TERRAIN)
-                {
-                    cursor_x++;
-                    game_cursor.setPosition(cursor_x*LARGEUR_CASE + 29, cursor_y*HAUTEUR_CASE + 27);
                 }
             }
             if(player_with_ball.getOrigin() == "France")
@@ -581,7 +506,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
             else
             {
                 pass_action = false;
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action && selector == 2)
                 {
                     if(player_with_ball.getX() > 1)
                     {
@@ -622,11 +547,6 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
         i.setSpriteball();
         sf::CircleShape sprite = i.getSprite();
         window.draw(sprite);
-    }
-
-    if(!toggle_boxes)
-    {
-        window.draw(game_cursor);
     }
 
     /* Interface de dialogue (affichée ou non selon l'utilisateur) */
@@ -675,6 +595,7 @@ void GameInstance::updateTurn(sf::RenderWindow& window)
     gameDraw(window);
 }
 
+/* Permet de mettre le jeu en pause en attendant la confirmation de l'utilisateur */
 void GameInstance::confirmTurn(sf::RenderWindow& window)
 {
     if(!goal_confirmed)
@@ -720,7 +641,6 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
             }
             if(InputManager::Instance().GetKey(sf::Keyboard::Key::Space) && toggle_boxes)
             {   
-                std::cout << "Return" << std::endl; 
                 pass_action = false;
                 goal_confirmed = false;            
                 return;
@@ -729,6 +649,7 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
     }
 }
 
+/* Permet de savoir quel joueur a la balle parmi tous */
 void GameInstance::whoHasBall()
 {
     if(!goal_confirmed)
@@ -755,6 +676,7 @@ void GameInstance::whoHasBall()
     
 }
 
+/* Affiche les différentes possibilités d'action */
 void GameInstance::displayOptions()
 {
     if(player_with_ball.getOrigin() == "France")
@@ -769,14 +691,15 @@ void GameInstance::displayOptions()
     {
         size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_gauche);
         info_dialog = createText(std::to_string(NbAdversaire) + " adversaires sur cette case.", 20, 50, 420);
-        text_1 = createText("Confirmer", 20, 490, 256);
-        text_2 = createText("Confirmer", 20, 490, 311);
-        text_3 = createText("Confirmer.", 20, 490, 366);
+        text_1 = createText("Chances de reussite :", 20, 500, 256);
+        text_2 = createText(std::to_string(player_with_ball.dribble_proba(NbAdversaire)), 20, 580, 311);
+        text_3 = createText("Confirmer.", 20, 545, 366);
     }
 
 
 }
 
+/* Met la jour la position de tous les joueurs au tour suivant */
 void GameInstance::updateTeamPositions()
 {
     team_gauche.updatePosition();
@@ -784,6 +707,7 @@ void GameInstance::updateTeamPositions()
     updateBallPosition();
 }
 
+/* Met à jour quel joueur possède la tour au tour suivant */
 void GameInstance::updateBallPosition()
 {
     if(player_with_ball.getOrigin() == "France")
@@ -796,12 +720,14 @@ void GameInstance::updateBallPosition()
     }
 }
 
+/* Message d'erreur lorsque le joueur ne peut plus avancer */
 void GameInstance::dribbleErrorMessage(sf::RenderWindow& window)
 {
     big_dialog_box = createText("Erreur : Vous ne pouvez plus avancer.", 20, 50, 268);
     gameDraw(window);
 }
 
+/* Donne les différents joueurs à qui on peut faire la passe */
 void GameInstance::passOptions(sf::RenderWindow& window)
 {
     player_option_1 = team_gauche.randomPlayerPass();
@@ -816,6 +742,7 @@ void GameInstance::passOptions(sf::RenderWindow& window)
 
 }
 
+/* Met à jour le score, la disposition des équipes et l'équipe qui a la balle */
 void GameInstance::confirmGoal()
 {
     big_dialog_box = createText("But de " + player_with_ball.getName() + " !", 20, 50, 268);
@@ -834,47 +761,20 @@ void GameInstance::confirmGoal()
     whoHasBall();
 }
 
+/* Affiche l'écran de fin correspondant */
 void GameInstance::gameEnd(sf::RenderWindow& window)
 {
+    main_theme.stop();
     if(score_gauche > score_droite)
     {
-        big_dialog_box = createText("Vous avez gagne !", 20, 50, 268);
+        EndScreen::Instance().loadBackgroundEndVictory(window);
     }
-    if(score_gauche > score_droite)
+    if(score_gauche < score_droite)
     {
-        big_dialog_box = createText("Vous avez perdu !", 20, 50, 268);
+        EndScreen::Instance().loadBackgroundEndDefeat(window);
     }
     else
     {
-        big_dialog_box = createText("Match nul !", 20, 50, 268);
-    }
-
-        gameDraw(window);
-
-    while(window.isOpen())
-    {
-        sf::Event event;
-        while(window.pollEvent(event))
-        {
-
-            if (event.type == sf::Event::Closed || InputManager::Instance().GetKey(sf::Keyboard::Key::Escape))
-            {
-                window.close();
-                std::cout << "Closing the game intentionally..." << std::endl;
-            }
-            if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter))
-                return;
-
-        }
+        EndScreen::Instance().loadBackgroundEndDraw(window);
     }
 }
-
-// if(_x == 4 && _y == 7)
-//     std::cout << "Theo Rouyer est beaucoup trop nul." << std::endl;
-// if(_x == 4 && _y == 2)
-//     std::cout << "Leonard Pannetier vient du Sud." << std::endl;
-// if(_x == 12 && _y == 4)
-//     std::cout << "Louis Leclercq est vraiment pas beau." << std::endl;
-
-// game_cursor.setPosition(sf::Vector2f(_x*LARGEUR_CASE + 32, _y*HAUTEUR_CASE + 29));
-

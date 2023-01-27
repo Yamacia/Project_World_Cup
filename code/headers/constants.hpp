@@ -51,4 +51,4 @@ const size_t CAGE_GAUCHE_X = 1;
 const size_t CAGE_GAUCHE_Y = 5;
 
 /* Nombre de tours d'une partie */
-const size_t MAX_TOURS = 60;
+const size_t MAX_TOURS = 45;

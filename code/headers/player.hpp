@@ -21,7 +21,7 @@ class Player : public Character {
         void initRightPosition();
 
         /*Méthodes d'actions */
-        void move();
+        virtual void move();
         bool dribble_right(int proba);
         bool dribble_left(int proba);
         bool shoot(int proba);
@@ -49,7 +49,7 @@ class Player : public Character {
         
         
 
-    private:
+    protected:
 
     bool ball;
     

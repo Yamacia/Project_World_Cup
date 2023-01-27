@@ -2,8 +2,10 @@
 #include "constants.hpp"
 #include "field.hpp"
 #include "team.hpp"
+#include "endscreen.hpp"
+#include "utility.hpp"
 
-class GameInstance
+class GameInstance : public EndScreen
 {
 protected:
     /* Les deux équipes qui jouent */
@@ -33,14 +35,14 @@ protected:
     sf::Sprite scoreboard;
     bool in_game; // savoir si on a lancé une partie ou non
     size_t turn; // Tour actuel
-    sf::RectangleShape game_cursor;
     sf::RectangleShape game_selector; 
     Player player_with_ball;
-    bool succesful_action;
-    bool pass_action;
-    bool goal_confirmed;
 
-    bool toggle_boxes;
+    /* Booléen du jeu */
+    bool succesful_action; // si l'action est réussie
+    bool pass_action; // si on veut faire une passe
+    bool goal_confirmed; // si on a marqué
+    bool toggle_boxes; // si on veut afficher les boites de texte
 
 
 public:
@@ -53,9 +55,6 @@ public:
     void loadPlaylist();
 
     /* Création graphique */
-    sf::Sprite createBox(size_t l_pos, size_t h_pos);
-    sf::Sprite createBigBox(size_t l_pos, size_t h_pos);
-    sf::Text createText(std::string string, size_t size, size_t l_pos, size_t h_pos);
     size_t cursorPosition(size_t x, size_t y, size_t selected);
 
     /* Méthodes menu */
@@ -107,6 +106,7 @@ public:
     sf::Text text_3 = createText("", 20, 490, 366);
     sf::Text info_dialog = createText("", 20, 50, 420);
 
+    /* Joueurs à qui faire la passe */
     Player* player_option_1;
     Player* player_option_2;
     Player* player_option_3;

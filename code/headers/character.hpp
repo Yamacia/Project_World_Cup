@@ -31,7 +31,7 @@ public:
     /* Autres méthodes*/
     //virtual void initStat(const Character & c, std::stringstream fichier)=0;
     //virtual void indicate_position() const = 0;
-    //virtual void move() const = 0;
+    virtual void move() const;
 
 protected: 
     std::string name;

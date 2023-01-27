@@ -19,6 +19,7 @@ class Goal: public Player{
         /*Méthode d'actions*/
         void catch_ball();
         void stop();
+        void move();
 
     private:
         bool _gball;

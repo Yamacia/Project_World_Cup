@@ -8,7 +8,12 @@ Goal::Goal(string n, string o){
     this->name=n;
     this->origin=o;
     this->poste="GO";
+    this->ball = false;
     this->_gball=false;
+    if(origin == "France")
+        initGoalGauche();
+    else
+        initGoalDroit();
 }
 
 
@@ -43,4 +48,8 @@ void Goal::catch_ball(){
 
 void Goal::stop(){
 
+}
+
+void Goal::move()
+{
 }

@@ -22,6 +22,10 @@ std::string Character::toInfo() const{
     return retour;
 }
 
+void Character::move() const
+{
+}
+
 
 void Character::setSpritePosition()
 {
