@@ -339,7 +339,7 @@ void GameInstance::loadTeam()
 {
     team_gauche = Team("France", "Antoine Griezmann, Olivier Giroud, Karim Benzema, Kylian Mbappe, Hugo Lloris, Paul Pogba, Adrien Rabiot, Nabil Fekir, Kingsley Coman, Theo Hernandez, Lucas Digne");
 
-    team_droite = Team("Portugal", "Christiano Ronaldo, Bruno Fernandes, Gancalo Guedes, Diogo Jota, Ruben Neves, Andre Silva, Joao Cancelo, Rafael Leao, Nuno Mendes, Raphael Guerreiro, Rui Patricio");
+    team_droite = Team("Portugal", "Christiano Ronaldo, Bruno Fernandes, Goncalo Guedes, Diogo Jota, Ruben Neves, Andre Silva, Joao Cancelo, Rafael Leao, Nuno Mendes, Raphael Guerreiro, Rui Patricio");
 }
 
 /* Donne la balle à l'équipe correspondante */
