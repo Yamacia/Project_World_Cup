@@ -45,6 +45,7 @@ Field::Field (const Field & f)
 
 }
 
+/* Permet de savoir combien d'adversaires sont présent sur une case précise */
 size_t Field::howManyOpponent(size_t x, size_t y, Team opponent_team)
 {
     size_t compteur = 0;

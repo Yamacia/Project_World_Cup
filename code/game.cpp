@@ -11,12 +11,14 @@ GameInstance& GameInstance::Instance()
 /* Initialise la musique au lancer */
 GameInstance::GameInstance()
 {
-    terrain = Field(LARGEUR_TERRAIN, HAUTEUR_TERRAIN);
+    /* Variables pour la musique */
     loadMusic();
     loadPlaylist();
     song = true;
-    succesful_action = false;
 
+    /* Variables pour le jeu */
+    terrain = Field(LARGEUR_TERRAIN, HAUTEUR_TERRAIN);
+    succesful_action = false;
     turn = 0;
     in_game = false;
     score_gauche = 0;
@@ -114,7 +116,7 @@ void GameInstance::menuLoop(sf::RenderWindow& window)
                 std::cout << "Closing the game intentionally..." << std::endl;
             }
 
-            if(event.type == sf::Event::KeyPressed)
+            if(event.type == sf::Event::KeyPressed) // Sélection de paramètres
             {
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up) && selected > 0)
                 {
@@ -191,7 +193,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                 std::cout << "Closing the game intentionally..." << std::endl;
             }
 
-            if(event.type == sf::Event::KeyPressed)
+            if(event.type == sf::Event::KeyPressed) // Sélection de paramètres
             {
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up) && selected > 0)
                 {
@@ -208,7 +210,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Left) && selected == 1)
                 {
-                    if(current_song == 0)
+                    if(current_song == 0) // Aller au dernier si on est au premier
                         current_song = 3;
                     else
                         current_song--;
@@ -217,7 +219,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::Right) && selected == 1)
                 {
-                    if(current_song == 3)
+                    if(current_song == 3) // Aller au premier si on est au dernier
                         current_song = 0;
                     else
                         current_song++;
@@ -226,7 +228,7 @@ void GameInstance::optionLoop(sf::RenderWindow& window)
                 }
                 if((InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && selected == 2) || (InputManager::Instance().GetKey(sf::Keyboard::Key::P)))
                 {
-                    if(!in_game)
+                    if(!in_game) // Retourner dans le jeu directement si on a commencé une partie
                         menuStart(window);
                     else
                         gameStart(window);
@@ -390,7 +392,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
     /* Rectangle de sélection d'action */
     size_t selector = 0;
     game_selector.setPosition(480, 246);
-    while(window.isOpen() && turn < MAX_TOURS)
+    while(window.isOpen() && turn < MAX_TOURS) // Dépasse pas le max de tours imposé
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -402,25 +404,15 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
             }
             if(event.type == sf::Event::KeyPressed)
             {
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Tab))
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Tab)) // Cacher l'interface
                 {
                     toggle_boxes = !toggle_boxes;
                 }
-                /* Debuggage : pas dans le final */
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Numpad0) && toggle_boxes)
-                {
-                    updateTurn(window);
-                }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::P))
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::P)) // Options
                 {
                     optionStart(window);
                 }
-                /* Debuggage : pas dans le final */
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::R))
-                {
-                    score_gauche++;
-                }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up))
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Up)) // Selectionner une case
                 {
                     if(toggle_boxes && selector > 0)
                     {
@@ -428,7 +420,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         game_selector.setPosition(game_selector.getPosition().x, game_selector.getPosition().y - 55);
                     }
                 }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down))
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Down)) // Selectionner une case
                 {
                     if(toggle_boxes && selector < 2)
                     {
@@ -437,11 +429,11 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                     }
                 }
             }
-            if(player_with_ball.getOrigin() == "France")
+            if(player_with_ball.getOrigin() == "France") // Actions quand on a la balle
             {
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && pass_action)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && pass_action) // Action de passe
                 {
-                    if(selector == 0)
+                    if(selector == 0) // Joueur 1
                     {
                         succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_1));
                         team_gauche(player_with_ball.getName())->set_ball(false);
@@ -449,7 +441,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         confirmTurn(window);
                         updateTurn(window);
                     }
-                    if(selector == 1)
+                    if(selector == 1) // Joueur 2
                     {
                         succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_2));
                         team_gauche(player_with_ball.getName())->set_ball(false);
@@ -457,7 +449,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         confirmTurn(window);
                         updateTurn(window);
                     }
-                    if(selector == 2)
+                    if(selector == 2) // Joueur 3
                     {
                         succesful_action = player_with_ball.pass(player_with_ball.pass_proba(*player_option_3));
                         team_gauche(player_with_ball.getName())->set_ball(false);
@@ -466,9 +458,9 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         updateTurn(window);
                     }
                 }
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action) // Actions de base
                 {
-                    if(selector == 1)
+                    if(selector == 1) // Dribbler
                     {
                         if(player_with_ball.getX() <= LARGEUR_TERRAIN)
                         {
@@ -482,7 +474,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                         }
 
                     }
-                    if(selector == 2)
+                    if(selector == 2) // Tirer
                     {
                         succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba_right());
                         if(succesful_action)
@@ -495,7 +487,7 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                 }
                 if(InputManager::Instance().GetKey(sf::Keyboard::Key::LControl) && toggle_boxes)
                 {
-                    if(selector == 0 && !pass_action)
+                    if(selector == 0 && !pass_action) // Faire la passe
                     {
                         passOptions(window);
                         pass_action = true;
@@ -503,16 +495,16 @@ void GameInstance::gameLoop(sf::RenderWindow& window)
                     
                 }
             }
-            else
+            else // Actions lorsqu'on n'a pas la balle
             {
                 pass_action = false;
-                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action && selector == 2)
+                if(InputManager::Instance().GetKey(sf::Keyboard::Key::Enter) && toggle_boxes && !pass_action && selector == 2) // Confirmer le tour
                 {
-                    if(player_with_ball.getX() > 1)
+                    if(player_with_ball.getX() > 1) // Avance si possible
                     {
                         succesful_action = player_with_ball.dribble_left(player_with_ball.dribble_proba(terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_gauche)));
                     }
-                    else
+                    else // Tire sinon
                     {
                         succesful_action = player_with_ball.shoot(player_with_ball.shoot_proba_left());
                         if(succesful_action)
@@ -535,14 +527,14 @@ void GameInstance::gameDraw(sf::RenderWindow& window)
     window.clear(sf::Color::Black);
     window.draw(background);
 
-    for(Player i : team_gauche.roster)
+    for(Player i : team_gauche.roster) // Afficher équipe de gauche
     {
         i.setSpriteball();
         sf::CircleShape sprite = i.getSprite();
         window.draw(sprite);
     }
 
-    for(Player i : team_droite.roster)
+    for(Player i : team_droite.roster) // Afficher équipe de droite
     {
         i.setSpriteball();
         sf::CircleShape sprite = i.getSprite();
@@ -598,7 +590,7 @@ void GameInstance::updateTurn(sf::RenderWindow& window)
 /* Permet de mettre le jeu en pause en attendant la confirmation de l'utilisateur */
 void GameInstance::confirmTurn(sf::RenderWindow& window)
 {
-    if(!goal_confirmed)
+    if(!goal_confirmed) // Afficher si rien de spécial
     {
         if(player_with_ball.getOrigin() == "France")
         {
@@ -630,7 +622,7 @@ void GameInstance::confirmTurn(sf::RenderWindow& window)
 
     gameDraw(window);
     sf::Event event;
-    while(window.pollEvent(event))
+    while(window.pollEvent(event)) // Boucle qui permet de fixer le tour actuel
     {
         while(true)
         {
@@ -679,7 +671,7 @@ void GameInstance::whoHasBall()
 /* Affiche les différentes possibilités d'action */
 void GameInstance::displayOptions()
 {
-    if(player_with_ball.getOrigin() == "France")
+    if(player_with_ball.getOrigin() == "France") // L'utilisateur possède la balle
     {
         size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_droite);
         info_dialog = createText(std::to_string(NbAdversaire) + " adversaires sur cette case.", 20, 50, 420);
@@ -687,7 +679,7 @@ void GameInstance::displayOptions()
         text_2 = createText("Dribbler (" + std::to_string(player_with_ball.dribble_proba(NbAdversaire)) + "%)", 20, 490, 311);
         text_3 = createText("Tirer (" + std::to_string(player_with_ball.shoot_proba_right()) + "%)", 20, 490, 366);
     }
-    else
+    else // L'utilisateur doit défendre
     {
         size_t NbAdversaire = terrain.howManyOpponent(player_with_ball.getX(), player_with_ball.getY(), team_gauche);
         info_dialog = createText(std::to_string(NbAdversaire) + " adversaires sur cette case.", 20, 50, 420);
@@ -765,15 +757,15 @@ void GameInstance::confirmGoal()
 void GameInstance::gameEnd(sf::RenderWindow& window)
 {
     main_theme.stop();
-    if(score_gauche > score_droite)
+    if(score_gauche > score_droite) // Victoire
     {
         EndScreen::Instance().loadBackgroundEndVictory(window);
     }
-    if(score_gauche < score_droite)
+    if(score_gauche < score_droite) // Défaite
     {
         EndScreen::Instance().loadBackgroundEndDefeat(window);
     }
-    else
+    else // Match Nul
     {
         EndScreen::Instance().loadBackgroundEndDraw(window);
     }

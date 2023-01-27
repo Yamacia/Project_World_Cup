@@ -1,5 +1,6 @@
 #include "headers/endscreen.hpp"
 
+/* Unique instance */
 EndScreen& EndScreen::Instance()
 {
     static EndScreen endManager;
@@ -8,6 +9,7 @@ EndScreen& EndScreen::Instance()
 
 EndScreen::EndScreen()
 {
+    /* Boite de dialogue contenant le résultat du match */
     final_box = createBox(255,385);
     
 }
@@ -17,6 +19,7 @@ EndScreen::~EndScreen()
 
 }
 
+/* Ecran de victoire */
 void EndScreen::loadBackgroundEndVictory(sf::RenderWindow& window)
 {
     sf::Texture *menu_screen = new sf::Texture;
@@ -27,6 +30,7 @@ void EndScreen::loadBackgroundEndVictory(sf::RenderWindow& window)
     drawEndScreen(window);
 }
 
+/* Ecran de défaite */
 void EndScreen::loadBackgroundEndDefeat(sf::RenderWindow& window)
 {
     sf::Texture *menu_screen = new sf::Texture;
@@ -37,6 +41,7 @@ void EndScreen::loadBackgroundEndDefeat(sf::RenderWindow& window)
     drawEndScreen(window);
 }
 
+/* Ecran de match nul */
 void EndScreen::loadBackgroundEndDraw(sf::RenderWindow& window)
 {
     sf::Texture *menu_screen = new sf::Texture;
@@ -47,6 +52,7 @@ void EndScreen::loadBackgroundEndDraw(sf::RenderWindow& window)
     drawEndScreen(window);
 }
 
+/* Dessine l'écran désiré */
 void EndScreen::drawEndScreen(sf::RenderWindow& window)
 {
     while(window.isOpen())
@@ -70,6 +76,7 @@ void EndScreen::drawEndScreen(sf::RenderWindow& window)
     }
 }
 
+/* Charge la musique finale */
 void EndScreen::loadMusic()
 {
     /* Création musique principale */

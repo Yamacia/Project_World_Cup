@@ -81,6 +81,7 @@ void Team::init(){
 }
 */
 
+/* Met à jour la position de tous les joueurs de l'équipe */
 void Team::updatePosition()
 {
     list<Player>::iterator i = roster.begin();
@@ -95,6 +96,7 @@ void Team::updatePosition()
     };
 }
 
+/* Donne la balle à un joueur aléatoire de l'équipe */
 void Team::randomPlayerBall()
 {
     int random_player = rand()%roster.size();
@@ -115,6 +117,7 @@ void Team::randomPlayerBall()
 
 }
 
+/* Retourne un joueur potentiel à qui faire la passe */
 Player* Team::randomPlayerPass()
 {
     Player* p = new Player;
@@ -138,6 +141,7 @@ Player* Team::randomPlayerPass()
 
 }
 
+/* Opérateur pour retrouver un joueur dans l'équipe à partir de son nom */
 Player* Team::operator()(std::string player)
 {
     Player* p= new Player;
@@ -154,25 +158,3 @@ Player* Team::operator()(std::string player)
     return p;
     delete [] p;
 }
-
-/*
-Player* Team::operator()(std::string player)
-{
-    std::cout << "Looking for : " + player << std::endl;
-    
-    for(Player i : roster)
-    {
-        std::cout << "Current is : " + i.getName() << std::endl;
-        if(i.getName() == player){
-            std::cout << i << std::endl;
-            static Player p(i);
-            //p=i;
-            std::cout << "Operateur a retourne : " + p.getName() << std::endl;
-            return &p;
-            //found =true;
-        }
-            
-    };
-    static Player p("",""); // pas trouvé
-    return &p;
-}*/

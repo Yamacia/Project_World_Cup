@@ -10,9 +10,9 @@ Character::Character(std::string n, std::string o) : name(n), origin(o), present
 
 Character::Character(const Character &c) : name(c.name), origin(c.origin), present(c.present), stat(c.stat), poste(c.poste), _x(c._x), _y(c._y)
 {
-    sprite = sf::CircleShape(6); 
-    setSpriteColor(); 
+    sprite = sf::CircleShape(6);  // Taille du sprite sur le jeu
     setSpritePosition();
+    setSpriteColor();
 }
 
 std::string Character::toInfo() const{
@@ -27,11 +27,13 @@ void Character::move() const
 }
 
 
+/* Met à jour la position du joueur sur l'interface graphique */
 void Character::setSpritePosition()
 {
     sprite.setPosition(_x*LARGEUR_CASE, _y*HAUTEUR_CASE);
 }
 
+/* Colorie le sprite d'un joueur selon sa nationalité (sur l'interface graphique) */
 void Character::setSpriteColor(){
     if(origin == "France")
     {
@@ -44,7 +46,7 @@ void Character::setSpriteColor(){
     }
 }
 
-
+/* Opérateur pour afficher toute sa description dans un cout*/
 std::ostream & operator<<(std::ostream& os, const Character& e){
     os << e.toInfo();
     return os;

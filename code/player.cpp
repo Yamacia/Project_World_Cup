@@ -7,7 +7,7 @@ using namespace std;
 
 Player::Player(std::string n, std::string o): Character(n, o)
 {
-    string fichier = "../data/" + origin + "_team.txt";
+    string fichier = "../data/" + origin + "_team.txt"; // Initialise le joueur selon sa nationalité
     this->stat = initStat(fichier,n);
     this->poste= initPoste(fichier,n);
     this->ball=false;
@@ -281,6 +281,7 @@ std::string Player::toInfo() const{
         return retour;
 }
 
+/* Operateur pour pointer vers un joueur précis */
 Player& Player::operator=(const Player &p){
     name=p.name;
     origin=p.origin;
@@ -295,6 +296,7 @@ Player& Player::operator=(const Player &p){
     return *this;
 }
 
+/* Entoure le joueur qui a la balle*/
 void Player::setSpriteball()
 {
     if(has_ball())
@@ -309,7 +311,7 @@ void Player::setSpriteball()
     }
 }
 
-
+/* Fait bouger un joueur aléatoirement (dans les limites du possible) */
 void Player::move(){
 
     size_t random_x = rand()%2;
@@ -333,8 +335,7 @@ void Player::move(){
 
 }
 
-
-
+/* Donne la proba de réussir le dribble */
 int Player::dribble_proba(size_t Nbadversaire) const
 {
     if(Nbadversaire <= 0)
@@ -348,6 +349,7 @@ int Player::dribble_proba(size_t Nbadversaire) const
 
 }
 
+/* Effectue le dribble (si on vient de l'équipe gauche), renvoie un booléen qui détermine la réussite */
 bool Player::dribble_right(int proba)
 {
     int roll_dice = rand()%100;
@@ -359,6 +361,7 @@ bool Player::dribble_right(int proba)
     return false;
 }
 
+/* Effectue le dribble (si on vient de l'équipe droite), renvoie un booléen qui détermine la réussite */
 bool Player::dribble_left(int proba)
 {
     int roll_dice = rand()%100;
@@ -370,17 +373,19 @@ bool Player::dribble_left(int proba)
     return false;
 }
 
-
+/* Donne la proba de réussir le tir (si on vient de l'équipe gauche) */
 int Player::shoot_proba_right() const
 {
     return max((int)((100*stat) / ((abs((int)(CAGE_DROITE_X - _x)) + abs((int)(CAGE_DROITE_Y - _y))) + 1)),0);
 }
 
+/* Donne la proba de réussir le tir (si on vient de l'équipe gauche) */
 int Player::shoot_proba_left() const
 {
     return max((int)((100*stat) / ((abs((int)(CAGE_GAUCHE_X - _x)) + abs((int)(CAGE_GAUCHE_Y - _y))) + 1)),0);
 }
 
+/* Effectue le tir, renvoie un booléen qui détermine la réussite */
 bool Player::shoot(int proba)
 {
     int roll_dice = rand()%100;
@@ -391,6 +396,7 @@ bool Player::shoot(int proba)
     return false;
 }
 
+/* Donne la proba de réussir la passe à un joueur */
 int Player::pass_proba(Player p) const
 {
     // std::cout << "x1 = " << this->_x << " et x2 = " << p._x << std::endl;
@@ -400,6 +406,7 @@ int Player::pass_proba(Player p) const
     return max((int)(100 - pow(std::max(this->_x,p._x) - std::min(this->_x,p._x),2) - pow(std::max(this->_y,p._y) - std::min(this->_y,p._y),2)),0);
 }
 
+/* Effectue la passe avec un joueur, renvoie un booléen qui détermine la réussite */
 bool Player::pass(int proba)
 {
     int roll_dice = rand()%100;
